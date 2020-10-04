@@ -78,7 +78,6 @@
                                 <th>Time</th>
                                 <th>Status</th>
                                 <th></th>
-                                bhbjk
                             </tr>
                         </thead>
                         <tbody>
