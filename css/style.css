@@ -1,0 +1,33 @@
+.sidemenu{
+    width: 250px;
+    background-color: #173F5F;
+    padding-bottom: 20px;
+}
+.toggle-bar{
+    width: 50px;
+    background-color: #173F5F;
+    padding-bottom: 20px;
+}
+.module{
+    padding: 19px;
+    border-radius: 15px 0 0 15px;
+    color: white;
+    height: 60px;
+}
+.module-active{
+    background-color: white;
+    color: black; 
+}
+.module:hover{
+    animation: moduleLink 0.7s 1;
+    background-color: white;
+    color: black;   
+}
+.hide-module-name{
+    display: none;
+}
+
+@keyframes moduleLink{
+    from {background-color: #252733;}
+    to {background-color: white; color: black;}
+}
