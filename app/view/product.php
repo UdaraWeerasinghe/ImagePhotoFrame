@@ -13,10 +13,7 @@
         
         include '../model/module-model.php';
             $moduleObj = new Module();
-            $moduleResult=$moduleObj->getAllModules();
-            
-            
-            
+            $moduleResult=$moduleObj->getAllModules();  
         ?>
     </head>
     <body>
@@ -47,7 +44,9 @@
 
                  <?php }?>
             </div>
-            <div class="dashbord-body" style="flex: 70%; height: 800px;">
+            <div class="dashbord-body" style="flex: 70%; height: 800px; padding: 10px;">
+                
+                
                 <h3 style="text-align: center; margin: 20px;">Product Management</h3>
                 
                 <ul class="nav nav-tabs">
@@ -55,9 +54,10 @@
                     <a class="nav-link active" href="#all-users">Available Design</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#active-users">Add New Design</a>
+                      <a class="nav-link" href="add-design.php">Add New Design</a>
                   </li>
                 </ul>
+                
                 
             </div>
          
@@ -65,31 +65,11 @@
         
 
         <script type="text/javascript" src="../../js/user-validation.js"></script>
-        <script type="text/javascript" src="../../js/jquery-3.4.1.js"></script>
         <script src="../../js/jsStyle.js"></script>
-        <script src="../../js/sweetalert.js"></script>
         <script>
         
         </script>
-        <script type="text/javascript">
-        
-
-///////////////sweetalert///////////////
-<?php
-    if(isset($_GET["text"])){
-        $icon=$_REQUEST["icon"];
-        $title=$_REQUEST["title"];
-        $text=$_REQUEST["text"];
-        ?>
-            
-swal({
-    title: "<?php echo $title;?>",
-    text: "<?php echo $text; ?>",
-    icon: "<?php echo $icon; ?>"
-        });
-    <?php } ?> 
-        </script>
-        
+ 
     </body>
 </html>
 

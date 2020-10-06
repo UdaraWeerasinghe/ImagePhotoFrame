@@ -52,7 +52,6 @@
             </div>
             <div class="dashbord-body" style="flex: 70%; height: 800px;">
                 <h3 style="text-align: center; margin-top: 20px;">User Management</h3>
-           <div class="container mt-3">
                 <ul class="nav nav-tabs">
                   <li class="nav-item">
                     <a class="nav-link active" href="#all-users">All Users</a>
@@ -137,9 +136,6 @@
                                 </div>
                   </div>
                 </div>
-              </div>
-         
-                
             </div>
          
         </div> 

@@ -49,8 +49,8 @@
 
                  <?php }?>
             </div>
-            <div class="dashbord-body" style="flex: 70%; height: 800px; margin-left: 15px;">
-                <h3 style="text-align: center; margin-top: 20px;">Order Management</h3>
+            <div class="dashbord-body" style="flex: 70%; height: 800px; padding: 10px;">
+                <h3 style="text-align: center; margin-top: 10px;">Order Management</h3>
                 
                 <ul class="nav nav-tabs">
                   <li class="nav-item">
@@ -69,8 +69,8 @@
                       <a class="nav-link" href="#ad">Completed</a>
                   </li>
                 </ul>
-                <div class="row"><div class="col-12">&nbsp;</div></div>
-                    <table class="table">
+               
+                <table class="table" style="margin-top: 15px;">
                         <thead>
                             <tr>
                                 <th>Customer Name</th>

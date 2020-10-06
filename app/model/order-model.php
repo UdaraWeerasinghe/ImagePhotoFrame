@@ -11,5 +11,3 @@ class Order{
         return $results;
     }
 }
-//INNER JOIN customer_order ON customer_order.order_status=order_status.status_id
-//$sql="SELECT * FROM customer_order o, customer c WHERE o.customer_id=c.customer_id";
