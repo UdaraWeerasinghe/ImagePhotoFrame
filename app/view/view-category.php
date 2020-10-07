@@ -9,11 +9,18 @@
         <link rel="stylesheet" href="../../fontawesome-pro-5.13.0-web/css/all.css">
         <link type="text/css" rel="stylesheet" href="../../css/style.css">
 
-        <?php include_once '../../commons/dbConnection.php'; 
+        <?php 
+        include_once '../../commons/dbConnection.php'; 
         
-        include '../model/module-model.php';
+            include '../model/module-model.php';
             $moduleObj = new Module();
             $moduleResult=$moduleObj->getAllModules();  
+            
+            include '../model/product-model.php';
+            $productObj=new Product();
+            $subCatId=$_REQUEST["subCatId"];
+            $subCategory=$productObj->viewCategory($subCatId);
+            
         ?>
     </head>
     <body>
@@ -46,33 +53,47 @@
             </div>
             <div class="dashbord-body" style="flex: 70%; height: 800px; padding: 10px;">
                 
-                
                 <h3 style="text-align: center; margin: 20px;">Product Management</h3>
                 
                 <ul class="nav nav-tabs">
                   <li class="nav-item">
-                      <a class="nav-link active" href="product.php">Available Design</a>
+                      <a class="nav-link" href="product.php">Available Design</a>
                   </li>
                   <li class="nav-item">
                       <a class="nav-link" href="add-design.php">Add New Design</a>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link" href="category.php">Manage Category</a>
+                      <a class="nav-link  active" href="category.php">Manage Category</a>
                   </li>
                 </ul>
-                
-                
-            </div>
-         
-        </div> 
-        
-
-        <script type="text/javascript" src="../../js/user-validation.js"></script>
+                <div class="container" style="padding-top: 20px;">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label style="font-weight: bold">Frame Type</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <label><?php echo 'ttt'; ?></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2"></div>
+                        <div class="col-md-5">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label style="font-weight: bold">Material types</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <label><?php echo 'ttt'; ?></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
         <script src="../../js/jsStyle.js"></script>
-        <script>
-        
-        </script>
- 
+
     </body>
 </html>
 

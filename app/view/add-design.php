@@ -58,82 +58,94 @@
                 
                 <ul class="nav nav-tabs">
                   <li class="nav-item">
-                    <a class="nav-link" href="#all-users">Available Design</a>
+                      <a class="nav-link" href="product.php">Available Design</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link  active" href="#active-users">Add New Design</a>
+                      <a class="nav-link  active" href="add-design.php">Add New Design</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="category.php">Manage Category</a>
                   </li>
                 </ul>
                 <div class="container">
-                <form style="padding-top: 10px;">
-                    <div class="row">
-                        <div class="col-md-2">
-                            <label>Design name</label>
-                        </div>
-                        <div class="col-md-3">
-                            <input type="text" class="form-control">
-                        </div>
-                        <div class="col-md-2"></div>
-                        <div class="col-md-2">
-                            <label>Design code</label>
-                        </div>
-                        <div class="col-md-3">
-                            <input type="text" class="form-control">
-                        </div>
-                    </div>
-                    
-                    <div class="row"><div class="col-md-12">&nbsp;</div></div>
-                    
-                    <div class="row">
-                        <div class="col-md-2">
-                            <label>Frame Material</label>
-                        </div>
-                        <div class="col-md-3">
-                            <select class="form-control">
-                                <option>---</option>
-                                <?php
-                                while ($prow=$category->fetch_assoc()){
-                                    ?>
-                                <option><?php echo $prow['cat_name'] ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                        <div class="col-md-2"></div>
-                        <div class="col-md-2">
-                            <label>Frame Type</label>
-                        </div>
-                        <div class="col-md-3">
-                            <select class="form-control">
-                                <option>---</option>
-                                <?php
-                                while ($prow=$sub_category->fetch_assoc()){
-                                    ?>
-                                <option><?php echo $prow['sub_cat_name'] ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="row"><div class="col-md-12">&nbsp;</div></div>
-                    
-                    <div class="row">
-                        <div class="col-md-2">
-                            <label>Color</label>
-                        </div>
-                        <div class="col-md-3">
-                            <input type="text" class="form-control">
-                        </div>
-                        <div class="col-md-2"></div>
-                        <div class="col-md-2">
-                            <label>Image</label>
-                        </div>
-                        <div class="col-md-3">
-                            <input type="file" onchange="readURL1(this)" class="form-control">
-                            <br>
-                            <input type="file" onchange="readURL2(this)" class="form-control">
-                            <img id="img_prev1"><img id="img_prev2">
-                        </div>
-                    </div>
+                    <form enctype="multipart/form-data" method="post" style="padding-top: 10px;" action="../controller/login-controller.php">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label>Design name</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control">
+                                </div>
+                                <div class="col-md-2"></div>
+                                <div class="col-md-2">
+                                    <label>Design code</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="row"><div class="col-md-12">&nbsp;</div></div>
+
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label>Frame Material</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <select class="form-control">
+                                        <option>---</option>
+                                        <?php
+                                        while ($prow=$category->fetch_assoc()){
+                                            ?>
+                                        <option><?php echo $prow['cat_name'] ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                                <div class="col-md-2"></div>
+                                <div class="col-md-2">
+                                    <label>Frame Type</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <select class="form-control">
+                                        <option>---</option>
+                                        <?php
+                                        while ($prow=$sub_category->fetch_assoc()){
+                                            ?>
+                                        <option><?php echo $prow['sub_cat_name'] ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row"><div class="col-md-12">&nbsp;</div></div>
+
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label>Color</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control">
+                                </div>
+                                <div class="col-md-2"></div>
+                                <div class="col-md-2">
+                                    <label>Image</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="file" onchange="readURL1(this)" class="form-control">
+                                    <br>
+                                    <input type="file" onchange="readURL2(this)" class="form-control">
+                                    <img id="img_prev1" style="margin-top: 10px"><img id="img_prev2" style="margin-top: 10px; margin-left: 20px;">
+                                </div>
+                            </div>
+                            
+                            <div class="row"><div class="col-md-12">&nbsp;</div></div>
+                            
+                            <div class="row">
+                                <div class="col-md-12" style="text-align: right">
+                                    <button type="reset" class="btn btn-danger"><i class="fad fa-sync-alt"></i>&nbsp;Reset</button>
+                                    <button type="submit" class="btn btn-success"><i class="fal fa-save"></i>&nbsp;Save</button>
+                                </div>
+                            </div>
                 </form>
                 </div>
                 
@@ -145,6 +157,7 @@
 
         <script type="text/javascript" src="../../js/user-validation.js"></script>
         <script src="../../js/jsStyle.js"></script>
+        <script src="../../js/product.js"></script>
         <script type="text/javascript">
       
         function readURL1(input) {
