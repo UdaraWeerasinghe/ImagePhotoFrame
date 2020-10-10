@@ -10,12 +10,11 @@ switch ($status){
         $catId=$productObj->addCategory($cat_name);
         $msg="Successfully added category"." ".$cat_name;
         $class="alert-success";
-        $subCategory=$_POST['sub_cat_name'];
+        $subCategory=$_POST['sub_cat_id'];
        
         foreach ($subCategory as $f) {
                  $productObj->addCategorySubCategory($catId,$f);
         }
-    ?>
     ?>
         <script> window.location="../view/category.php?category=category & msg=<?php echo $msg;?> & class=<?php echo $class; ?>";</script>
    <?php
@@ -49,7 +48,7 @@ switch ($status){
         ?>
         <div class="row">
             <div class="col-md-4">
-                <label>Category Name</label>
+                <label>Material Name</label>
             </div>
             <div class="col-md-8">
                 <input type="hidden" name="cat_id" value="<?php echo $cat_id; ?>">
@@ -107,7 +106,116 @@ switch ($status){
          ?>
         <script> window.location="../view/category.php?sub_cat=category & msg=<?php echo $msg;?> & class=<?php echo $class; ?>";</script>
    <?php
+        
+    
+    case "addDesign":
+        $dNanme=$_POST["dNanme"];
+        $dCode=$_POST["dCode"];
+        $material=$_POST["material"];
+        $frameType=$_POST["frameType"];
+        $color=$_POST["color"];
+        if($_FILES["img1"]["name"]!="")
+                {
+                    $img1=$_FILES["img1"]["name"];
+                    $img1="".time()."_".$img1;
+                    /// obtain temporary location
+                   $tmp= $_FILES["img1"]["tmp_name"];
+                   $destination="../../images/design_image/$img1";
+                   move_uploaded_file($tmp, $destination); 
+                }
+        if($_FILES["img2"]["name"]!="")
+                {
+                    $img2=$_FILES["img2"]["name"];
+                    $img2="".time()."_".$img2;
+                    /// obtain temporary location
+                   $tmp= $_FILES["img2"]["tmp_name"];
+                   $destination="../../images/design_image/$img2";
+                   move_uploaded_file($tmp, $destination); 
+                }       
+        $productObj->addDesign($dNanme, $dCode, $material, $frameType, $color, $img1, $img2);
+        $msg="Successfully add design"." ".$dNanme;
+        $class="alert-success";
+         ?>
+        <script> window.location="../view/product.php?msg=<?php echo $msg;?> & class=<?php echo $class; ?>";</script>
+   <?php
         break;
-    
-    
+        
+        
+        case "paginate":
+            $page=$_POST['page'];
+            $txt=$_POST["txt"];
+            
+            include_once '../model/product-model.php';
+            $productObj=new Product();
+            $productResult=$productObj->getAllProduct($page,$txt);
+            
+            
+            ?>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                           
+                            <th>Product Name</th>
+                            <th>Color</th>
+                            <th>Availability</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php while ($prow=$productResult->fetch_assoc()) {
+                            ?>
+                        <tr>
+                            <td><img width="30px" height="30px" src="../../images/design_image/<?php echo $prow['product_img_1']; ?>">&nbsp;&nbsp;<?php echo $prow['product_name']; ?></td>
+                            <td><?php echo $prow['product_color']; ?></td>
+                            <td>
+                                <?php
+                                if($prow['product_status']==1){
+                                    echo 'Available';
+                                } else {
+                                    echo 'Not Available';
+                                }
+                                ?>
+                            </td>
+                            <th>
+                                <a class="btn btn-info"><i class="far fa-print-search" style="margin: 4px"></i></a>
+                                <?php
+                                if($prow['product_status']==1){
+                                    ?>
+                                    <a class="btn btn-success">Activate</a>
+                                <?php
+                                } else {
+                                    ?>
+                                    <a class="btn btn-danger">Deactivate</a>
+                                    <?php
+                                }
+                                ?>
+                            </th>
+                        </tr>
+                            <?php
+                        }
+                        ?>
+                    </tbody>
+                </table>
+                
+                <div class="row">
+                    <div class="col-12">
+                        <ul class="pagination">
+                            <?php
+                            $ecount=$productObj->getProductCount();
+                            $numOfPage=$ecount/5;
+                            $ceilpages= ceil($numOfPage);
+                            for($x=1; $x<=$ceilpages; $x++){
+                                ?>
+                            <li class="page-item <?php if($x==$page){echo 'active';} ?>">
+                                <a class="page-link" href="#" onclick="navigatopage(<?php echo $x; ?>)"><?php echo $x; ?></a>
+                            </li>
+                            <?php
+                            }
+                            ?>
+                            
+                        </ul>
+                    </div>
+                </div>
+        <?php
+        break;
 }

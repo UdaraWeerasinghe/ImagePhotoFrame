@@ -54,7 +54,7 @@
             <div class="dashbord-body" style="flex: 70%; height: 800px; padding: 10px;">
                 
                 
-                <h3 style="text-align: center; margin: 20px;">Product Management</h3>
+                <h3 style="text-align: center; margin-bottom: 20px;">Product Management</h3>
                 
                 <ul class="nav nav-tabs">
                   <li class="nav-item">
@@ -68,20 +68,23 @@
                   </li>
                 </ul>
                 <div class="container">
-                    <form enctype="multipart/form-data" method="post" style="padding-top: 10px;" action="../controller/login-controller.php">
+                    <form id="addDesign" enctype="multipart/form-data" method="post" style="padding-top: 30px;" action="../controller/product-controller.php?status=addDesign">
+                        
+                        <div class="row"><div style="text-align: center" class="col-md-12" id="vAlert"></div></div>
+                        
                             <div class="row">
                                 <div class="col-md-2">
                                     <label>Design name</label>
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control">
+                                    <input type="text" id="dNanme" name="dNanme" class="form-control">
                                 </div>
                                 <div class="col-md-2"></div>
                                 <div class="col-md-2">
                                     <label>Design code</label>
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control">
+                                    <input type="text" id="dCode" name="dCode" class="form-control">
                                 </div>
                             </div>
 
@@ -92,12 +95,12 @@
                                     <label>Frame Material</label>
                                 </div>
                                 <div class="col-md-3">
-                                    <select class="form-control">
-                                        <option>---</option>
+                                    <select name="material" id="material" class="form-control">
+                                        <option value="">---</option>
                                         <?php
                                         while ($prow=$category->fetch_assoc()){
                                             ?>
-                                        <option><?php echo $prow['cat_name'] ?></option>
+                                        <option value="<?php echo $prow['cat_id'] ?>"><?php echo $prow['cat_name'] ?></option>
                                         <?php } ?>
                                     </select>
                                 </div>
@@ -106,12 +109,12 @@
                                     <label>Frame Type</label>
                                 </div>
                                 <div class="col-md-3">
-                                    <select class="form-control">
-                                        <option>---</option>
+                                    <select name="frameType" id="frameType" class="form-control">
+                                        <option value="">---</option>
                                         <?php
                                         while ($prow=$sub_category->fetch_assoc()){
                                             ?>
-                                        <option><?php echo $prow['sub_cat_name'] ?></option>
+                                        <option value="<?php echo $prow['sub_cat_id'] ?>"><?php echo $prow['sub_cat_name'] ?></option>
                                         <?php } ?>
                                     </select>
                                 </div>
@@ -124,16 +127,16 @@
                                     <label>Color</label>
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control">
+                                    <input type="text" name="color" id="color" class="form-control">
                                 </div>
                                 <div class="col-md-2"></div>
                                 <div class="col-md-2">
                                     <label>Image</label>
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="file" onchange="readURL1(this)" class="form-control">
+                                    <input type="file" id="img1" name="img1" onchange="readURL1(this)" class="form-control">
                                     <br>
-                                    <input type="file" onchange="readURL2(this)" class="form-control">
+                                    <input type="file" id="img2" name="img2" onchange="readURL2(this)" class="form-control">
                                     <img id="img_prev1" style="margin-top: 10px"><img id="img_prev2" style="margin-top: 10px; margin-left: 20px;">
                                 </div>
                             </div>
@@ -155,9 +158,8 @@
         </div> 
         
 
-        <script type="text/javascript" src="../../js/user-validation.js"></script>
         <script src="../../js/jsStyle.js"></script>
-        <script src="../../js/product.js"></script>
+        <script src="../../js/product-validation.js"></script>
         <script type="text/javascript">
       
         function readURL1(input) {
@@ -188,6 +190,8 @@ function readURL2(input) {
         reader.readAsDataURL(input.files[0]);
     }
 } 
+
+
         </script>
  
     </body>

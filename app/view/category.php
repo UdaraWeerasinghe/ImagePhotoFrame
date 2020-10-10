@@ -53,7 +53,7 @@
             </div>
             <div class="dashbord-body" style="flex: 70%; height: 800px; padding: 10px;">
                 
-                <h3 style="text-align: center; margin: 20px;">Product Management</h3>
+                <h3 style="text-align: center; margin-bottom: 20px;">Product Management</h3>
                 
                 <ul class="nav nav-tabs">
                   <li class="nav-item">
@@ -69,7 +69,7 @@
                 <div class="container" style="padding-top: 20px;">
                     
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-xl-6">
                             <div style="padding: 20px 20px 0px 20px; box-shadow: 2px 2px 10px 1px grey;">
                                 <div class="row">
                                     <div class="col-md-6">
@@ -94,7 +94,6 @@
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
-                                            <th>Id</th>
                                             <th>Name</th>
                                             <th>Availability</th>
                                             <th></th>
@@ -106,7 +105,7 @@
                                             ?>
                                         
                                         <tr>
-                                            <td><?php echo $catRow['cat_id']; ?></td>
+                                         
                                             <td><?php echo $catRow['cat_name']; ?></td>
                                             <td>
                                                 <?php
@@ -140,7 +139,7 @@
                         </div>
                         
                         
-                        <div class="col-6">
+                        <div class="col-xl-6">
                             <div style="padding: 20px 20px 0px 20px; box-shadow: 2px 2px 10px 1px grey;">
                                 <div class="row">
                                     <div class="col-md-6">
@@ -165,7 +164,7 @@
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
-                                            <th>Id</th>
+                                            
                                             <th>Name</th>
                                             <th>Availability</th>
                                             <th></th>
@@ -177,7 +176,7 @@
                                             $sub_cat_id=$subCatRow['sub_cat_id'];
                                         ?>
                                         <tr>
-                                            <td><?php echo $subCatRow['sub_cat_id']; ?></td>
+                                           
                                             <td><?php echo $subCatRow['sub_cat_name']; ?></td>
                                             <td>
                                                 <?php
@@ -189,7 +188,7 @@
                                                 ?>
                                             </td>
                                             <td>
-                                                <a class="btn btn-info" href="view-category.php"><i class="far fa-print-search" style="margin: 4px"></i></a>
+                                                <a class="btn btn-info"><i class="far fa-print-search" style="margin: 4px"></i></a>
                                                 <?php 
                                                 if ($subCatRow['sub_cat_status']==1){
                                                     ?>
@@ -218,26 +217,28 @@
             <div class="modal fade" id="addCategory">
                 <div class="modal-dialog modal-lg">
                   <div class="modal-content">
-                      <form enctype="multipart/form-data" method="post" style="padding-top: 10px;" action="../controller/product-controller.php?status=addCategory">
+                      <form id="addCategort" enctype="multipart/form-data" method="post" style="padding-top: 10px;" action="../controller/product-controller.php?status=addCategory">
                         <!-- Modal Header -->
                         <div class="modal-header">
-                          <h4 class="modal-title">Add Category</h4>
+                          <h4 class="modal-title">Add Material</h4>
                           <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
+                        
                         <!-- Modal body -->
                         <div class="modal-body">
+                            <div class="row" style="padding: 10px;"><div style="text-align: center" class="col-md-12" id="vAlert"></div></div>
                                 <div class="row">
                                     <div class="col-md-5">
-                                        <label>Category Name</label>
+                                        <label>Material Name</label>
                                     </div>
                                     <div class="col-md-7">
-                                        <input name="cat_name" type="text" class="form-control">
+                                        <input name="cat_name" id="cat_name" type="text" class="form-control" placeholder="Enter Material...">
                                     </div>
                                 </div>
                             <div class="row"><div class="col-12">&nbsp;</div></div>
                                 <div class="row">
                                     <div class="col-md-5">
-                                        <label>Select Sub Category</label>
+                                        <label>Select Frame Type</label>
                                     </div>
                                     <div class="col-md-7">
                                         <div class="row">
@@ -248,7 +249,7 @@
                                             $Counter++;
                                             ?>
                                             <div class="col-md-6">
-                                                <input name="sub_cat_name[]" type="checkbox" value="<?php echo $catRow['sub_cat_id']; ?>">&nbsp;<label><?php echo $catRow['sub_cat_name']; ?></label>
+                                                <input name="sub_cat_id[]" id="sub_cat_id" type="checkbox" value="<?php echo $catRow['sub_cat_id']; ?>">&nbsp;<label><?php echo $catRow['sub_cat_name']; ?></label>
                                             </div>
                                         <?php
                                         if ($Counter % 2 == 0){
@@ -279,7 +280,7 @@
                       <form enctype="multipart/form-data" method="post" style="padding-top: 10px;" action="../controller/product-controller.php?status=updateCategory">
                         <!-- Modal Header -->
                         <div class="modal-header">
-                          <h4 class="modal-title">Update Category</h4>
+                          <h4 class="modal-title">Update Material</h4>
                           <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
                         <!-- Modal body -->
@@ -302,23 +303,23 @@
                       <form enctype="multipart/form-data" method="post" style="padding-top: 10px;" action="../controller/product-controller.php?status=addSubCategory">
                         <!-- Modal Header -->
                         <div class="modal-header">
-                          <h4 class="modal-title">Add Sub Category</h4>
+                          <h4 class="modal-title">Add Frame Type</h4>
                           <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
                         <!-- Modal body -->
                         <div class="modal-body">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <label>Sub Category Name</label>
+                                        <label>Frame Type</label>
                                     </div>
                                     <div class="col-md-8">
-                                        <input name="sub_cat_name" type="text" class="form-control">
+                                        <input name="sub_cat_name" type="text" class="form-control" placeholder="Enter Frame Type...">
                                     </div>
                                 </div>
                             <div class="row"><div class="col-12">&nbsp;</div></div>
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <label>Select Category</label>
+                                        <label>Select Material</label>
                                     </div>
                                     <div class="col-md-8">
                                         <?php
@@ -367,7 +368,7 @@
             </div>
             <!--///////////////add sub category modal end/////////////////-->
 
-        <script type="text/javascript" src="../../js/user-validation.js"></script>
+        <script src="../../js/product-validation.js"></script>
         <script src="../../js/jsStyle.js"></script>
         <script>
 //     load update category

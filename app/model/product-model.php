@@ -94,11 +94,32 @@ class Product{
         $con->query($sql) or die($con->error);
         
     }
-    public function  viewCategory(){
+    
+    public function  addDesign($dNanme,$dCode,$material,$frameType,$color,$img1,$img2){
         
         $con=$GLOBALS['con'];
-        $sql="SELECT * FROM sub_category";
+        $sql="INSERT INTO product(product_name,product_code,cat_id,sub_cat_id,product_color,product_img_1,product_img_2) VALUES('$dNanme','$dCode','$material','$frameType','$color','$img1','$img2')";
+        $con->query($sql) or die($con->error);
+        
+    }
+  
+    public function  getProductCount(){
+        
+        $con=$GLOBALS['con'];
+        $sql="SELECT COUNT(product_id) as pCount FROM product";
+        $results = $con->query($sql) or die($con->error);
+        $cRow=$results->fetch_assoc();
+        return $cRow['pCount'];
+    }
+      public function  getAllProduct($page,$txt){
+        $strat=($page-1)*5;                  //start position
+        $con=$GLOBALS['con'];
+        if ($txt==""){
+          $sql="SELECT * FROM product LIMIT $strat,5";  
+        }else {
+           $sql="SELECT * FROM product WHERE product_name LIKE '%$txt%' $strat,5";
+        }
         $results = $con->query($sql) or die($con->error);
         return $results;
-    }
+    }  
 }

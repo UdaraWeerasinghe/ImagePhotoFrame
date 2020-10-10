@@ -14,6 +14,10 @@
         include '../model/module-model.php';
             $moduleObj = new Module();
             $moduleResult=$moduleObj->getAllModules();  
+            
+        include '../model/product-model.php'; 
+            $productObj=new Product();
+            $productResult=$productObj->getAllProduct(1,"");
         ?>
     </head>
     <body>
@@ -47,27 +51,108 @@
             <div class="dashbord-body" style="flex: 70%; height: 800px; padding: 10px;">
                 
                 
-                <h3 style="text-align: center; margin: 20px;">Product Management</h3>
-                
-                <ul class="nav nav-tabs">
-                  <li class="nav-item">
-                      <a class="nav-link active" href="product.php">Available Design</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="add-design.php">Add New Design</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="category.php">Manage Category</a>
-                  </li>
-                </ul>
-                
-                
+                <h3 style="text-align: center; margin-bottom: 20px;">Product Management</h3>
+                <div class="row" style="margin: 0px;">
+                    <div class="col-md-7">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="product.php">All Design</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="add-design.php">Add New Design</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="category.php">Manage Category</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="input-group mb-3">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="far fa-search"></i></span>
+                            </div>
+                            <input type="search" class="form-control"id="seachtext">
+                          </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-primary" id="searchbtn" onclick="navigatopage(1)">search</button>
+                    </div>
+                </div>
+                <div class="container" id="empcont">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+
+                                <th>Product Name</th>
+                                <th>Color</th>
+                                <th>Availability</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php while ($prow=$productResult->fetch_assoc()) {
+                                ?>
+                            <tr>
+                                <td><img width="30px" height="30px" src="../../images/design_image/<?php echo $prow['product_img_1']; ?>">&nbsp;&nbsp;<?php echo $prow['product_name']; ?></td>
+                                <td><?php echo $prow['product_color']; ?></td>
+                                <td>
+                                    <?php
+                                    if($prow['product_status']==1){
+                                        echo 'Available';
+                                    } else {
+                                        echo 'Not Available';
+                                    }
+                                    ?>
+                                </td>
+                                <th>
+                                    <a class="btn btn-info"><i class="far fa-print-search" style="margin: 4px"></i></a>
+                                    <?php
+                                    if($prow['product_status']==1){
+                                        ?>
+                                        <a class="btn btn-success">Activate</a>
+                                    <?php
+                                    } else {
+                                        ?>
+                                        <a class="btn btn-danger">Deactivate</a>
+                                        <?php
+                                    }
+                                    ?>
+                                </th>
+                            </tr>
+                                <?php
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+
+                    <div class="row" style="margin: 0px;">
+                        <div class="col-12">
+                            <ul class="pagination">
+                                <?php
+                                $ecount=$productObj->getProductCount();
+                                $numOfPage=$ecount/5;
+                                $ceilpages= ceil($numOfPage);
+                                for($x=1; $x<=$ceilpages; $x++){
+                                    ?>
+                                <li class="page-item <?php if($x==1){echo 'active';} ?>">
+                                    <a class="page-link" href="#" onclick="navigatopage(<?php echo $x; ?>)"><?php echo $x; ?></a>
+                                </li>
+                                <?php
+                                }
+                                ?>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
          
         </div> 
         
 
-        <script type="text/javascript" src="../../js/user-validation.js"></script>
+        <script type="text/javascript" src="../../js/product-validation.js"></script>
         <script src="../../js/jsStyle.js"></script>
         <script>
         
