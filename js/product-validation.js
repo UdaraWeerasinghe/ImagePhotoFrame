@@ -1,4 +1,5 @@
 $(document).ready(function (){
+     
     $("#addDesign").submit(function (){
         var dNanme=$("#dNanme").val();
         var dCode=$("#dCode").val();
@@ -10,20 +11,25 @@ $(document).ready(function (){
        
         
         if(dNanme==""){
-          $("#vAlert").html("Design name can not be empty !");
-          $("#vAlert").addClass("alert alert-danger");
-          $("#dNanme").focus();
+          $("#dNanme").addClass("is-invalid");
+         // $("#dNanme").focus();
           return false;
+        }
+        else{
+            $("#dNanme").removeClass("is-invalid");
+            $("#dNanme").addClass("is-valid");
         }
         if(dCode==""){
-          $("#vAlert").html("Design code can not be empty !");
-          $("#vAlert").addClass("alert alert-danger");
-          $("#dCode").focus();
+         $("#dCode").addClass("is-invalid");
           return false;
         }
+        else{
+            $("#dCode").removeClass("is-invalid");
+            $("#dCode").addClass("is-valid");
+        }
         if(material==""){
-          $("#vAlert").html("Material does not selected !");
-          $("#vAlert").addClass("alert alert-danger");
+          
+          $("#material").addClass("is-invalid");
           $("#material").focus();
           return false;
         }

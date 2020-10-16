@@ -68,7 +68,7 @@
                   </li>
                 </ul>
                 <div class="container">
-                    <form id="addDesign" enctype="multipart/form-data" method="post" style="padding-top: 30px;" action="../controller/product-controller.php?status=addDesign">
+                    <form id="addDesign" class="needs-validation" enctype="multipart/form-data"  method="post" style="padding-top: 30px;" action="../controller/product-controller.php?status=addDesign" novalidate>
                         
                         <div class="row"><div style="text-align: center" class="col-md-12" id="vAlert"></div></div>
                         
@@ -76,15 +76,21 @@
                                 <div class="col-md-2">
                                     <label>Design name</label>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <input type="text" id="dNanme" name="dNanme" class="form-control">
+                                    <div class="invalid-tooltip">
+                                        Design name need to be enter
+                                    </div>
                                 </div>
-                                <div class="col-md-2"></div>
+                                <!--<div class="col-md-2"></div>-->
                                 <div class="col-md-2">
                                     <label>Design code</label>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <input type="text" id="dCode" name="dCode" class="form-control">
+                                    <div class="invalid-feedback">
+                                        Design name need to be enter
+                                    </div>
                                 </div>
                             </div>
 
@@ -94,7 +100,7 @@
                                 <div class="col-md-2">
                                     <label>Frame Material</label>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <select name="material" id="material" class="form-control">
                                         <option value="">---</option>
                                         <?php
@@ -102,21 +108,30 @@
                                             ?>
                                         <option value="<?php echo $prow['cat_id'] ?>"><?php echo $prow['cat_name'] ?></option>
                                         <?php } ?>
+                                        <div class="invalid-feedback">
+                                        Design name need to be enter
+                                    </div>
                                     </select>
+                                    <div class="invalid-tooltip">
+                                        Design name need to be enter
+                                    </div>
                                 </div>
-                                <div class="col-md-2"></div>
+                                <!--<div class="col-md-2"></div>-->
                                 <div class="col-md-2">
                                     <label>Frame Type</label>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <select name="frameType" id="frameType" class="form-control">
-                                        <option value="">---</option>
+                                        <option value="">Select frame type</option>
                                         <?php
                                         while ($prow=$sub_category->fetch_assoc()){
                                             ?>
                                         <option value="<?php echo $prow['sub_cat_id'] ?>"><?php echo $prow['sub_cat_name'] ?></option>
                                         <?php } ?>
                                     </select>
+                                    <div class="invalid-tooltip">
+                                        Design name need to be enter
+                                    </div>
                                 </div>
                             </div>
 
@@ -126,19 +141,32 @@
                                 <div class="col-md-2">
                                     <label>Color</label>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <input type="text" name="color" id="color" class="form-control">
+                                    <div class="invalid-tooltip">
+                                        Design name need to be enter
+                                    </div>
                                 </div>
-                                <div class="col-md-2"></div>
+                                <!--<div class="col-md-2"></div>-->
                                 <div class="col-md-2">
                                     <label>Image</label>
                                 </div>
-                                <div class="col-md-3">
-                                    <input type="file" id="img1" name="img1" onchange="readURL1(this)" class="form-control">
-                                    <br>
-                                    <input type="file" id="img2" name="img2" onchange="readURL2(this)" class="form-control">
-                                    <img id="img_prev1" style="margin-top: 10px"><img id="img_prev2" style="margin-top: 10px; margin-left: 20px;">
+                                <div class="col-md-4">
+                                        
+                                            <input type="file" id="img1" name="img1" onchange="readURL1(this)" class="form-control">
+                                            <div class="invalid-tooltip">
+                                        Design name need to be enter
+                                    </div>
+                                            <img id="img_prev1" style="margin-top: 10px">
+                                        <br>
+                                        
+                                            <input type="file" id="img2" name="img2" onchange="readURL2(this)" class="form-control">
+                                            <div class="invalid-tooltip">
+                                        Design name need to be enter
+                                    </div>
+                                            <img id="img_prev2" style="margin-top: 10px;">
                                 </div>
+                                
                             </div>
                             
                             <div class="row"><div class="col-md-12">&nbsp;</div></div>
@@ -190,7 +218,6 @@ function readURL2(input) {
         reader.readAsDataURL(input.files[0]);
     }
 } 
-
 
         </script>
  
