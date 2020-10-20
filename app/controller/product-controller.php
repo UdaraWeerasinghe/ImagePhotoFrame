@@ -132,9 +132,24 @@ switch ($status){
                    $destination="../../images/design_image/$img2";
                    move_uploaded_file($tmp, $destination); 
                 }       
-        $productObj->addDesign($dNanme, $dCode, $material, $frameType, $color, $img1, $img2);
+        $proId=$productObj->addDesign($dNanme, $dCode, $material, $frameType, $color, $img1, $img2);
         $msg="Successfully add design"." ".$dNanme;
         $class="alert-success";
+        
+        if ($proId>0) {
+                if (isset($_POST['sizeId'])){
+                    $numberlegth= sizeof($_POST['sizeId']);
+                    $numberlegth;
+                    for($i=0; $i<$numberlegth; $i++){
+                        $size_id=$_POST['sizeId'][$i];
+                        $price=$_POST[$size_id];
+//                        echo $size_id;
+//                         echo $price;
+                      $productObj->addPrice($size_id, $price, $proId);
+                    }
+                }
+            }
+        
          ?>
         <script> window.location="../view/product.php?msg=<?php echo $msg;?> & class=<?php echo $class; ?>";</script>
    <?php
@@ -217,5 +232,74 @@ switch ($status){
                     </div>
                 </div>
         <?php
+        break;
+        
+    case "getType":
+        $subCatId=$_POST['sub_cat_id'];
+        $productResult=$productObj->getSizeByType($subCatId);
+        ?>
+        <div class="row mb-3" style="font-weight: bolder">
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-3">Size</div>
+                    <div class="col-md-9">Price</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-3">Size</div>
+                    <div class="col-md-9">Price</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-3">Size</div>
+                    <div class="col-md-9">Price</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-3">Size</div>
+                    <div class="col-md-9">Price</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <?php
+            $count=0;
+        while ($tRow=$productResult->fetch_assoc()){
+            $count++; 
+        ?>
+            <div class="col-md-3">
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <?php echo $tRow['width']."&Prime;"."&#215;".$tRow['height']."&Prime;"; ?>
+                    </div>
+                    <div class="col-md-7">
+                        
+                        <div class="input-group">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text">Rs.</span>
+                                </div>
+                            <input type="number" name="<?php echo $tRow['size_id']; ?>" class="form-control" required>
+                            <input name="sizeId[]" value="<?php echo $tRow['size_id']; ?>" hidden>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+            </div>
+            <?php if ($count % 4 == 0){
+                ?>
+        </div>   
+        <div class="row">
+        <?php
+        }
+        }
+        ?>
+        </div>
+        <?php
+        
         break;
 }

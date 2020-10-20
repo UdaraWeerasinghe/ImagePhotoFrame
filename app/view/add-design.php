@@ -78,7 +78,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <input type="text" id="dNanme" name="dNanme" class="form-control">
-                                    <div class="invalid-tooltip">
+                                    <div class="invalid-tooltip" style="">
                                         Design name need to be enter
                                     </div>
                                 </div>
@@ -88,8 +88,8 @@
                                 </div>
                                 <div class="col-md-4">
                                     <input type="text" id="dCode" name="dCode" class="form-control">
-                                    <div class="invalid-feedback">
-                                        Design name need to be enter
+                                    <div class="invalid-tooltip">
+                                        Design code need to be enter
                                     </div>
                                 </div>
                             </div>
@@ -113,7 +113,7 @@
                                     </div>
                                     </select>
                                     <div class="invalid-tooltip">
-                                        Design name need to be enter
+                                        Design Material need to be select
                                     </div>
                                 </div>
                                 <!--<div class="col-md-2"></div>-->
@@ -130,7 +130,7 @@
                                         <?php } ?>
                                     </select>
                                     <div class="invalid-tooltip">
-                                        Design name need to be enter
+                                        Design type need to be select
                                     </div>
                                 </div>
                             </div>
@@ -142,34 +142,47 @@
                                     <label>Color</label>
                                 </div>
                                 <div class="col-md-4">
-                                    <input type="text" name="color" id="color" class="form-control">
-                                    <div class="invalid-tooltip">
-                                        Design name need to be enter
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <input type="text" name="color" id="color" class="form-control">
+                                            <div class="invalid-tooltip">
+                                                Design color need to be enter
+                                            </div>
+                                        </div>
                                     </div>
+                                    
                                 </div>
                                 <!--<div class="col-md-2"></div>-->
                                 <div class="col-md-2">
                                     <label>Image</label>
                                 </div>
                                 <div class="col-md-4">
-                                        
+                                    <div class="row">
+                                        <div class="col-12">
                                             <input type="file" id="img1" name="img1" onchange="readURL1(this)" class="form-control">
                                             <div class="invalid-tooltip">
-                                        Design name need to be enter
-                                    </div>
+                                                Design image need to be upload
+                                            </div>
                                             <img id="img_prev1" style="margin-top: 10px">
-                                        <br>
-                                        
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
                                             <input type="file" id="img2" name="img2" onchange="readURL2(this)" class="form-control">
                                             <div class="invalid-tooltip">
-                                        Design name need to be enter
-                                    </div>
+                                                Design image need to be upload
+                                            </div>
                                             <img id="img_prev2" style="margin-top: 10px;">
+                                        </div>
+                                    </div>  
                                 </div>
                                 
                             </div>
                             
                             <div class="row"><div class="col-md-12">&nbsp;</div></div>
+                            <div id="frameTypeLoad"></div>
+                            
+                            
                             
                             <div class="row">
                                 <div class="col-md-12" style="text-align: right">
@@ -219,6 +232,15 @@ function readURL2(input) {
     }
 } 
 
+//framesize
+$("#frameType").change(function () {
+        var url = "../controller/product-controller.php?status=getType";
+        var x = $("#frameType").val();
+        $.post(url, {sub_cat_id:x}, function (data){
+            $("#frameTypeLoad").html(data).show();
+        });
+    });
+//framesize
         </script>
  
     </body>

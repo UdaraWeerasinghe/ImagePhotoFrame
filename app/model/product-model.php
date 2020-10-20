@@ -100,7 +100,14 @@ class Product{
         $con=$GLOBALS['con'];
         $sql="INSERT INTO product(product_name,product_code,cat_id,sub_cat_id,product_color,product_img_1,product_img_2) VALUES('$dNanme','$dCode','$material','$frameType','$color','$img1','$img2')";
         $con->query($sql) or die($con->error);
+        $proId=$con->insert_id;
+        return $proId;
         
+    }
+    function addPrice($size_id,$price,$proId){
+        $con = $GLOBALS["con"];
+        $sql = "INSERT INTO product_price(size_id,product_price,product_id) VALUES('$size_id','$price','$proId')";
+        $con->query($sql)or die($con->error);
     }
   
     public function  getProductCount(){
@@ -122,4 +129,11 @@ class Product{
         $results = $con->query($sql) or die($con->error);
         return $results;
     }  
+     public function  getSizeByType($subCatId){
+        
+        $con=$GLOBALS['con'];
+        $sql="SELECT * FROM sub_category_size sc, size s WHERE sc.size_id=s.size_id and sc.sub_cat_id='$subCatId'";
+        $results = $con->query($sql) or die($con->error);
+        return $results;
+    }
 }
