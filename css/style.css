@@ -2,6 +2,31 @@
     width: 250px;
     background-color: #173F5F;
     padding-bottom: 20px;
+    height: 600px;;
+    position: fixed;
+    top: 59px;
+    z-index: 1;
+    overflow: scroll;
+    
+}
+.sidemenu::-webkit-scrollbar {
+    display: none;
+}
+.dashbord-body{
+    width:calc(100% - 250px);
+    height: 100vh;
+    position: absolute;
+    top: 59px;
+    right: 0;
+    padding: 10px 10px 10px 10px;
+}
+.dashbord-body-toggle{
+    width:calc(100% - 50px);
+    height: 100vh;
+    position: absolute;
+    top: 59px;
+    right: 0;
+    padding: 10px 10px 10px 10px;
 }
 .toggle-bar{
     width: 50px;

@@ -6,6 +6,8 @@
         <script type="text/javascript" src="../../js/jquery-3.5.1.js"></script>
         <link type="text/css" rel="stylesheet" href="../../bootstrap/css/bootstrap.css">
         <script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../DataTables-1.10.22/css/jquery.dataTables.min.css"/>
+        <script type="text/javascript" src="../../DataTables-1.10.22/js/jquery.dataTables.min.js"></script>
         <link rel="stylesheet" href="../../fontawesome-pro-5.13.0-web/css/all.css">
         <link type="text/css" rel="stylesheet" href="../../css/style.css">
 
@@ -26,7 +28,7 @@
         
         <?php include 'dashboard-header.php'; ?>
         
-        <div style="flex-wrap: wrap; display: flex;">
+        <div class="container-fluid m-0 p-0" style="width: 100%;">
             <div id="sidemenu" class="sidemenu">
                 <a href="dashboard.php" style="text-decoration: none;">
                     <div class="module module">
@@ -50,7 +52,7 @@
 
                  <?php }?>
             </div>
-            <div class="dashbord-body" style="flex: 70%; height: 800px;">
+            <div class="dashbord-body" id="dashbord-body">
                 <h3 style="text-align: center; margin-top: 20px;">User Management</h3>
                 <ul class="nav nav-tabs">
                   <li class="nav-item">
@@ -88,7 +90,7 @@
                       }
                       ?>
                        <div style="padding: 5px;margin-top: 5px;">
-                                    <table class="table table-hover">
+                           <table class="table table-hover" id="user_tbl">
                                         <thead>
                                             <tr>
                                                 <th>Name</th>
@@ -143,9 +145,6 @@
 
         <script type="text/javascript" src="../../js/user-validation.js"></script>
         <script src="../../js/jsStyle.js"></script>
-        <script>
-        
-        </script>
         <script type="text/javascript">
         function readURL(input) {
         if (input.files && input.files[0]) {
@@ -161,6 +160,10 @@
         reader.readAsDataURL(input.files[0]);
     }
 }   
+
+$(function(){
+    $("#user_tbl").dataTable();
+  });
 
         </script>
         

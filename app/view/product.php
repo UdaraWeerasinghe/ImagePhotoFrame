@@ -6,6 +6,8 @@
         <script type="text/javascript" src="../../js/jquery-3.5.1.js"></script>
         <link type="text/css" rel="stylesheet" href="../../bootstrap/css/bootstrap.css">
         <script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../DataTables-1.10.22/css/jquery.dataTables.min.css"/>
+        <script type="text/javascript" src="../../DataTables-1.10.22/js/jquery.dataTables.min.js"></script>
         <link rel="stylesheet" href="../../fontawesome-pro-5.13.0-web/css/all.css">
         <link type="text/css" rel="stylesheet" href="../../css/style.css">
 
@@ -17,7 +19,7 @@
             
         include '../model/product-model.php'; 
             $productObj=new Product();
-            $productResult=$productObj->getAllProduct(1,"");
+            $productResult=$productObj->getAllProduct();
         ?>
     </head>
     <body>
@@ -48,12 +50,12 @@
 
                  <?php }?>
             </div>
-            <div class="dashbord-body" style="flex: 70%; height: 800px; padding: 10px;">
+            <div class="dashbord-body" id="dashbord-body" style="padding: 10px;">
                 
                 
                 <h3 style="text-align: center; margin-bottom: 20px;">Product Management</h3>
                 <div class="row" style="margin: 0px;">
-                    <div class="col-md-7">
+                    <div class="col-md-12">
                         <ul class="nav nav-tabs">
                             <li class="nav-item">
                                 <a class="nav-link active" href="product.php">All Design</a>
@@ -66,22 +68,9 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="col-md-3">
-                        <div class="input-group mb-3">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="far fa-search"></i></span>
-                            </div>
-                            <input type="search" class="form-control"id="seachtext">
-                          </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <button type="button" class="btn btn-primary" id="searchbtn" onclick="navigatopage(1)">search</button>
-                    </div>
                 </div>
-                <div class="container" id="empcont">
-                    <table class="table table-hover">
+                <div class="" style="padding-top: 20px;">
+                    <table id="product_tbl" class="table table-hover">
                         <thead>
                             <tr>
 
@@ -129,21 +118,7 @@
 
                     <div class="row" style="margin: 0px;">
                         <div class="col-12">
-                            <ul class="pagination">
-                                <?php
-                                $ecount=$productObj->getProductCount();
-                                $numOfPage=$ecount/5;
-                                $ceilpages= ceil($numOfPage);
-                                for($x=1; $x<=$ceilpages; $x++){
-                                    ?>
-                                <li class="page-item <?php if($x==1){echo 'active';} ?>">
-                                    <a class="page-link" href="#" onclick="navigatopage(<?php echo $x; ?>)"><?php echo $x; ?></a>
-                                </li>
-                                <?php
-                                }
-                                ?>
-
-                            </ul>
+                        
                         </div>
                     </div>
                 </div>
@@ -155,7 +130,9 @@
         <script type="text/javascript" src="../../js/product-validation.js"></script>
         <script src="../../js/jsStyle.js"></script>
         <script>
-        
+         $(function(){
+    $("#product_tbl").dataTable();
+  });
         </script>
  
     </body>

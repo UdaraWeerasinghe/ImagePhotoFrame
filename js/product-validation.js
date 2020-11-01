@@ -93,16 +93,4 @@ $(document).ready(function (){
         });
        
         
-        
-    navigatopage=function (x){
-        
-        var txt=$("#seachtext").val(); 
-         var url = "../controller/product-controller.php?status=paginate";
-         
-        $.post(url, {page:x,txt:txt}, function (data){
-            $("#empcont").html(data).show();
-        });
-        
-        
-    };
 });

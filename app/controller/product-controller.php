@@ -282,7 +282,7 @@ switch ($status){
                                 <div class="input-group-prepend">
                                   <span class="input-group-text">Rs.</span>
                                 </div>
-                            <input type="number" name="<?php echo $tRow['size_id']; ?>" class="form-control" required>
+                            <input type="number" min="0" onkeypress="return isNumberKey(event)" name="<?php echo $tRow['size_id']; ?>" class="form-control" required>
                             <input name="sizeId[]" value="<?php echo $tRow['size_id']; ?>" hidden>
                         </div>
                         

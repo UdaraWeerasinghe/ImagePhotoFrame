@@ -203,6 +203,14 @@
         <script src="../../js/product-validation.js"></script>
         <script type="text/javascript">
       
+      function isNumberKey(event){
+          let charCode = (event.which)?event.which:event.keyCode;
+          if(charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57))
+              return false;
+        return true;
+          
+      }
+      
         function readURL1(input) {
         if (input.files && input.files[0]) {
         var reader = new FileReader();

@@ -118,14 +118,9 @@ class Product{
         $cRow=$results->fetch_assoc();
         return $cRow['pCount'];
     }
-      public function  getAllProduct($page,$txt){
-        $strat=($page-1)*5;                  //start position
+      public function  getAllProduct(){
         $con=$GLOBALS['con'];
-        if ($txt==""){
-          $sql="SELECT * FROM product LIMIT $strat,5";  
-        }else {
-           $sql="SELECT * FROM product WHERE product_name LIKE '%$txt%' $strat,5";
-        }
+        $sql="SELECT * FROM product";  
         $results = $con->query($sql) or die($con->error);
         return $results;
     }  
