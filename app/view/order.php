@@ -85,7 +85,7 @@
                  while ($order_row=$allOrder->fetch_assoc()){
                                   ?>
                             <tr>
-                                <td><?php echo $order_row["customer_name"]; ?></td>
+                                <td><?php echo $order_row["customer_fName"]; ?></td>
                                 <td><?php echo $order_row["order_date"]; ?></td>
                                 <td><?php echo $order_row["order_time"]; ?></td>
                                 <td><?php echo $order_row["status_name"]; ?></td>
