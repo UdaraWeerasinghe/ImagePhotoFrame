@@ -53,7 +53,14 @@
                  <?php }?>
             </div>
             <div class="dashbord-body" id="dashbord-body">
-                <h3 style="text-align: center; margin-top: 20px;">User Management</h3>
+                <h3 style="text-align: center; margin-top: 10px;">User Management</h3>
+                <div style="padding: 10px;">
+                    <div class="row">
+                        <div class="col-12"style="background-color: #f5f6f8;padding: 5px;">
+                            <a href="dashboard.php">Dashboard</a>/<a href="user.php">User</a>
+                        </div>
+                    </div>
+                </div>
                 <ul class="nav nav-tabs">
                   <li class="nav-item">
                     <a class="nav-link active" href="#all-users">All Users</a>

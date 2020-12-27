@@ -49,9 +49,15 @@
 
                  <?php }?>
             </div>
-            <div class="dashbord-body" style="flex: 70%; height: 800px; padding: 10px;">
+            <div class="dashbord-body" id="dashbord-body" style="flex: 70%; height: 800px; padding: 10px;">
                 <h3 style="text-align: center; margin-top: 10px;">Order Management</h3>
-                
+                <div style="padding: 10px;">
+                    <div class="row">
+                        <div class="col-12"style="background-color: #f5f6f8;padding: 5px;">
+                            <a href="dashboard.php">Dashboard</a>/<a href="order.php">Order</a>
+                        </div>
+                    </div>
+                </div>
                 <ul class="nav nav-tabs">
                   <li class="nav-item">
                     <a class="nav-link active" href="#all-users">New Ordes</a>
@@ -73,10 +79,10 @@
                 <table class="table" style="margin-top: 15px;">
                         <thead>
                             <tr>
+                                <th>No</th>
                                 <th>Customer Name</th>
                                 <th>Date</th>
                                 <th>Time</th>
-                                <th>Status</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -85,11 +91,27 @@
                  while ($order_row=$allOrder->fetch_assoc()){
                                   ?>
                             <tr>
-                                <td><?php echo $order_row["customer_fName"]; ?></td>
-                                <td><?php echo $order_row["order_date"]; ?></td>
-                                <td><?php echo $order_row["order_time"]; ?></td>
-                                <td><?php echo $order_row["status_name"]; ?></td>
-                                <td><button class="btn btn-info">View Order</button></td>
+                                <td>
+                                    <?php echo $order_row["order_id"] ?>
+                                </td>
+                                <td><?php echo $order_row["customer_fName"]." ".$order_row["customer_lName"]; ?></td>
+                                <td>
+                                    <?php 
+                                    $timestamp = strtotime($order_row["order_timestamp"]);
+                               echo date('d-m-Y', $timestamp);
+                                ?>
+                                </td>
+                                <td>
+                                    <?php 
+                                    
+                               echo date('G:i:s', $timestamp);
+                                ?>
+                                </td>
+                                <td>
+                                    <a href="view-order.php?oId=<?php echo $order_row["order_id"] ?>" class="btn btn-info">View</a>
+                                    <a class="btn btn-warning">Start Process</a>
+                                    <a class="btn btn-danger">Reject</a>
+                                </td>
                             </tr>
                  <?php } ?>
                         </tbody>

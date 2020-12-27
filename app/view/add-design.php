@@ -51,11 +51,17 @@
 
                  <?php }?>
             </div>
-            <div class="dashbord-body" style="flex: 70%; height: 800px; padding: 10px;">
+            <div class="dashbord-body" id="dashbord-body" style="flex: 70%; height: 800px; padding: 10px;">
                 
                 
                 <h3 style="text-align: center; margin-bottom: 20px;">Product Management</h3>
-                
+                <div style="padding: 10px;">
+                    <div class="row">
+                        <div class="col-12"style="background-color: #f5f6f8;padding: 5px;">
+                            <a href="dashboard.php">Dashboard</a>/<a href="product.php">Product Management</a>/<a href="add-design.php">Add Design</a>
+                        </div>
+                    </div>
+                </div>
                 <ul class="nav nav-tabs">
                   <li class="nav-item">
                       <a class="nav-link" href="product.php">Available Design</a>
@@ -78,15 +84,15 @@
                                 </div>
                                 <div class="col-md-4">
                                     <input type="text" id="dNanme" name="dNanme" class="form-control">
-                                    <div class="invalid-tooltip" style="">
+                                    <div class="invalid-tooltip">
                                         Design name need to be enter
                                     </div>
                                 </div>
-                                <!--<div class="col-md-2"></div>-->
+                              
                                 <div class="col-md-2">
                                     <label>Design code</label>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4 mb-4">
                                     <input type="text" id="dCode" name="dCode" class="form-control">
                                     <div class="invalid-tooltip">
                                         Design code need to be enter
@@ -94,7 +100,6 @@
                                 </div>
                             </div>
 
-                            <div class="row"><div class="col-md-12">&nbsp;</div></div>
 
                             <div class="row">
                                 <div class="col-md-2">
@@ -102,7 +107,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <select name="material" id="material" class="form-control">
-                                        <option value="">---</option>
+                                        <option></option>
                                         <?php
                                         while ($prow=$category->fetch_assoc()){
                                             ?>
@@ -116,13 +121,27 @@
                                         Design Material need to be select
                                     </div>
                                 </div>
-                                <!--<div class="col-md-2"></div>-->
+                                
+                                <div class="col-md-2">
+                                    <label>Frame Strip</label>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <select name="mId"  id="fStrip" class="form-control">
+                                        
+                                    </select>
+                                    <div class="invalid-tooltip">
+                                        Design type need to be select
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
                                 <div class="col-md-2">
                                     <label>Frame Type</label>
                                 </div>
                                 <div class="col-md-4">
                                     <select name="frameType" id="frameType" class="form-control">
-                                        <option value="">Select frame type</option>
                                         <?php
                                         while ($prow=$sub_category->fetch_assoc()){
                                             ?>
@@ -133,15 +152,10 @@
                                         Design type need to be select
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="row"><div class="col-md-12">&nbsp;</div></div>
-
-                            <div class="row">
                                 <div class="col-md-2">
                                     <label>Color</label>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4 mb-4">
                                     <div class="row">
                                         <div class="col-md-12">
                                             <input type="text" name="color" id="color" class="form-control">
@@ -150,33 +164,31 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
                                 </div>
-                                <!--<div class="col-md-2"></div>-->
+                            </div>
+                            
+                            <div class="row">
                                 <div class="col-md-2">
-                                    <label>Image</label>
+                                    <label>Image 1</label>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <input type="file" id="img1" name="img1" onchange="readURL1(this)" class="form-control">
-                                            <div class="invalid-tooltip">
-                                                Design image need to be upload
-                                            </div>
-                                            <img id="img_prev1" style="margin-top: 10px">
-                                        </div>
+                                    <input type="file" id="img1" name="img1" onchange="readURL1(this)" class="form-control">
+                                    <div class="invalid-tooltip">
+                                        Design image need to be upload
                                     </div>
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <input type="file" id="img2" name="img2" onchange="readURL2(this)" class="form-control">
-                                            <div class="invalid-tooltip">
-                                                Design image need to be upload
-                                            </div>
-                                            <img id="img_prev2" style="margin-top: 10px;">
-                                        </div>
-                                    </div>  
+                                    <img id="img_prev1" style="margin-top: 10px">
                                 </div>
-                                
+                               
+                                    <div class="col-md-2">
+                                        <label>Image 2</label>
+                                    </div>
+                                    <div class="col-md-4">                                
+                                        <input type="file" id="img2" name="img2" onchange="readURL2(this)" class="form-control">
+                                        <div class="invalid-tooltip">
+                                            Design image need to be upload
+                                        </div>
+                                        <img id="img_prev2" style="margin-top: 10px;">                                       
+                                </div>
                             </div>
                             
                             <div class="row"><div class="col-md-12">&nbsp;</div></div>
@@ -239,7 +251,15 @@ function readURL2(input) {
         reader.readAsDataURL(input.files[0]);
     }
 } 
-
+//frameStrip
+$("#material").change(function () {
+        var url = "../controller/inventory-controller.php?status=getStrip";
+        var sType = $("#material").val();
+        $.post(url, {sType:sType}, function (data){
+            $("#fStrip").html(data).show();
+        });
+    });
+//frameStrip
 //framesize
 $("#frameType").change(function () {
         var url = "../controller/product-controller.php?status=getType";
@@ -249,6 +269,8 @@ $("#frameType").change(function () {
         });
     });
 //framesize
+
+
         </script>
  
     </body>

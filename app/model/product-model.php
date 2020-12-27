@@ -95,10 +95,10 @@ class Product{
         
     }
     
-    public function  addDesign($dNanme,$dCode,$material,$frameType,$color,$img1,$img2){
+    public function  addDesign($dNanme,$dCode,$material,$frameType,$color,$img1,$img2,$mId){
         
         $con=$GLOBALS['con'];
-        $sql="INSERT INTO product(product_name,product_code,cat_id,sub_cat_id,product_color,product_img_1,product_img_2) VALUES('$dNanme','$dCode','$material','$frameType','$color','$img1','$img2')";
+        $sql="INSERT INTO product(product_name,product_code,cat_id,sub_cat_id,product_color,product_img_1,product_img_2,strip_id) VALUES('$dNanme','$dCode','$material','$frameType','$color','$img1','$img2','$mId')";
         $con->query($sql) or die($con->error);
         $proId=$con->insert_id;
         return $proId;
@@ -128,6 +128,42 @@ class Product{
         
         $con=$GLOBALS['con'];
         $sql="SELECT * FROM sub_category_size sc, size s WHERE sc.size_id=s.size_id and sc.sub_cat_id='$subCatId'";
+        $results = $con->query($sql) or die($con->error);
+        return $results;
+    }
+    public function  geProductById($pId){
+        $con=$GLOBALS['con'];
+        $sql="SELECT * FROM product WHERE product_id='$pId'";  
+        $results = $con->query($sql) or die($con->error);
+        return $results;
+    } 
+    public function  getSubCategoryById($sub_cat_id){
+        $con=$GLOBALS['con'];
+        $sql="SELECT * FROM sub_category WHERE sub_cat_id='$sub_cat_id'";  
+        $results = $con->query($sql) or die($con->error);
+        return $results;
+    } 
+    public function  getCategoryById($cat_id){
+        $con=$GLOBALS['con'];
+        $sql="SELECT * FROM category WHERE cat_id='$cat_id'";  
+        $results = $con->query($sql) or die($con->error);
+        return $results;
+    }
+    public function  getSizeBySubCatId($sub_cat_id){
+        $con=$GLOBALS['con'];
+        $sql="SELECT * FROM sub_category_size WHERE sub_cat_id='$sub_cat_id'";  
+        $results = $con->query($sql) or die($con->error);
+        return $results;
+    }
+    public function  getPrice($pId,$size_id){
+        $con=$GLOBALS['con'];
+        $sql="SELECT * FROM product_price WHERE product_id='$pId' AND size_id='$size_id'";  
+        $results = $con->query($sql) or die($con->error);
+        return $results;
+    }
+    public function  getSizeById($size_id){
+        $con=$GLOBALS['con'];
+        $sql="SELECT * FROM size WHERE size_id='$size_id'";  
         $results = $con->query($sql) or die($con->error);
         return $results;
     }

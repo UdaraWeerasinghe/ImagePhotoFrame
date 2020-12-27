@@ -3,11 +3,8 @@
     <head>
         <meta charset="UTF-8">
         <title></title>
-        <script type="text/javascript" src="../../js/jquery-3.5.1.js"></script>
         <link type="text/css" rel="stylesheet" href="../../bootstrap/css/bootstrap.css">
-        <script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="../../DataTables-1.10.22/css/jquery.dataTables.min.css"/>
-        <script type="text/javascript" src="../../DataTables-1.10.22/js/jquery.dataTables.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../DataTables-1.10.22/css/dataTables.bootstrap4.css"/>
         <link rel="stylesheet" href="../../fontawesome-pro-5.13.0-web/css/all.css">
         <link type="text/css" rel="stylesheet" href="../../css/style.css">
 
@@ -54,6 +51,13 @@
                 
                 
                 <h3 style="text-align: center; margin-bottom: 20px;">Product Management</h3>
+                <div style="padding: 10px;">
+                    <div class="row">
+                        <div class="col-12"style="background-color: #f5f6f8;padding: 5px;">
+                            <a href="dashboard.php">Dashboard</a>/<a href="product.php">Product Management</a>
+                        </div>
+                    </div>
+                </div>
                 <div class="row" style="margin: 0px;">
                     <div class="col-md-12">
                         <ul class="nav nav-tabs">
@@ -69,7 +73,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="" style="padding-top: 20px;">
+                <div  style="padding: 20px;">
                     <table id="product_tbl" class="table table-hover">
                         <thead>
                             <tr>
@@ -96,7 +100,7 @@
                                     ?>
                                 </td>
                                 <th>
-                                    <a class="btn btn-info"><i class="far fa-print-search" style="margin: 4px"></i></a>
+                                    <a href="view-product.php?pId=<?php echo $prow['product_id'] ?>" class="btn btn-info"><i class="far fa-print-search" style="margin: 4px"></i></a>
                                     <?php
                                     if($prow['product_status']==1){
                                         ?>
@@ -126,7 +130,11 @@
          
         </div> 
         
-
+        <script type="text/javascript" src="../../js/jquery-3.5.1.js"></script>
+        <script type="text/javascript" src="../../bootstrap/js/bootstrap.js"></script>
+        <script type="text/javascript" src="../../DataTables-1.10.22/js/jquery.dataTables.js"></script>
+        <script type="text/javascript" src="../../DataTables-1.10.22/js/dataTables.bootstrap4.js"></script>
+        <script type="text/javascript" src="../../js/popper1.16.0.js"></script>
         <script type="text/javascript" src="../../js/product-validation.js"></script>
         <script src="../../js/jsStyle.js"></script>
         <script>

@@ -12,6 +12,9 @@
 .sidemenu::-webkit-scrollbar {
     display: none;
 }
+.toggle-bar::-webkit-scrollbar {
+    display: none;
+}
 .dashbord-body{
     width:calc(100% - 250px);
     height: 100vh;
@@ -32,6 +35,8 @@
     width: 50px;
     background-color: #173F5F;
     padding-bottom: 20px;
+    position: fixed;
+    overflow: scroll;
 }
 .module{
     padding: 19px;

@@ -51,10 +51,16 @@
 
                  <?php }?>
             </div>
-            <div class="dashbord-body" style="flex: 70%; height: 800px; padding: 10px;">
+            <div class="dashbord-body" id="dashbord-body" style="flex: 70%; height: 800px; padding: 10px;">
                 
                 <h3 style="text-align: center; margin-bottom: 20px;">Product Management</h3>
-                
+                <div style="padding: 10px;">
+                    <div class="row">
+                        <div class="col-12"style="background-color: #f5f6f8;padding: 5px;">
+                            <a href="dashboard.php">Dashboard</a>/<a href="product.php">Product Management</a>/<a href="category.php">Manage Category</a>
+                        </div>
+                    </div>
+                </div>
                 <ul class="nav nav-tabs">
                   <li class="nav-item">
                       <a class="nav-link" href="product.php">Available Design</a>
@@ -70,7 +76,7 @@
                     
                     <div class="row">
                         <div class="col-xl-6">
-                            <div style="padding: 20px 20px 0px 20px; box-shadow: 2px 2px 10px 1px grey;">
+                            <div class="card" style="padding: 20px 20px 0px 20px;">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <h4>Material Types</h4>
@@ -140,7 +146,7 @@
                         
                         
                         <div class="col-xl-6">
-                            <div style="padding: 20px 20px 0px 20px; box-shadow: 2px 2px 10px 1px grey;">
+                            <div class="card" style="padding: 20px 20px 0px 20px;">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <h4>Frame Types</h4>

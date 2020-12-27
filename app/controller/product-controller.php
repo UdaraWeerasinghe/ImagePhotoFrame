@@ -114,6 +114,7 @@ switch ($status){
         $material=$_POST["material"];
         $frameType=$_POST["frameType"];
         $color=$_POST["color"];
+        echo $mId=$_POST["mId"];
         if($_FILES["img1"]["name"]!="")
                 {
                     $img1=$_FILES["img1"]["name"];
@@ -132,7 +133,7 @@ switch ($status){
                    $destination="../../images/design_image/$img2";
                    move_uploaded_file($tmp, $destination); 
                 }       
-        $proId=$productObj->addDesign($dNanme, $dCode, $material, $frameType, $color, $img1, $img2);
+        $proId=$productObj->addDesign($dNanme, $dCode, $material, $frameType, $color, $img1, $img2,$mId);
         $msg="Successfully add design"." ".$dNanme;
         $class="alert-success";
         
