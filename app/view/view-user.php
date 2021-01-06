@@ -1,4 +1,6 @@
-<?php include '../../commons/session.php'; ?>
+<?php include '../../commons/session.php';
+$logUser=$_SESSION['user']['user_id'];
+?>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -19,7 +21,7 @@
             $userObj = new User();
             $userResult=$userObj->getAllUserWithRole();
             $roleResult=$userObj->getAllRole();
-            $userId=$_REQUEST["userId"];
+            $userId= base64_decode($_REQUEST["userId"]);
             $viewUser=$userObj->viewUser($userId);
  
         ?>
@@ -31,7 +33,7 @@
         <div style="flex-wrap: wrap; display: flex;">
             <div id="sidemenu" class="sidemenu">
                 <a href="dashboard.php" style="text-decoration: none;">
-                    <div class="module module">
+                    <div class="module">
                         <i class="fas fa-tachometer-alt-fast">&nbsp;&nbsp;</i>
                          <span class="module-name">Dashboard</span>
                     </div>
@@ -159,7 +161,19 @@
                                  <div class="row" style="margin-top: 10px;"><div class="col-12">&nbsp;</div></div>
                                 <div class="row">
                                     <div class="col-md-12" style="text-align: end">
-                                        <a href="update-user.php?userId=<?php  echo $userId;?>" class="btn btn-warning">Update</a>
+                                        <?php
+                                        if($logUser==$userId){
+                                            ?>
+                                        <button class="btn btn-warning" disabled>Update</button>
+                                            
+                                            <?php
+                                        }else{
+                                            ?>
+                                            <a href="update-user.php?userId=<?php  echo $userId;?>" class="btn btn-warning">Update</a>
+                                            <?php
+                                        }
+                                        ?>
+                                        
                                     </div>
                                 </div>
                          <?php } ?>

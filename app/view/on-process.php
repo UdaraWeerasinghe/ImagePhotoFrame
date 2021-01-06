@@ -16,7 +16,7 @@
             
             include '../model/order-model.php';
             $orderObj=new Order();
-            $allOrder=$orderObj->getAllOrders();
+            $allOrder=$orderObj->getAllOnProcessOrders();
             
         ?>
     </head>
@@ -59,10 +59,10 @@
                 </div>-->
                 <ul class="nav nav-tabs" style="margin-bottom: 10px;">
                   <li class="nav-item">
-                      <a class="nav-link active" href="order.php">New Ordes</a>
+                      <a class="nav-link" href="order.php">New Ordes</a>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link" href="on-process.php">On Process</a>
+                      <a class="nav-link active" href="on-process.php">On Process</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="#deactive-users">Waiting For Payment</a>
@@ -127,7 +127,6 @@
         <script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="../../DataTables-1.10.22/js/jquery.dataTables.js"></script>
         <script type="text/javascript" src="../../DataTables-1.10.22/js/dataTables.bootstrap4.js"></script>
-<!--        <script type="text/javascript" src="../../js/popper1.16.0.js"></script>-->
         <script type="text/javascript" src="../../js/sweetalert2.js"></script>
         <script type="text/javascript" src="../../js/user-validation.js"></script>
         <script src="../../js/jsStyle.js"></script>

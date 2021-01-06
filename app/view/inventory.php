@@ -72,7 +72,7 @@
                 </div>
                 <div style="padding: 15px">
                     <div style="width: 100%; text-align: end">
-                        <a class="btn btn-primary" data-toggle="modal" data-target="#addMaterial">Add New Material</a>
+                        <a class="btn btn-primary" data-toggle="modal" data-target="#addMaterial">Add New Frame Strip</a>
                     </div><br>
                     <table id="inventory_tbl" class="table table-hover">
                     <thead>
@@ -92,8 +92,8 @@
                             <td><?php echo $iRow["material_name"]; ?></td>
                             <td><?php echo $iRow["qty"]." ft"; ?></td>
                             <td>
-                                <a class="btn btn-success" data-toggle="modal" data-target="#addQty" onclick="load_data(<?php echo $iRow["material_id"]; ?>)">Add</a>
-                                <a class="btn btn-info">View</a>
+                                <a class="btn btn-sm btn-success" data-toggle="modal" data-target="#addQty" onclick="load_data(<?php echo $iRow["material_id"]; ?>)">Add</a>
+                                <a class="btn btn-sm btn-info">View</a>
                             </td>
                         </tr>
                         <?php
@@ -112,7 +112,7 @@
                       <form enctype="multipart/form-data" method="post" style="padding-top: 10px;" action="../controller/inventory-controller.php?status=addMaterial">
                         <!-- Modal Header -->
                         <div class="modal-header">
-                          <h4 class="modal-title">Add Material</h4>
+                          <h4 class="modal-title">Add Strip</h4>
                           <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
                         <!-- Modal body -->
@@ -131,8 +131,8 @@
                                     <select name="mType" class="form-control">
                                         <option value="1">Metal Strip</option>
                                         <option value="2">Wood Strip</option>
-                                        <option value="3">Glass</option>
-                                        <option value="4">Hardboard</option>
+<!--                                        <option value="3">Glass</option>
+                                        <option value="4">Hardboard</option>-->
                                     </select>
                                 </div>
                             </div>

@@ -51,13 +51,13 @@
                 
                 
                 <h3 style="text-align: center; margin-bottom: 20px;">Product Management</h3>
-                <div style="padding: 10px;">
+<!--                <div style="padding: 10px;">
                     <div class="row">
                         <div class="col-12"style="background-color: #f5f6f8;padding: 5px;">
-                            <a href="dashboard.php">Dashboard</a>/<a href="product.php">Product Management</a>
+                            <a href="dashboard.php">Dashboard</a> / <a>Product Management</a>
                         </div>
                     </div>
-                </div>
+                </div>-->
                 <div class="row" style="margin: 0px;">
                     <div class="col-md-12">
                         <ul class="nav nav-tabs">

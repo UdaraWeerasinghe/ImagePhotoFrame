@@ -48,4 +48,41 @@ switch ($status){
                 <?php
                  } 
             break;
+            
+            case "addReason":
+                $reason=$_POST["reason"];
+                $order_id=$_POST["orderId"];
+                
+                $inventoryObj->rejectOrderStatus($order_id,$reason);
+               
+                header("Location:../view/order.php");
+                break;
+            
+            case "startProcess":
+                
+            $order_id=$_REQUEST["oId"];
+            $mId=$_POST["mId"];
+            
+            $x= sizeof($_POST["length"]);
+            for($i=0; $i<$x; $i++){
+                $length=$_POST["length"][$i];
+                $mId=$_POST["mId"][$i];
+                $qty=$inventoryObj->getMaterialLengthById($mId);
+                $row=$qty->fetch_assoc();
+                $nQty=$row["qty"]-$length;
+                $inventoryObj->updateQty($mId, $nQty);
+                
+                $gQty=$inventoryObj->getMaterialLengthById('1');
+                $gRow=$gQty->fetch_assoc();
+                $nqQty=$gRow["qty"]-$length;
+                $inventoryObj->updateQty('1', $nqQty);
+                
+                $bQty=$inventoryObj->getMaterialLengthById('2');
+                $bRow=$bQty->fetch_assoc();
+                $nbQty=$bRow["qty"]-$length;
+                $inventoryObj->updateQty('2', $nbQty);
+            }
+                $inventoryObj->startProcess($order_id);
+                 header("Location:../view/order.php");
+                break;
 }

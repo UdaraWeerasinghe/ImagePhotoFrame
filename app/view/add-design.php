@@ -55,13 +55,13 @@
                 
                 
                 <h3 style="text-align: center; margin-bottom: 20px;">Product Management</h3>
-                <div style="padding: 10px;">
+<!--                <div style="padding: 10px;">
                     <div class="row">
                         <div class="col-12"style="background-color: #f5f6f8;padding: 5px;">
-                            <a href="dashboard.php">Dashboard</a>/<a href="product.php">Product Management</a>/<a href="add-design.php">Add Design</a>
+                            <a href="dashboard.php">Dashboard </a>/<a href="product.php"> Product Management</a> /<a> Add New Design</a>
                         </div>
                     </div>
-                </div>
+                </div>-->
                 <ul class="nav nav-tabs">
                   <li class="nav-item">
                       <a class="nav-link" href="product.php">Available Design</a>
@@ -126,7 +126,7 @@
                                     <label>Frame Strip</label>
                                 </div>
                                 <div class="col-md-4 mb-4">
-                                    <select name="mId"  id="fStrip" class="form-control">
+                                    <select name="fStrip" id="fStrip" class="form-control">
                                         
                                     </select>
                                     <div class="invalid-tooltip">

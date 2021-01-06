@@ -6,7 +6,14 @@ class Order{
     public function  getAllOrders(){
         
         $con=$GLOBALS['con'];
-        $sql="SELECT * FROM order_detail o, customer c WHERE o.customer_id=c.customer_id ORDER BY o.order_timestamp DESC";
+        $sql="SELECT * FROM order_detail o, customer c WHERE o.customer_id=c.customer_id AND order_status='1'";
+        $results = $con->query($sql) or die($con->error);
+        return $results;
+    }
+    public function  getAllOnProcessOrders(){
+        
+        $con=$GLOBALS['con'];
+        $sql="SELECT * FROM order_detail o, customer c WHERE o.customer_id=c.customer_id AND order_status='2'";
         $results = $con->query($sql) or die($con->error);
         return $results;
     }
@@ -21,6 +28,20 @@ class Order{
         
         $con=$GLOBALS['con'];
         $sql="SELECT * FROM order_product o, product p WHERE o.product_id=p.product_id AND order_id='$order_id'";
+        $results = $con->query($sql) or die($con->error);
+        return $results;
+    }
+     public function  getMaterialById($pId){
+        
+        $con=$GLOBALS['con'];
+        $sql="SELECT * FROM product_material WHERE product_id='$pId'";
+        $results = $con->query($sql) or die($con->error);
+        return $results;
+    }
+    public function  getSizeByPId($sizeId){
+        
+        $con=$GLOBALS['con'];
+        $sql="SELECT * FROM size WHERE size_id='$sizeId'";
         $results = $con->query($sql) or die($con->error);
         return $results;
     }

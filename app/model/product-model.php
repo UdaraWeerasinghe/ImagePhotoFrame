@@ -95,14 +95,19 @@ class Product{
         
     }
     
-    public function  addDesign($dNanme,$dCode,$material,$frameType,$color,$img1,$img2,$mId){
+    public function  addDesign($dNanme,$dCode,$material,$frameType,$color,$img1,$img2){
         
         $con=$GLOBALS['con'];
-        $sql="INSERT INTO product(product_name,product_code,cat_id,sub_cat_id,product_color,product_img_1,product_img_2,strip_id) VALUES('$dNanme','$dCode','$material','$frameType','$color','$img1','$img2','$mId')";
+        $sql="INSERT INTO product(product_name,product_code,cat_id,sub_cat_id,product_color,product_img_1,product_img_2) VALUES('$dNanme','$dCode','$material','$frameType','$color','$img1','$img2')";
         $con->query($sql) or die($con->error);
         $proId=$con->insert_id;
         return $proId;
         
+    }
+    function setMaterialProduct($proId,$mId){
+        $con = $GLOBALS["con"];
+        $sql = "INSERT INTO product_material(product_id,material_id) VALUES('$proId','$mId')";
+        $con->query($sql)or die($con->error);
     }
     function addPrice($size_id,$price,$proId){
         $con = $GLOBALS["con"];
