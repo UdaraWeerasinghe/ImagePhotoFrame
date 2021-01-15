@@ -111,11 +111,13 @@ if(isset($_REQUEST["oId"])){
                                         $sizeId=$opRow["size_id"]; 
                                         $sizeResult=$orderObj->getSizeByPId($sizeId);
                                         $sRow=$sizeResult->fetch_assoc();
-                                        $length=$sRow['width']*$sRow['height'];
+                                        $length=$sRow['width']+$sRow['height']+1;
+                                        $squareInch=$sRow['width']*$sRow['height']+1;
                                         echo $sRow['width']."&Prime;"."&#215;".$sRow['height']."&Prime;";
                                         ?>
                                     </span>
                                     <input type="hidden" name="length[]" value="<?php echo $length; ?>">
+                                    <input type="hidden" name="squareInch[]" value="<?php echo $squareInch; ?>">
                                 </div>
                                 <div class="col-2 mb-4" style="text-align: right">
                                     <span><?php echo $opRow["quantity"]; ?></span>
@@ -182,7 +184,9 @@ if(isset($_REQUEST["oId"])){
                           Swal.fire({
                             title: '<strong>Reason</strong>',
                             html:
-                              '<form method="post" action="../controller/inventory-controller.php?status=addReason">Why you are going to reject the order' +
+                              '<form method="post" action="../controller/inventory-controller.php?status=addRjmkm\n\
+                  nhhihhjk\n\
+eason">Why you are going to reject the order' +
                               '<br><br><input name="reason" type="text" class="form-control" required>' +
                               '<input type="hidden" name="orderId" value="<?php echo $order_id ?>">' +
                               '<br><button class="btn btn-success">Submit</button></form>',

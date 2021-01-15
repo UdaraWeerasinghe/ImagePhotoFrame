@@ -52,27 +52,30 @@
                  <?php }?>
             </div>
             <div class="dashbord-body" id="dashbord-body" style="flex: 70%; height: 800px; padding: 10px;">
-                
-                
-                <h3 style="text-align: center; margin-bottom: 20px;">Product Management</h3>
-<!--                <div style="padding: 10px;">
-                    <div class="row">
-                        <div class="col-12"style="background-color: #f5f6f8;padding: 5px;">
-                            <a href="dashboard.php">Dashboard </a>/<a href="product.php"> Product Management</a> /<a> Add New Design</a>
-                        </div>
+                <div class="row container-fluid">
+                    <div class="col-sm-2">
+                        <button class="btn" onclick="history.go(-1);"><i style="color: #173F5F;" class="fad fa-arrow-alt-circle-left fa-2x"></i></button>
                     </div>
-                </div>-->
-                <ul class="nav nav-tabs">
-                  <li class="nav-item">
-                      <a class="nav-link" href="product.php">Available Design</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link  active" href="add-design.php">Add New Design</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="category.php">Manage Category</a>
-                  </li>
-                </ul>
+                    <div class="col-sm-8">
+                         <h3 style="text-align: center; margin-bottom: 20px;">Product Management</h3>
+                    </div>
+                    <div class="col-sm-2"></div>
+                </div>
+                <div class="row" style="margin: 0px;">
+                    <div class="col-md-12">
+                        <ul class="nav nav-tabs">
+                          <li class="nav-item">
+                              <a class="nav-link" href="product.php">Available Design</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link  active" href="add-design.php">Add New Design</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link" href="category.php">Manage Category</a>
+                          </li>
+                        </ul>
+                    </div>
+                </div>
                 <div class="container">
                     <form id="addDesign" class="needs-validation" enctype="multipart/form-data"  method="post" style="padding-top: 30px;" action="../controller/product-controller.php?status=addDesign" novalidate>
                         

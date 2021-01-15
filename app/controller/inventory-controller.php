@@ -64,8 +64,10 @@ switch ($status){
             $mId=$_POST["mId"];
             
             $x= sizeof($_POST["length"]);
+            
             for($i=0; $i<$x; $i++){
-                $length=$_POST["length"][$i];
+                $length=$_POST["length"][$i]/12; //conver to feets 
+                $squareInch=$_POST["squareInch"][$i]/12; //conver to feets 
                 $mId=$_POST["mId"][$i];
                 $qty=$inventoryObj->getMaterialLengthById($mId);
                 $row=$qty->fetch_assoc();
@@ -74,12 +76,12 @@ switch ($status){
                 
                 $gQty=$inventoryObj->getMaterialLengthById('1');
                 $gRow=$gQty->fetch_assoc();
-                $nqQty=$gRow["qty"]-$length;
+                $nqQty=$gRow["qty"]-$squareInch;
                 $inventoryObj->updateQty('1', $nqQty);
                 
                 $bQty=$inventoryObj->getMaterialLengthById('2');
                 $bRow=$bQty->fetch_assoc();
-                $nbQty=$bRow["qty"]-$length;
+                $nbQty=$bRow["qty"]-$squareInch;
                 $inventoryObj->updateQty('2', $nbQty);
             }
                 $inventoryObj->startProcess($order_id);

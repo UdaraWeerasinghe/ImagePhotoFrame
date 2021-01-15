@@ -109,8 +109,7 @@
                                 </td>
                                 <td>
                                     <a href="view-order.php?oId=<?php echo $order_row["order_id"] ?>" class="btn btn-sm btn-info">View</a>
-                                    <!--<a class="btn btn-sm btn-warning">Start Process</a>-->
-                                    <!--<a class="btn btn-sm btn-danger" id="reject" onclick="load_data(<?php // echo $order_row["order_id"]; ?>)">Reject</a>-->
+                                    <a class="btn btn-sm btn-warning">Compleded</a>
                                 </td>
                             </tr>
                  <?php } ?>

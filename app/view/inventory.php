@@ -19,7 +19,7 @@
     </head>
     <body>
         
-        <?php include 'dashboard-header.php'; ?>
+        <?php include 'dashboard-header.php';?>
         
         <div style="flex-wrap: wrap; display: flex;">
             <div id="sidemenu" class="sidemenu">
@@ -45,35 +45,20 @@
 
                  <?php }?>
             </div>
-            <div class="dashbord-body" id="dashbord-body" style="padding: 10px;">
+            <div class="dashbord-body" id="dashbord-body" style="padding: 20px 10px 0px 10px;">
                 
                 
                 <h3 style="text-align: center; margin-bottom: 20px;">Inventory Management</h3>
                 
-                <div class="row container-fluid" style="margin: 0px;">
-                    <div class="col-md-4">
-                        <div class="shadow bg-info" style="height: 100px; background-color: white;border-radius: 15px;
-                             padding: 10px; text-align: center;color: white">
-                            <h4>Glass</h4><hr>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="shadow bg-info" style="height: 100px; background-color: white;border-radius: 15px;
-                             padding: 10px; text-align: center;color: white">
-                            <h4>Hardboards</h4><hr>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="shadow bg-info" style="height: 100px; background-color: white;border-radius: 15px; 
-                             padding: 10px; text-align: center;color: white">
-                            <h4>Frame Strips</h4><hr>
-                        </div>
-                    </div>
+                <div class="container-fluid" style="margin: 0px;">
+                    
                 </div>
                 <div style="padding: 15px">
+                    <div id="columnchart_material" style="width: 100%; height: 500px;"></div>
                     <div style="width: 100%; text-align: end">
                         <a class="btn btn-primary" data-toggle="modal" data-target="#addMaterial">Add New Frame Strip</a>
                     </div><br>
+                    
                     <table id="inventory_tbl" class="table table-hover">
                     <thead>
                         <tr>
@@ -90,10 +75,10 @@
                         <tr>
                             <td><?php echo $iRow["material_id"]; ?></td>
                             <td><?php echo $iRow["material_name"]; ?></td>
-                            <td><?php echo $iRow["qty"]." ft"; ?></td>
+                            <td><?php echo number_format($iRow["qty"])." ft"; ?></td>
                             <td>
                                 <a class="btn btn-sm btn-success" data-toggle="modal" data-target="#addQty" onclick="load_data(<?php echo $iRow["material_id"]; ?>)">Add</a>
-                                <a class="btn btn-sm btn-info">View</a>
+                               
                             </td>
                         </tr>
                         <?php
@@ -169,6 +154,7 @@
                 </div>
             </div>
             <!--///////////////add material qty modal end/////////////////-->
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript" src="../../js/jquery-3.5.1.js"></script>
         <script type="text/javascript" src="../../bootstrap/js/bootstrap.js"></script>
         <script type="text/javascript" src="../../DataTables-1.10.22/js/jquery.dataTables.js"></script>
@@ -189,6 +175,39 @@
          $(function(){
     $("#inventory_tbl").dataTable();
   });
+  
+  
+  
+ 
+       google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Year', 'Feets'],
+          ['2014', 100],
+          ['2015', 1170],
+          ['2016', 660],
+          ['2014', 1000],
+          ['2015', 1170],
+          ['2016', 660],
+          ['2014', 1000],
+          ['2015', 1170],
+          ['2016', 660],
+          ['2017', 1030]
+        ]);
+
+        var options = {
+          chart: {
+            title: 'Company Performance',
+            subtitle: 'Sales, Expenses, and Profit: 2014-2017'
+          }
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+      }
         </script>
  
     </body>

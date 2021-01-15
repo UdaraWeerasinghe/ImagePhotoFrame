@@ -65,6 +65,24 @@ class Inventory{
         $results = $con->query($sql) or die($con->error);
         return $results;
     }
+//    public function  getGlassCount(){
+//        
+//        $con=$GLOBALS['con'];
+//        $sql="SELECT SUM(qty) AS qty FROM  material WHERE material_type='3'";
+//        $result = $con->query($sql) or die($con->error);
+//        $row=$result->fetch_assoc();
+//        $glassQty=$row["qty"];
+//        return $glassQty;
+//    }
+//    public function  getHardBoardCount(){
+//        
+//        $con=$GLOBALS['con'];
+//        $sql="SELECT SUM(qty) AS qty FROM  material WHERE material_type='4'";
+//        $result = $con->query($sql) or die($con->error);
+//        $row=$result->fetch_assoc();
+//        $hardBoardQty=$row["qty"];
+//        return $hardBoardQty;
+//    }
     
     }
 

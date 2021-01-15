@@ -52,14 +52,8 @@ $logUser=$_SESSION['user']['user_id'];
                  <?php }?>
             </div>
             <div class="dashbord-body" id="dashbord-body">
+                
                 <h3 style="text-align: center; margin-top: 10px;">User Management</h3>
-<!--                <div style="padding: 10px;">
-                    <div class="row">
-                        <div class="col-12"style="background-color: #f5f6f8;padding: 5px;">
-                            <a href="dashboard.php">Dashboard </a>/<a> User</a>
-                        </div>
-                    </div>
-                </div>-->
                 <ul class="nav nav-tabs">
                   <li class="nav-item">
                     <a class="nav-link active" href="#all-users">All Users</a>
@@ -74,10 +68,17 @@ $logUser=$_SESSION['user']['user_id'];
                       <a class="nav-link" href="add-user.php">Add User</a>
                   </li>
                 </ul>
-
+                <div class="container-fluid">
+                    <div class="row"style="margin-top: 10px;">
+                        <div class="col-6"></div>
+                        <div class="col-6" style="text-align: right">
+                            <a href="report-all-user.php" class="btn btn-primary"><i class="far fa-download"></i>&nbsp;Export PDF</a>
+                        </div>
+                    </div>
+                </div>
                 <div class="tab-content"> 
 
-                  <div id="all-users" class="container"><br>
+                    <div id="all-users" class="container-fluid"><br>
                       <?php
                       if(isset($_GET["msg"])){
                           $msg=$_REQUEST["msg"];
@@ -95,7 +96,7 @@ $logUser=$_SESSION['user']['user_id'];
                               <?php
                       }
                       ?>
-                       <div style="padding: 5px;margin-top: 5px;">
+                       <div>
                            <table class="table table-hover" id="user_tbl">
                                         <thead>
                                             <tr>

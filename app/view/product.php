@@ -48,9 +48,19 @@
                  <?php }?>
             </div>
             <div class="dashbord-body" id="dashbord-body" style="padding: 10px;">
+                <div class="row container-fluid">
+                    <div class="col-sm-2">
+                        <button class="btn" onclick="history.go(-1);"><i style="color: #173F5F;" class="fad fa-arrow-alt-circle-left fa-2x"></i></button>
+                    </div>
+                    <div class="col-sm-8">
+                        <h3 style="text-align: center; margin-bottom: 20px;">Product Management</h3>
+                    </div>
+                    <div class="col-sm-2">
+                        
+                    </div>
+                </div>
                 
                 
-                <h3 style="text-align: center; margin-bottom: 20px;">Product Management</h3>
 <!--                <div style="padding: 10px;">
                     <div class="row">
                         <div class="col-12"style="background-color: #f5f6f8;padding: 5px;">
@@ -62,7 +72,7 @@
                     <div class="col-md-12">
                         <ul class="nav nav-tabs">
                             <li class="nav-item">
-                                <a class="nav-link active" href="product.php">All Design</a>
+                                <a class="nav-link active" href="product.php">Available Design</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="add-design.php">Add New Design</a>
@@ -74,6 +84,12 @@
                     </div>
                 </div>
                 <div  style="padding: 20px;">
+                    <div class="row">
+                        <div class="col-6"></div>
+                        <div class="col-6 mb-2" style="text-align: right">
+                            <a href="report-all-product.php" class="btn btn-primary"><i class="far fa-download"></i>&nbsp;Export PDF</a>
+                        </div>
+                    </div>
                     <table id="product_tbl" class="table table-hover">
                         <thead>
                             <tr>
@@ -100,15 +116,15 @@
                                     ?>
                                 </td>
                                 <th>
-                                    <a href="view-product.php?pId=<?php echo $prow['product_id'] ?>" class="btn btn-info"><i class="far fa-print-search" style="margin: 4px"></i></a>
+                                    <a href="view-product.php?pId=<?php echo $prow['product_id'] ?>" class="btn btn-sm btn-info"><i class="far fa-print-search" style="margin: 4px"></i></a>
                                     <?php
                                     if($prow['product_status']==1){
                                         ?>
-                                        <a class="btn btn-success">Activate</a>
+                                        <a class="btn btn-sm btn-success">Activate</a>
                                     <?php
                                     } else {
                                         ?>
-                                        <a class="btn btn-danger">Deactivate</a>
+                                        <a class="btn btn-sm btn-danger">Deactivate</a>
                                         <?php
                                     }
                                     ?>

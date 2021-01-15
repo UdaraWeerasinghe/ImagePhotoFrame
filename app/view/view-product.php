@@ -54,7 +54,15 @@
             <div class="dashbord-body" id="dashbord-body" style="padding: 10px;">
                 <div class="container-fluid">
                 
-                    <h3 style="text-align: center; margin-bottom: 20px;">View Product</h3>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <button class="btn" onclick="history.go(-1);"><i style="color: #173F5F;" class="fad fa-arrow-alt-circle-left fa-2x"></i></button>
+                    </div>
+                    <div class="col-sm-8">
+                        <h3 style="text-align: center; margin-bottom: 20px;">View Product</h3>
+                    </div>
+                    <div class="col-sm-2"></div>
+                </div>
                     <hr>
 
                     <div class="row">
