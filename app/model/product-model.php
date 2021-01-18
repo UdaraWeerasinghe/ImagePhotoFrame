@@ -18,13 +18,20 @@ class Product{
         $results = $con->query($sql) or die($con->error);
         return $results;
     }
-    public function  addCategory($cat_name){
+    public function  getCatInserId(){
         
         $con=$GLOBALS['con'];
-        $sql="INSERT INTO category(cat_name) VALUES('$cat_name')";
+        $sql="SELECT cat_id FROM category ORDER BY cat_id DESC LIMIT 1";
+        $results = $con->query($sql);
+        return $results;
+    }
+    public function  addCategory($newid,$cat_name){
+        
+        $con=$GLOBALS['con'];
+        $sql="INSERT INTO category(cat_id,cat_name) VALUES('$newid','$cat_name')";
         $con->query($sql) or die($con->error); 
-        $catId=$con->insert_id;
-        return $catId;
+        $isAdded="true";
+        return $isAdded;
     }
      public function  deactivateCategory($cat_id){
         

@@ -57,15 +57,21 @@ class User{
              return true;
           }
     }
-    
-    public function  addUser($fName,$lName,$email,$cn,$dob,$nic,$uRole,$gender,$user_img,$status){
+    public function  getUserInserId(){
+        
         $con=$GLOBALS['con'];
-        $sql="INSERT INTO user(user_fname,user_lname,user_email,user_cno,user_gender,
+        $sql="SELECT user_id FROM user ORDER BY user_id DESC LIMIT 1";
+        $results = $con->query($sql);
+        return $results;
+    }
+    public function  addUser($newid,$fName,$lName,$email,$cn,$dob,$nic,$uRole,$gender,$user_img,$status){
+        $con=$GLOBALS['con'];
+        $sql="INSERT INTO user(user_id,user_fname,user_lname,user_email,user_cno,user_gender,
             user_dob,user_nic,role_id,user_image,user_status)
-            VALUES('$fName','$lName','$email','$cn','$gender','$dob','$nic','$uRole','$user_img','$status')";
+            VALUES('$newid','$fName','$lName','$email','$cn','$gender','$dob','$nic','$uRole','$user_img','$status')";
         $con->query($sql) or die($con->error);
-        $u_id=$con->insert_id;
-        return $u_id;
+        $isAdded="true";
+        return $isAdded;
     }
     
     public function addLogin($login_username,$login_password,$user_id){

@@ -130,7 +130,7 @@
                                 </div>
                                 <div class="col-md-4 mb-4">
                                     <select name="fStrip" id="fStrip" class="form-control">
-                                        
+                                       
                                     </select>
                                     <div class="invalid-tooltip">
                                         Design type need to be select

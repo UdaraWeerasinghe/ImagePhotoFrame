@@ -7,37 +7,44 @@ switch ($status){
     
     case "addCategory":
         $cat_name=$_POST["cat_name"];
-        $catId=$productObj->addCategory($cat_name);
-        $msg="Successfully added category"." ".$cat_name;
-        $class="alert-success";
-        $subCategory=$_POST['sub_cat_id'];
+        
+        $idResult=$productObj->getCatInserId();
+                $nor=$idResult->num_rows;
+                if($nor==0){
+                    $newid = "CAT00001";
+                }
+                else{
+                    $idRow=$idResult->fetch_assoc();
+                    $lid=$idRow["cat_id"];
+                    $num=substr($lid, 3);
+                    $num++;
+                    $newid = "CAT".str_pad($num,5,"0",STR_PAD_LEFT);
+                    
+                   $isAdded=$productObj->addCategory($newid,$cat_name);
+                
+                if($isAdded=="true"){
+                    
+                    $subCategory=$_POST['sub_cat_id'];
        
-        foreach ($subCategory as $f) {
-                 $productObj->addCategorySubCategory($catId,$f);
-        }
-    ?>
-        <script> window.location="../view/category.php?category=category & msg=<?php echo $msg;?> & class=<?php echo $class; ?>";</script>
-   <?php
+                foreach ($subCategory as $f) {
+                         $productObj->addCategorySubCategory($newid,$f);
+                        }
+        header("Location:../view/category.php?alert=materialAdd");
+                    }
+                }
+
     break;
 
     case "deactivateCategory":
         $cat_id=$_REQUEST["cat_id"];
         $productObj->deactivateCategory($cat_id);
-        $msg="Category Deactiveted";
-        $class="alert-danger";
-         ?>
-        <script> window.location="../view/category.php?category=category & msg=<?php echo $msg;?> & class=<?php echo $class; ?>";</script>
-   <?php
+        header("Location:../view/category.php?alert=deactivated");
         break;
     
     case "activateCategory":
         $cat_id=$_REQUEST["cat_id"];
         $productObj->activateCategory($cat_id);
-        $msg="Category activeted";
-        $class="alert-success";
-         ?>
-        <script> window.location="../view/category.php?category=category & msg=<?php echo $msg;?> & class=<?php echo $class; ?>";</script>
-   <?php
+        header("Location:../view/category.php?alert=activated");
         break;
     
     
@@ -63,18 +70,13 @@ switch ($status){
         $cat_id=$_POST["cat_id"];
         $cat_name=$_POST["cat_name"];
         $productObj->updateCategory($cat_id,$cat_name);
-        $msg="Successfully updated to"." ".$cat_name;
-        $class="alert-success";
-         ?>
-        <script> window.location="../view/category.php?category=category & msg=<?php echo $msg;?> & class=<?php echo $class; ?>";</script>
-   <?php
+        header("Location:../view/category.php?alert=update");
+         
         break;
     
         case "addSubCategory":
         $sub_cat_name=$_POST["sub_cat_name"];
         $subCatId=$productObj->addSubCategory($sub_cat_name);
-        $msg="Successfully added sub category"." ".$sub_cat_name;
-        $class="alert-success";
         $category=$_POST['cat_name'];
         $size=$_POST['sub_cat_size'];
         foreach ($category as $f) {
@@ -83,30 +85,22 @@ switch ($status){
         foreach ($size as $s) {
                  $productObj->addSubCategorySize($subCatId,$s);
         }
-    ?>
-        <script> window.location="../view/category.php?sub_cat=category & msg=<?php echo $msg;?> & class=<?php echo $class; ?>";</script>
-   <?php
+        header("Location:../view/category.php?alert=subCatAdded");
+
     break;
     
     case "deactivateSubCategory":
         $sub_cat_id=$_REQUEST["sub_cat_id"];
         $productObj->deactivateSubCategory($sub_cat_id);
-        $msg="Category Deactiveted";
-        $class="alert-danger";
-         ?>
-        <script> window.location="../view/category.php?sub_cat=category & msg=<?php echo $msg;?> & class=<?php echo $class; ?>";</script>
-   <?php
+        header("Location:../view/category.php?alert=deactivated");
         break;
     
     case "activateSubCategory":
         $sub_cat_id=$_REQUEST["sub_cat_id"];
         $productObj->activateSubCategory($sub_cat_id);
-        $msg="Category activeted";
-        $class="alert-success";
-         ?>
-        <script> window.location="../view/category.php?sub_cat=category & msg=<?php echo $msg;?> & class=<?php echo $class; ?>";</script>
-   <?php
-        
+        header("Location:../view/category.php?alert=activated");
+         
+        break;
     
     case "addDesign":
         $dNanme=$_POST["dNanme"];

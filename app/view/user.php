@@ -52,7 +52,6 @@ $logUser=$_SESSION['user']['user_id'];
                  <?php }?>
             </div>
             <div class="dashbord-body" id="dashbord-body">
-                
                 <h3 style="text-align: center; margin-top: 10px;">User Management</h3>
                 <ul class="nav nav-tabs">
                   <li class="nav-item">
@@ -128,11 +127,11 @@ $logUser=$_SESSION['user']['user_id'];
                                             if ($row["user_status"]=="1"){
                                                 if($logUser==$userId){
                                                     ?>
-                                              <button class="btn btn-sm btn-danger" onclick="deactivate(<?php echo $userId;?>)" disabled>Deactivate</button>
+                                              <button class="btn btn-sm btn-danger" onclick="deactivate('<?php echo $userId;?>')" disabled>Deactivate</button>
                                               <?php
                                                 } else {
                                                   ?>
-                                              <button class="btn btn-sm btn-danger" onclick="deactivate(<?php echo $userId;?>)">Deactivate</button>
+                                              <button class="btn btn-sm btn-danger" onclick="deactivate('<?php echo $userId;?>')">Deactivate</button>
                                                 <?php  
                                                 }
                                                 
@@ -140,11 +139,11 @@ $logUser=$_SESSION['user']['user_id'];
                                              else {
                                                  if($logUser==$userId){
                                                     ?>
-                                              <button class="btn btn-sm btn-success" onclick="activate(<?php echo $userId;?>)" disabled>Activate</button>                                          
+                                              <button class="btn btn-sm btn-success" onclick="activate('<?php echo $userId;?>')" disabled>Activate</button>                                          
                                               <?php
                                               }else{
                                                  ?>
-                                              <button class="btn btn-sm btn-success" onclick="activate(<?php echo $userId;?>)">Activate</button>
+                                              <button class="btn btn-sm btn-success" onclick="activate('<?php echo $userId;?>')">Activate</button>
                                                 <?php 
                                               }
                                                  

@@ -43,9 +43,9 @@ switch ($status){
             
                 while ($sRow=$stripResult->fetch_assoc()){
                     ?>
-                <option value="<?php echo $sRow['material_id'] ?>"><?php echo $sRow['material_name'] ?></option>
+                <option value="//<?php echo $sRow['material_id'] ?>"><?php echo $sRow['material_name'] ?></option>
                 
-                <?php
+                //<?php
                  } 
             break;
             

@@ -21,6 +21,11 @@
             $category=$productObj->getAllCategory();//all matirials
             $sub_category=$productObj->getAllSubCategory();//all type
             
+            if(isset($_GET["alert"])){
+                ?>
+    <input type="hidden" id="alert" value="<?php echo $_REQUEST["alert"]; ?>">
+        <?php
+            }
         ?>
     </head>
     <body>
@@ -86,21 +91,10 @@
                                         <h4>Material Types</h4>
                                     </div>
                                     <div class="col-md-6" style="text-align: end">
-                                        <button class="btn btn-primary" data-toggle="modal" data-target="#addCategory">Add Material Types</button>
+                                        <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addCategory">Add Material Types</button>
                                     </div>
                                 </div>
-                                 <?php
-                                        if(isset($_GET["category"])){
-                                            $msg=$_REQUEST["msg"];
-                                            $class=$_REQUEST["class"];
-                                    ?>
-                                <div class="row" id="alertMsg" style="padding: 20px 20px 0px 20px;">
-                                    <div class="col-12 alert <?php echo $class; ?>" style="text-align: center">
-                                        <?php echo $msg; ?>
-                                    </div>
-                                </div>
-                                        <?php } ?>
-                                
+                                 
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
@@ -127,15 +121,15 @@
                                                 ?>
                                             </td>
                                             <td>
-                                                <a data-toggle="modal" data-target="#updateCategory" class="btn btn-warning" onclick="load_data(<?php echo $catRow['cat_id']; ?>)"><i class="fas fa-pencil" style="margin: 4px"></i></a>
+                                         <a data-toggle="modal" data-target="#updateCategory" class="btn btn-sm btn-warning" onclick="load_data('<?php echo $catRow['cat_id']; ?>')"><i class="fas fa-pencil" style="margin: 4px"></i></a>                                              
                                                 <?php
                                                 if($catRow['cat_status']==1){
                                                     ?>
-                                                <a href="../controller/product-controller.php?status=deactivateCategory&cat_id=<?php echo $cat_id; ?>" class="btn btn-danger">Deactivate</a>
+                                                <a href="../controller/product-controller.php?status=deactivateCategory&cat_id=<?php echo $cat_id; ?>" class="btn btn-sm btn-danger">Deactivate</a>
                                                 <?php
                                                 } else {
                                                     ?>
-                                                <a href="../controller/product-controller.php?status=activateCategory&cat_id=<?php echo $cat_id; ?>" class="btn btn-success">Activate</a>
+                                                <a href="../controller/product-controller.php?status=activateCategory&cat_id=<?php echo $cat_id; ?>" class="btn btn-sm btn-success">Activate</a>
                                                 <?php
                                                 }
                                                 ?>
@@ -156,21 +150,10 @@
                                         <h4>Frame Types</h4>
                                     </div>
                                     <div class="col-md-6" style="text-align: end">
-                                        <button class="btn btn-primary" data-toggle="modal" data-target="#addSubCategory">Add Frame Types</button>
+                                        <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addSubCategory">Add Frame Types</button>
                                     </div>
                                 </div>
-                             <?php
-                                        if(isset($_GET["sub_cat"])){
-                                            $msg=$_REQUEST["msg"];
-                                            $class=$_REQUEST["class"];
-                                    ?>
-                                <div class="row" id="alertMsg" style="padding: 20px 20px 0px 20px;">
-                                    <div class="col-12 alert <?php echo $class; ?>" style="text-align: center">
-                                        <?php echo $msg; ?>
-                                    </div>
-                                </div>
-                                        <?php } ?>
-                                
+                            
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
@@ -198,15 +181,15 @@
                                                 ?>
                                             </td>
                                             <td>
-                                                <a class="btn btn-info"><i class="far fa-print-search" style="margin: 4px"></i></a>
+                                                <a class="btn btn-sm btn-info"><i class="far fa-print-search" style="margin: 4px"></i></a>
                                                 <?php 
                                                 if ($subCatRow['sub_cat_status']==1){
                                                     ?>
-                                                        <a href="../controller/product-controller.php?status=deactivateSubCategory&sub_cat_id=<?php echo $sub_cat_id; ?>" class="btn btn-danger">Deactivate</a>
+                                                        <a href="../controller/product-controller.php?status=deactivateSubCategory&sub_cat_id=<?php echo $sub_cat_id; ?>" class="btn btn-sm btn-danger">Deactivate</a>
                                                         <?php
                                                 } else {
                                                     ?>
-                                                        <a href="../controller/product-controller.php?status=activateSubCategory&sub_cat_id=<?php echo $sub_cat_id; ?>"  class="btn btn-success">Activate</a>
+                                                        <a href="../controller/product-controller.php?status=activateSubCategory&sub_cat_id=<?php echo $sub_cat_id; ?>"  class="btn btn-sm btn-success">Activate</a>
                                                         <?php
                                                 }
                                                 ?>
@@ -377,7 +360,7 @@
                 </div>
             </div>
             <!--///////////////add sub category modal end/////////////////-->
-
+            <script type="text/javascript" src="../../js/sweetalert2.js"></script>
         <script src="../../js/product-validation.js"></script>
         <script src="../../js/jsStyle.js"></script>
         <script>
@@ -389,12 +372,56 @@
         });
     }
     // load update category  end
-
-//  alert div  
-$(function(){
-$('#alertMsg').fadeOut(2500);
+$( document ).ready(function() {
+    var x = $("#alert").val();
+    if (x=="materialAdd"){
+    Swal.fire({
+  position: 'top-end',
+  icon: 'success',
+  title: 'New material type added',
+  showConfirmButton: false,
+  timer: 1500
 });
-//alert div
+    }
+    if (x=="update"){
+    Swal.fire({
+  position: 'top-end',
+  icon: 'success',
+  title: 'Successfully Updated ',
+  showConfirmButton: false,
+  timer: 1500
+});
+    }
+    
+    if (x=="update"){
+    Swal.fire({
+  position: 'top-end',
+  icon: 'success',
+  title: 'Successfully Updated ',
+  showConfirmButton: false,
+  timer: 1500
+});
+    }
+    
+    if (x=="subCatAdded"){
+    Swal.fire({
+  position: 'top-end',
+  icon: 'success',
+  title: 'New subcategory Added',
+  showConfirmButton: false,
+  timer: 1500
+});
+    }
+    if (x=="activated"){
+    Swal.fire({
+  position: 'top-end',
+  icon: 'success',
+  title: 'Successfully Activated',
+  showConfirmButton: false,
+  timer: 1500
+});
+    }
+});
 </script>
     </body>
 </html>

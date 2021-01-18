@@ -64,15 +64,27 @@ switch ($status){
                     
                     $user_img="defaultImage.jpg";
                     
-                    
                 }
-               
-                $u_id=$userObj->addUser($fName, $lName, $email, $cn, $dob, $nic, $uRole, $gender, $user_img,1);
                 
-                if($u_id>0){
-                    $password= sha1($nic);
-                    $userObj->addLogin($email, $password, $u_id);
+                $idResult=$userObj->getUserInserId();
+                $nor=$idResult->num_rows;
+                if($nor==0){
+                    $newid = "U00001";
                 }
+                else{
+                    $idRow=$idResult->fetch_assoc();
+                    $lid=$idRow["user_id"];
+                    $num=substr($lid, 1);
+                    $num++;
+                    $newid = "U".str_pad($num,5,"0",STR_PAD_LEFT);
+                    
+                   $isAdded=$userObj->addUser($newid,$fName, $lName, $email, $cn, $dob, $nic, $uRole, $gender, $user_img,1);
+                
+                if($isAdded=="true"){
+                    $password= sha1($nic);
+                    $userObj->addLogin($email, $password, $newid);
+                }
+                
                 $class=" alert alert-success";
                 $class= base64_encode($class);
                 $msg="Successfully Add";
@@ -80,14 +92,14 @@ switch ($status){
                             ?>
 <script> window.location="../view/user.php?msg=<?php echo $msg;?> & class=<?php echo $class; ?>";</script>
 <?php
-                
-                
+                }
+               
                         
         } catch (Exception $ex) {
             $msg=$ex->getMessage();
             $msg= base64_encode($msg);
             ?>
-<script> window.location="../view/add-user.php?msg=<?php echo $msg; ?>";</script>
+<!--<script> window.location="../view/add-user.php?msg=<?php echo $msg; ?>";</script>-->
 
 <?php
         }
