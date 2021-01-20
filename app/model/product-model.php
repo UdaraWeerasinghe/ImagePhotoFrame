@@ -3,13 +3,13 @@ include_once '../../commons/dbConnection.php';
 $dbConnObj= new dbConnection();
 
 class Product{
-    public function  getAllCategory(){
-        
-        $con=$GLOBALS['con'];
-        $sql="SELECT * FROM category";
-        $results = $con->query($sql) or die($con->error);
-        return $results;
-    }
+//    public function  getAllCategory(){
+//        
+//        $con=$GLOBALS['con'];
+//        $sql="SELECT * FROM category";
+//        $results = $con->query($sql) or die($con->error);
+//        return $results;
+//    }
     
     public function  getAllSubCategory(){
         
@@ -18,47 +18,47 @@ class Product{
         $results = $con->query($sql) or die($con->error);
         return $results;
     }
-    public function  getCatInserId(){
-        
-        $con=$GLOBALS['con'];
-        $sql="SELECT cat_id FROM category ORDER BY cat_id DESC LIMIT 1";
-        $results = $con->query($sql);
-        return $results;
-    }
-    public function  addCategory($newid,$cat_name){
-        
-        $con=$GLOBALS['con'];
-        $sql="INSERT INTO category(cat_id,cat_name) VALUES('$newid','$cat_name')";
-        $con->query($sql) or die($con->error); 
-        $isAdded="true";
-        return $isAdded;
-    }
-     public function  deactivateCategory($cat_id){
-        
-        $con=$GLOBALS['con'];
-        $sql="UPDATE category SET cat_status=0 WHERE cat_id='$cat_id'";
-        $con->query($sql) or die($con->error); 
-    }
-    public function  activateCategory($cat_id){
-        
-        $con=$GLOBALS['con'];
-        $sql="UPDATE category SET cat_status=1 WHERE cat_id='$cat_id'";
-        $con->query($sql) or die($con->error); 
-    }
+//    public function  getCatInserId(){
+//        
+//        $con=$GLOBALS['con'];
+//        $sql="SELECT cat_id FROM category ORDER BY cat_id DESC LIMIT 1";
+//        $results = $con->query($sql);
+//        return $results;
+//    }
+//    public function  addCategory($newid,$cat_name){
+//        
+//        $con=$GLOBALS['con'];
+//        $sql="INSERT INTO category(cat_id,cat_name) VALUES('$newid','$cat_name')";
+//        $con->query($sql) or die($con->error); 
+//        $isAdded="true";
+//        return $isAdded;
+//    }
+//     public function  deactivateCategory($cat_id){
+//        
+//        $con=$GLOBALS['con'];
+//        $sql="UPDATE category SET cat_status=0 WHERE cat_id='$cat_id'";
+//        $con->query($sql) or die($con->error); 
+//    }
+//    public function  activateCategory($cat_id){
+//        
+//        $con=$GLOBALS['con'];
+//        $sql="UPDATE category SET cat_status=1 WHERE cat_id='$cat_id'";
+//        $con->query($sql) or die($con->error); 
+//    }
    
-    public function  getCategory($cat_id){
-        
-        $con=$GLOBALS['con'];
-        $sql="SELECT * FROM category WHERE cat_id='$cat_id'";
-        $results = $con->query($sql) or die($con->error);
-        return $results;
-    }
-    public function  updateCategory($cat_id,$cat_name){
-        
-        $con=$GLOBALS['con'];
-        $sql="UPDATE category SET cat_name='$cat_name' WHERE cat_id='$cat_id'";
-        $con->query($sql) or die($con->error); 
-    }
+//    public function  getCategory($cat_id){
+//        
+//        $con=$GLOBALS['con'];
+//        $sql="SELECT * FROM category WHERE cat_id='$cat_id'";
+//        $results = $con->query($sql) or die($con->error);
+//        return $results;
+//    }
+//    public function  updateCategory($cat_id,$cat_name){
+//        
+//        $con=$GLOBALS['con'];
+//        $sql="UPDATE category SET cat_name='$cat_name' WHERE cat_id='$cat_id'";
+//        $con->query($sql) or die($con->error); 
+//    }
     public function  deactivateSubCategory($sub_cat_id){
         
         $con=$GLOBALS['con'];
@@ -71,22 +71,29 @@ class Product{
         $sql="UPDATE sub_category SET sub_cat_status=1 WHERE sub_cat_id='$sub_cat_id'";
         $con->query($sql) or die($con->error); 
     }
-     public function  addSubCategory($sub_cat_name){
+    public function  getDesignInserId(){
         
         $con=$GLOBALS['con'];
-        $sql="INSERT INTO sub_category(sub_cat_name) VALUES('$sub_cat_name')";
-        $con->query($sql) or die($con->error);
-        $catId=$con->insert_id;
-        return $catId;
+        $sql="SELECT sub_cat_id FROM sub_category ORDER BY sub_cat_id DESC LIMIT 1";
+        $results = $con->query($sql);
+        return $results;
     }
-    public function  addCategorySubCategory($f,$sub_cat_id){
+     public function  addSubCategory($newid,$sub_cat_name){
         
         $con=$GLOBALS['con'];
-        $sql="INSERT INTO category_sub_category(cat_id,sub_cat_id) VALUES('$f','$sub_cat_id')";
+        $sql="INSERT INTO sub_category(sub_cat_id,sub_cat_name) VALUES('$newid','$sub_cat_name')";
         $con->query($sql) or die($con->error);
-        $catId=$con->insert_id;
-        return $catId;
+        $isAdded="true";
+        return $isAdded;
     }
+//    public function  addCategorySubCategory($f,$sub_cat_id){
+//        
+//        $con=$GLOBALS['con'];
+//        $sql="INSERT INTO category_sub_category(cat_id,sub_cat_id) VALUES('$f','$sub_cat_id')";
+//        $con->query($sql) or die($con->error);
+//        $catId=$con->insert_id;
+//        return $catId;
+//    }
     public function  getAllSize(){
         
         $con=$GLOBALS['con'];
@@ -101,14 +108,21 @@ class Product{
         $con->query($sql) or die($con->error);
         
     }
-    
-    public function  addDesign($dNanme,$dCode,$material,$frameType,$color,$img1,$img2){
+    public function  getProductInserId(){
         
         $con=$GLOBALS['con'];
-        $sql="INSERT INTO product(product_name,product_code,cat_id,sub_cat_id,product_color,product_img_1,product_img_2) VALUES('$dNanme','$dCode','$material','$frameType','$color','$img1','$img2')";
+        $sql="SELECT product_id FROM product ORDER BY product_id DESC LIMIT 1";
+        $results = $con->query($sql);
+        return $results;
+    }
+    
+    public function  addDesign($newid,$dNanme,$dCode,$material,$frameType,$color,$img1,$img2){
+        
+        $con=$GLOBALS['con'];
+        $sql="INSERT INTO product(product_id,product_name,product_code,material_id,sub_cat_id,product_color,product_img_1,product_img_2) VALUES('$newid','$dNanme','$dCode','$material','$frameType','$color','$img1','$img2')";
         $con->query($sql) or die($con->error);
-        $proId=$con->insert_id;
-        return $proId;
+        $isAdded="true";
+        return $isAdded;
         
     }
     function setMaterialProduct($proId,$mId){
@@ -158,6 +172,12 @@ class Product{
     public function  getCategoryById($cat_id){
         $con=$GLOBALS['con'];
         $sql="SELECT * FROM category WHERE cat_id='$cat_id'";  
+        $results = $con->query($sql) or die($con->error);
+        return $results;
+    }
+    public function  getStripById($pId){
+        $con=$GLOBALS['con'];
+        $sql="SELECT * FROM product_material pm, material m WHERE pm.material_id=m.material_id AND pm.product_id='$pId'";  
         $results = $con->query($sql) or die($con->error);
         return $results;
     }

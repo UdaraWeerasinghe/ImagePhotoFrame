@@ -99,7 +99,7 @@
                                 </div>
                                 <div class="col-sm-9 mb-4">
                                     <?php
-                                    $cat_id=$pRow['cat_id'];
+                                    $cat_id=$pRow['material_id'];
                                     $categoryResult=$productObj->getCategoryById($cat_id);
                                     $cRow=$categoryResult->fetch_assoc();
                                     ?>
@@ -112,11 +112,10 @@
                                 </div>
                                 <div class="col-sm-9 mb-4">
                                     <?php
-                                    $cat_id=$pRow['cat_id'];
-                                    $categoryResult=$productObj->getCategoryById($cat_id);
-                                    $cRow=$categoryResult->fetch_assoc();
+                                    $stripResult=$productObj->getStripById($pId);
+                                    $stRow=$stripResult->fetch_assoc();
                                     ?>
-                                    <label><?php echo $cRow['cat_name']; ?></label>
+                                    <label><?php echo $stRow['material_name']; ?></label>
                                 </div>
                             </div>
                         </div>

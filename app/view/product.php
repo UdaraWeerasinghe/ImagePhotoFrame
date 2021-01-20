@@ -17,6 +17,12 @@
         include '../model/product-model.php'; 
             $productObj=new Product();
             $productResult=$productObj->getAllProduct();
+        
+        if(isset($_GET["alert"])){
+                ?>
+    <input type="hidden" id="alert" value="<?php echo $_REQUEST["alert"]; ?>">
+        <?php
+            }
         ?>
     </head>
     <body>
@@ -152,11 +158,26 @@
         <script type="text/javascript" src="../../DataTables-1.10.22/js/dataTables.bootstrap4.js"></script>
         <script type="text/javascript" src="../../js/popper1.16.0.js"></script>
         <script type="text/javascript" src="../../js/product-validation.js"></script>
+        <script type="text/javascript" src="../../js/sweetalert2.js"></script>
         <script src="../../js/jsStyle.js"></script>
         <script>
          $(function(){
     $("#product_tbl").dataTable();
   });
+  
+  $( document ).ready(function() {
+    var x = $("#alert").val();
+    
+    if (x=="designAdded"){
+    Swal.fire({
+  position: 'top-end',
+  icon: 'success',
+  title: 'Design Successfully Added',
+  showConfirmButton: false,
+  timer: 1500
+});
+    }
+});
         </script>
  
     </body>

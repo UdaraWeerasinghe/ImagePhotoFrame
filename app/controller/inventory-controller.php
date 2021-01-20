@@ -8,9 +8,22 @@ switch ($status){
     case "addMaterial":
         $mName= $_POST["mName"];
         $mType= $_POST["mType"];
+        $idResult=$inventoryObj->getMaterialInserId();
+                $nor=$idResult->num_rows;
+                if($nor==0){
+                    $newid = "MAT00001";
+                }
+                else{
+                    $idRow=$idResult->fetch_assoc();
+                    $lid=$idRow["material_id"];
+                    $num=substr($lid, 3);
+                    $num++;
+                    $newid = "MAT".str_pad($num,5,"0",STR_PAD_LEFT);
+                    
+                    $inventoryObj->addMaterial($newid,$mName, $mType);
+                }
             
-        $inventoryObj->addMaterial($mName, $mType);
-        header("Location:../view/inventory.php");
+        header("Location:../view/inventory.php?alert=materialAdded");
             break;
         
     case "loadQty":
@@ -43,9 +56,9 @@ switch ($status){
             
                 while ($sRow=$stripResult->fetch_assoc()){
                     ?>
-                <option value="//<?php echo $sRow['material_id'] ?>"><?php echo $sRow['material_name'] ?></option>
+                <option value="<?php echo $sRow['material_id'] ?>"><?php echo $sRow['material_name'] ?></option>
                 
-                //<?php
+                <?php
                  } 
             break;
             
@@ -85,6 +98,11 @@ switch ($status){
                 $inventoryObj->updateQty('2', $nbQty);
             }
                 $inventoryObj->startProcess($order_id);
+                
+                
+                
+                
                  header("Location:../view/order.php");
                 break;
+                
 }

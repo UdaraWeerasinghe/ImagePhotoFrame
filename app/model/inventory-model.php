@@ -10,10 +10,17 @@ class Inventory{
         $results = $con->query($sql) or die($con->error);
         return $results;
     }
-    public function  addMaterial($mName,$mType){
+    public function  getMaterialInserId(){
         
         $con=$GLOBALS['con'];
-        $sql="INSERT INTO  material(material_name,material_type) VALUES('$mName','$mType')";
+        $sql="SELECT material_id FROM material ORDER BY material_id DESC LIMIT 1";
+        $results = $con->query($sql);
+        return $results;
+    }
+    public function  addMaterial($newid,$mName,$mType){
+        
+        $con=$GLOBALS['con'];
+        $sql="INSERT INTO  material(material_id,material_name,material_type) VALUES('$newid','$mName','$mType')";
         $results = $con->query($sql) or die($con->error);
         return $results;
     }

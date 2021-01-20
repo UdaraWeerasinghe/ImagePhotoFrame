@@ -5,87 +5,43 @@ $productObj=new Product();
 $status=$_REQUEST["status"];
 switch ($status){
     
-    case "addCategory":
-        $cat_name=$_POST["cat_name"];
-        
-        $idResult=$productObj->getCatInserId();
-                $nor=$idResult->num_rows;
+        case "addSubCategory":
+            $sub_cat_name=$_POST["sub_cat_name"];
+            $idResult=$productObj->getDesignInserId();
+            $nor=$idResult->num_rows;
                 if($nor==0){
-                    $newid = "CAT00001";
+                    $newid = "DES00001";
                 }
                 else{
                     $idRow=$idResult->fetch_assoc();
-                    $lid=$idRow["cat_id"];
+                    $lid=$idRow["sub_cat_id"];
                     $num=substr($lid, 3);
                     $num++;
-                    $newid = "CAT".str_pad($num,5,"0",STR_PAD_LEFT);
+                    $newid = "DES".str_pad($num,5,"0",STR_PAD_LEFT);
                     
-                   $isAdded=$productObj->addCategory($newid,$cat_name);
-                
-                if($isAdded=="true"){
+                    $isAdded=$productObj->addSubCategory($newid,$sub_cat_name);
                     
-                    $subCategory=$_POST['sub_cat_id'];
-       
-                foreach ($subCategory as $f) {
-                         $productObj->addCategorySubCategory($newid,$f);
-                        }
-        header("Location:../view/category.php?alert=materialAdd");
-                    }
+                    if($isAdded=="true"){
+                    $size=$_POST['sub_cat_size'];
+                    
+                    foreach ($size as $s) {
+                 $productObj->addSubCategorySize($newid,$s);
                 }
-
-    break;
-
-    case "deactivateCategory":
-        $cat_id=$_REQUEST["cat_id"];
-        $productObj->deactivateCategory($cat_id);
-        header("Location:../view/category.php?alert=deactivated");
-        break;
-    
-    case "activateCategory":
-        $cat_id=$_REQUEST["cat_id"];
-        $productObj->activateCategory($cat_id);
-        header("Location:../view/category.php?alert=activated");
-        break;
-    
-    
-    case "edit_category":
-        $cat_id=$_POST["cat_id"];
-        $catResult=$productObj->getCategory($cat_id);
-        $catRow=$catResult->fetch_assoc();
-        ?>
-        <div class="row">
-            <div class="col-md-4">
-                <label>Material Name</label>
-            </div>
-            <div class="col-md-8">
-                <input type="hidden" name="cat_id" value="<?php echo $cat_id; ?>">
-                <input name="cat_name" type="text" value="<?php echo $catRow['cat_name'] ?>" class="form-control">
-            </div>
-        </div>
-        <?php
-        
-        break;
-    
-    case "updateCategory":
-        $cat_id=$_POST["cat_id"];
-        $cat_name=$_POST["cat_name"];
-        $productObj->updateCategory($cat_id,$cat_name);
-        header("Location:../view/category.php?alert=update");
+                header("Location:../view/category.php?alert=subCatAdded");
+                }
+                    
+                }
          
-        break;
-    
-        case "addSubCategory":
-        $sub_cat_name=$_POST["sub_cat_name"];
-        $subCatId=$productObj->addSubCategory($sub_cat_name);
-        $category=$_POST['cat_name'];
-        $size=$_POST['sub_cat_size'];
-        foreach ($category as $f) {
-                 $productObj->addCategorySubCategory($f,$subCatId);
-        }
-        foreach ($size as $s) {
-                 $productObj->addSubCategorySize($subCatId,$s);
-        }
-        header("Location:../view/category.php?alert=subCatAdded");
+//        $subCatId=$productObj->addSubCategory($sub_cat_name);
+//        $category=$_POST['cat_name'];
+//        $size=$_POST['sub_cat_size'];
+//        foreach ($category as $f) {
+//                 $productObj->addCategorySubCategory($f,$subCatId);
+//        }
+//        foreach ($size as $s) {
+//                 $productObj->addSubCategorySize($subCatId,$s);
+//        }
+//        header("Location:../view/category.php?alert=subCatAdded");
 
     break;
     
@@ -126,13 +82,26 @@ switch ($status){
                    $tmp= $_FILES["img2"]["tmp_name"];
                    $destination="../../images/design_image/$img2";
                    move_uploaded_file($tmp, $destination); 
-                }       
-        $proId=$productObj->addDesign($dNanme, $dCode, $material, $frameType, $color, $img1, $img2);
-        $productObj->setMaterialProduct($proId, $mId);
-        $msg="Successfully add design"." ".$dNanme;
-        $class="alert-success";
-        
-        if ($proId>0) {
+                } 
+                $idResult=$productObj->getProductInserId();
+                $nor=$idResult->num_rows;
+                if($nor==0){
+                    $newid = "PR00001";
+                }
+                else{
+                    $idRow=$idResult->fetch_assoc();
+                    $lid=$idRow["product_id"];
+                    $num=substr($lid, 2);
+                    $num++;
+                    $newid = "PR".str_pad($num,5,"0",STR_PAD_LEFT);
+                    
+                    $isAdded=$productObj->addDesign($newid,$dNanme, $dCode, $material, $frameType, $color, $img1, $img2);
+                
+                    if($isAdded=="true"){
+                        
+                        $productObj->setMaterialProduct($newid, $mId);
+                         
+                        
                 if (isset($_POST['sizeId'])){
                     $numberlegth= sizeof($_POST['sizeId']);
                     $numberlegth;
@@ -141,14 +110,13 @@ switch ($status){
                         $price=$_POST[$size_id];
 //                        echo $size_id;
 //                         echo $price;
-                      $productObj->addPrice($size_id, $price, $proId);
+                      $productObj->addPrice($size_id, $price, $newid);
                     }
                 }
-            }
-        
-         ?>
-        <script> window.location="../view/product.php?msg=<?php echo $msg;?> & class=<?php echo $class; ?>";</script>
-   <?php
+                    }
+                }
+
+                header("Location:../view/product.php?alert=designAdded");
         break;
         
     case "getType":

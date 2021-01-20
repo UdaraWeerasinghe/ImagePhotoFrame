@@ -18,7 +18,6 @@
             
             include '../model/product-model.php';
             $productObj=new Product();
-            $category=$productObj->getAllCategory();//all matirials
             $sub_category=$productObj->getAllSubCategory();//all type
             
             if(isset($_GET["alert"])){
@@ -85,61 +84,6 @@
                     
                     <div class="row">
                         <div class="col-xl-6">
-                            <div class="card" style="padding: 20px 20px 0px 20px;">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <h4>Material Types</h4>
-                                    </div>
-                                    <div class="col-md-6" style="text-align: end">
-                                        <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addCategory">Add Material Types</button>
-                                    </div>
-                                </div>
-                                 
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Availability</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php while ($catRow=$category->fetch_assoc()){ 
-                                            $cat_id=$catRow['cat_id'];
-                                            ?>
-                                        
-                                        <tr>
-                                         
-                                            <td><?php echo $catRow['cat_name']; ?></td>
-                                            <td>
-                                                <?php
-                                                if($catRow['cat_status']==1){
-                                                    echo 'Available';
-                                                } else {
-                                                    echo 'Not Available';
-                                                }
-                                                ?>
-                                            </td>
-                                            <td>
-                                         <a data-toggle="modal" data-target="#updateCategory" class="btn btn-sm btn-warning" onclick="load_data('<?php echo $catRow['cat_id']; ?>')"><i class="fas fa-pencil" style="margin: 4px"></i></a>                                              
-                                                <?php
-                                                if($catRow['cat_status']==1){
-                                                    ?>
-                                                <a href="../controller/product-controller.php?status=deactivateCategory&cat_id=<?php echo $cat_id; ?>" class="btn btn-sm btn-danger">Deactivate</a>
-                                                <?php
-                                                } else {
-                                                    ?>
-                                                <a href="../controller/product-controller.php?status=activateCategory&cat_id=<?php echo $cat_id; ?>" class="btn btn-sm btn-success">Activate</a>
-                                                <?php
-                                                }
-                                                ?>
-                                                
-                                            </td>
-                                        </tr>
-                                        <?php } ?>
-                                    </tbody>
-                                </table>
-                            </div>        
                         </div>
                         
                         
@@ -206,89 +150,7 @@
                     </div>
                 </div>
             </div> 
-            <!--///////////////add category modal start/////////////////--> 
-            <div class="modal fade" id="addCategory">
-                <div class="modal-dialog modal-lg">
-                  <div class="modal-content">
-                      <form id="addCategort" enctype="multipart/form-data" method="post" style="padding-top: 10px;" action="../controller/product-controller.php?status=addCategory">
-                        <!-- Modal Header -->
-                        <div class="modal-header">
-                          <h4 class="modal-title">Add Material</h4>
-                          <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        </div>
-                        
-                        <!-- Modal body -->
-                        <div class="modal-body">
-                            <div class="row" style="padding: 10px;"><div style="text-align: center" class="col-md-12" id="vAlert"></div></div>
-                                <div class="row">
-                                    <div class="col-md-5">
-                                        <label>Material Name</label>
-                                    </div>
-                                    <div class="col-md-7">
-                                        <input name="cat_name" id="cat_name" type="text" class="form-control" placeholder="Enter Material..." required>
-                                    </div>
-                                </div>
-                            <div class="row"><div class="col-12">&nbsp;</div></div>
-                                <div class="row">
-                                    <div class="col-md-5">
-                                        <label>Select Frame Type</label>
-                                    </div>
-                                    <div class="col-md-7">
-                                        <div class="row">
-                                        <?php
-                                        $Counter=0;
-                                        $sub_category=$productObj->getAllSubCategory();
-                                        while ($catRow=$sub_category->fetch_assoc()){ 
-                                            $Counter++;
-                                            ?>
-                                            <div class="col-md-6">
-                                                <input name="sub_cat_id[]" id="sub_cat_id" type="checkbox" value="<?php echo $catRow['sub_cat_id']; ?>">&nbsp;<label><?php echo $catRow['sub_cat_name']; ?></label>
-                                            </div>
-                                        <?php
-                                        if ($Counter % 2 == 0){
-                                            ?>
-                                        </div> <div class="row">
-                                                <?php
-                                        }
-                                        
-                                        } ?>
-                                        </div>
-                                    </div>
-                                </div>
-                        </div>
-                        <!-- Modal footer -->
-                        <div class="modal-footer">
-                            <button type="reset" class="btn btn-danger"><i class="fad fa-sync-alt"></i>&nbsp;Clear</button>
-                            <button type="submit" class="btn btn-success"><i class="fal fa-save"></i>&nbsp;Save</button>
-                        </div>
-                    </form> 
-                  </div>
-                </div>
-            </div>
-            <!--///////////////add category modal end/////////////////--> 
-            <!--///////////////update category modal start/////////////////--> 
-            <div class="modal fade" id="updateCategory">
-                <div class="modal-dialog ">
-                  <div class="modal-content">
-                      <form enctype="multipart/form-data" method="post" style="padding-top: 10px;" action="../controller/product-controller.php?status=updateCategory">
-                        <!-- Modal Header -->
-                        <div class="modal-header">
-                          <h4 class="modal-title">Update Material</h4>
-                          <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        </div>
-                        <!-- Modal body -->
-                        <div class="modal-body" id="modalBody">
-                                
-                        </div>
-                        <!-- Modal footer -->
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-warning"><i class="fas fa-pencil" style="margin: 4px"></i>&nbsp;Update</button>
-                        </div>
-                    </form> 
-                  </div>
-                </div>
-            </div>
-            <!--///////////////update category modal end/////////////////--> 
+            
             <!--///////////////add sub category modal start/////////////////--> 
             <div class="modal fade" id="addSubCategory">
                 <div class="modal-dialog modal-lg">
@@ -310,18 +172,6 @@
                                     </div>
                                 </div>
                             <div class="row"><div class="col-12">&nbsp;</div></div>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <label>Select Material</label>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <?php
-                                        $category=$productObj->getAllCategory();
-                                        while ($catRow=$category->fetch_assoc()){ ?>
-                                        <input name="cat_name[]" type="checkbox" value="<?php echo $catRow['cat_id']; ?>">&nbsp;<label><?php echo $catRow['cat_name']; ?></label>&nbsp;&nbsp;
-                                        <?php } ?>
-                                    </div>
-                                </div>
                             <div class="row"><div class="col-12">&nbsp;</div></div>
                                 <div class="row">
                                     <div class="col-md-4">
@@ -360,48 +210,14 @@
                 </div>
             </div>
             <!--///////////////add sub category modal end/////////////////-->
-            <script type="text/javascript" src="../../js/sweetalert2.js"></script>
+        <script type="text/javascript" src="../../js/sweetalert2.js"></script>
         <script src="../../js/product-validation.js"></script>
         <script src="../../js/jsStyle.js"></script>
         <script>
-//     load update category
-    function load_data(x) {
-        var url="../controller/product-controller.php?status=edit_category";
-        $.post(url, {cat_id:x}, function(data){
-            $("#modalBody").html(data).show();
-        });
-    }
-    // load update category  end
+
 $( document ).ready(function() {
     var x = $("#alert").val();
-    if (x=="materialAdd"){
-    Swal.fire({
-  position: 'top-end',
-  icon: 'success',
-  title: 'New material type added',
-  showConfirmButton: false,
-  timer: 1500
-});
-    }
-    if (x=="update"){
-    Swal.fire({
-  position: 'top-end',
-  icon: 'success',
-  title: 'Successfully Updated ',
-  showConfirmButton: false,
-  timer: 1500
-});
-    }
-    
-    if (x=="update"){
-    Swal.fire({
-  position: 'top-end',
-  icon: 'success',
-  title: 'Successfully Updated ',
-  showConfirmButton: false,
-  timer: 1500
-});
-    }
+
     
     if (x=="subCatAdded"){
     Swal.fire({
@@ -417,6 +233,15 @@ $( document ).ready(function() {
   position: 'top-end',
   icon: 'success',
   title: 'Successfully Activated',
+  showConfirmButton: false,
+  timer: 1500
+});
+    }
+     if (x=="deactivated"){
+    Swal.fire({
+  position: 'top-end',
+  icon: 'success',
+  title: 'Successfully Deactivated',
   showConfirmButton: false,
   timer: 1500
 });

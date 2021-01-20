@@ -18,7 +18,7 @@
             
             include '../model/product-model.php';
             $productObj=new Product();
-            $category=$productObj->getAllCategory();//all matirials
+//            $category=$productObj->getAllCategory();//all matirials
             $sub_category=$productObj->getAllSubCategory();//all type
             
         ?>
@@ -111,11 +111,8 @@
                                 <div class="col-md-4">
                                     <select name="material" id="material" class="form-control">
                                         <option></option>
-                                        <?php
-                                        while ($prow=$category->fetch_assoc()){
-                                            ?>
-                                        <option value="<?php echo $prow['cat_id'] ?>"><?php echo $prow['cat_name'] ?></option>
-                                        <?php } ?>
+                                        <option value="CAT00001">Metal</option>
+                                        <option value="CAT00002">Wood</option>
                                         <div class="invalid-feedback">
                                         Design name need to be enter
                                     </div>

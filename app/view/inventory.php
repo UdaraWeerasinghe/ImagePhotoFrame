@@ -15,6 +15,12 @@
             include '../model/inventory-model.php';
             $inventoryObj = new Inventory();
             $inventoryResult=$inventoryObj->getAllMaterial();
+            
+            if(isset($_GET["alert"])){
+                ?>
+    <input type="hidden" id="alert" value="<?php echo $_REQUEST["alert"]; ?>">
+        <?php
+            }
         ?>
     </head>
     <body>
@@ -114,8 +120,8 @@
                                 <div class="col-sm-3">Type</div>
                                 <div class="col-sm-9">
                                     <select name="mType" class="form-control">
-                                        <option value="1">Metal Strip</option>
-                                        <option value="2">Wood Strip</option>
+                                        <option value="CAT00001">Metal Strip</option>
+                                        <option value="CAT00002">Wood Strip</option>
 <!--                                        <option value="3">Glass</option>
                                         <option value="4">Hardboard</option>-->
                                     </select>
@@ -161,6 +167,7 @@
         <script type="text/javascript" src="../../DataTables-1.10.22/js/dataTables.bootstrap4.js"></script>
         <script type="text/javascript" src="../../js/popper1.16.0.js"></script>
         <script type="text/javascript" src="../../js/product-validation.js"></script>
+        <script type="text/javascript" src="../../js/sweetalert2.js"></script>
         <script src="../../js/jsStyle.js"></script>
         <script>
             //     load  add feet
@@ -208,6 +215,21 @@
 
         chart.draw(data, google.charts.Bar.convertOptions(options));
       }
+      
+      
+      $( document ).ready(function() {
+    var x = $("#alert").val();
+    
+    if (x=="materialAdded"){
+    Swal.fire({
+  position: 'top-end',
+  icon: 'success',
+  title: 'Frame Strip Successfully Added',
+  showConfirmButton: false,
+  timer: 1500
+});
+    }
+});
         </script>
  
     </body>
