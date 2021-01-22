@@ -72,37 +72,79 @@ switch ($status){
                 break;
             
             case "startProcess":
+//                
+            $order_id= base64_decode($_REQUEST["oId"]);
+//            $mId=$_POST["mId"];
+//            
+//            $x= sizeof($_POST["length"]);
+//            
+//            for($i=0; $i<$x; $i++){
+//                $length=$_POST["length"][$i]/12; //conver to feets 
+//                $squareInch=$_POST["squareInch"][$i]/12; //conver to feets 
+//                $mId=$_POST["mId"][$i];
+//                $qty=$inventoryObj->getMaterialLengthById($mId);
+//                $row=$qty->fetch_assoc();
+//                echo $nQty=$row["qty"]-$length;
+//                $inventoryObj->updateQty($mId, $nQty);
+//                
+//                $gQty=$inventoryObj->getMaterialLengthById('MAT00001');
+//                $gRow=$gQty->fetch_assoc();
+//                $gRow["qty"];
+//                $nqQty=$gRow["qty"]-$squareInch;
+//                $inventoryObj->updateQty('MAT00001', $nqQty);
+//                
+//                $bQty=$inventoryObj->getMaterialLengthById('MAT00002');
+//                $bRow=$bQty->fetch_assoc();
+//                $nbQty=$bRow["qty"]-$squareInch;
+//                $inventoryObj->updateQty('MAT00002', $nbQty);
+//            }
+//                $inventoryObj->startProcess($order_id);
                 
-            $order_id=$_REQUEST["oId"];
-            $mId=$_POST["mId"];
-            
-            $x= sizeof($_POST["length"]);
-            
-            for($i=0; $i<$x; $i++){
-                $length=$_POST["length"][$i]/12; //conver to feets 
-                $squareInch=$_POST["squareInch"][$i]/12; //conver to feets 
-                $mId=$_POST["mId"][$i];
-                $qty=$inventoryObj->getMaterialLengthById($mId);
-                $row=$qty->fetch_assoc();
-                $nQty=$row["qty"]-$length;
-                $inventoryObj->updateQty($mId, $nQty);
+                $customerResult=$inventoryObj->getCustomerByOId($order_id);
+                $cRow=$customerResult->fetch_assoc();
+                $customerName=$cRow["customer_fName"]." ".$cRow["customer_lName"];
                 
-                $gQty=$inventoryObj->getMaterialLengthById('1');
-                $gRow=$gQty->fetch_assoc();
-                $nqQty=$gRow["qty"]-$squareInch;
-                $inventoryObj->updateQty('1', $nqQty);
+    require '../../includes/phpMailer-header.php';
+
+    $mail->setFrom('imagephotoframs@gmail.com');
+    $mail->addAddress('udaraw1997@gmail.com');     
+    $mail->addReplyTo('imagephotoframs@gmail.com', 'Information');
+
+
+    $mail->isHTML(true);                                  
+    $mail->Subject = 'Order';
+    $mail->Body    = ''
+            . '<div style="width:100%; background-color: #c7cfb7; padding: 0 10% 0 10%">'
+            . '<div style="width:80%; background-color: white;">'
+            . '<div style="width:100%; height:60px; display: flex;">'
+            . '<div style="width: 50%; height:50px;"><img width="180px" height="50px" src="cid:icon"></div>'
+            . '<div style="width: 50%; height:50px; text-align: right; margin-top:30px; margin-right:10px;">'
+            . '<a href="http://localhost/imagePhotoFrameWeb/app/view/order.php" style="text-decoration:none;">My order | &nbsp;</a>'
+            . '<a href="http://localhost/imagePhotoFrameWeb/app/view/profile.php" style="text-decoration:none;">My account | &nbsp;</a>'
+            . '<a href="http://localhost/imagePhotoFrameWeb/app/view/contact.php" style="text-decoration:none;">Contact us</a>'
+            . '</div>'
+            . '</div>'
+            . '<div style="width:100%; position: fixed; top: 100px; padding: 10px 0px 10px 0px; background-color: #09015f; text-align: center; color: white; font-style: italic;">'
+            . '<h1 style="margin: 0">THANKS FOR</h1>'
+            . '<h4 style="margin: 0">Choosing To Shop At Image Photo Frames</h4>'
+            . '</div>'
+            . '<div style="padding: 0 15px; color: black">'
+            . '<p style="font-weight:bold;">Dear '.$customerName.',</p>'
+            . '</div>'
+            . '<div style="padding: 0 40px; color: black">'
+            . '<p>Thank you for shopping with us.Your order number is '.$order_id.'.</p>'
+            . '</div>'
+            . '</div>'
+            . '</div>';
+    $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+    $mail->AddEmbeddedImage('../../images/system/icon.jpg', 'icon');
+    
+    if ($mail->Send()) { 
+        header("Location:../view/order.php?alert=success");           
+}
                 
-                $bQty=$inventoryObj->getMaterialLengthById('2');
-                $bRow=$bQty->fetch_assoc();
-                $nbQty=$bRow["qty"]-$squareInch;
-                $inventoryObj->updateQty('2', $nbQty);
-            }
-                $inventoryObj->startProcess($order_id);
-                
-                
-                
-                
-                 header("Location:../view/order.php");
+                 
                 break;
                 
 }

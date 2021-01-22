@@ -31,17 +31,7 @@ switch ($status){
                 }
                     
                 }
-         
-//        $subCatId=$productObj->addSubCategory($sub_cat_name);
-//        $category=$_POST['cat_name'];
-//        $size=$_POST['sub_cat_size'];
-//        foreach ($category as $f) {
-//                 $productObj->addCategorySubCategory($f,$subCatId);
-//        }
-//        foreach ($size as $s) {
-//                 $productObj->addSubCategorySize($subCatId,$s);
-//        }
-//        header("Location:../view/category.php?alert=subCatAdded");
+ 
 
     break;
     
@@ -187,4 +177,5 @@ switch ($status){
         <?php
         
         break;
+        
 }

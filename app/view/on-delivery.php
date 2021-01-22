@@ -16,13 +16,13 @@
             
             include '../model/order-model.php';
             $orderObj=new Order();
-            $allOrder=$orderObj->getAllOrders();
-           if(isset($_GET["alert"])){
+            $allOrder=$orderObj->getAllOnDeliveryOrders();
+            if(isset($_GET["alert"])){
         ?>
         <input type="hidden" id="alert" value="sucess">
     <?php
     }
-?>
+        ?>
     </head>
     <body>
         
@@ -57,7 +57,7 @@
 
                 <ul class="nav nav-tabs" style="margin-bottom: 10px;">
                   <li class="nav-item">
-                      <a class="nav-link active" href="order.php">New Ordes</a>
+                      <a class="nav-link" href="order.php">New Ordes</a>
                   </li>
                   <li class="nav-item">
                       <a class="nav-link" href="on-process.php">On Process</a>
@@ -66,7 +66,7 @@
                       <a class="nav-link" href="completed.php">Waiting For Payment</a>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link" href="on-delivery.php">On delivery</a>
+                      <a class="nav-link active" href="on-delivery.php">On delivery</a>
                   </li>
                   <li class="nav-item">
                       <a class="nav-link" href="#ad">Completed</a>
@@ -107,6 +107,7 @@
                                 </td>
                                 <td>
                                     <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#view" onclick="viewOrder('<?php echo $order_row["order_id"] ?>')">View</button>
+                                    <a type="button" class="btn btn-sm btn-warning" href="../controller/order-controller.php?status=completed&oId=<?php echo base64_encode($order_row["order_id"]); ?>">Start Delivery</a>
                                 </td>
                             </tr>
                  <?php } ?>
@@ -134,7 +135,6 @@
               </div>
             </div>
         </div>
-        
         <script type="text/javascript" src="../../js/jquery-3.5.1.js"></script>
         <script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="../../DataTables-1.10.22/js/jquery.dataTables.js"></script>
@@ -148,33 +148,17 @@
         <script type="text/javascript">
             $(function(){
              $("#order_tbl").dataTable({
-                 "order": [[ 0, "desc" ]]
+                 "order": [[ 2, "desc" ]]
              });
            });
            
-           function viewOrder(orderId){
-            var url="../controller/order-controller.php?status=viewOrderModale&orderId="+orderId;
+            function viewOrder(orderId){
+            var url="../controller/order-controller.php?status=viewOrderModale&completed&orderId="+orderId;
             $.post(url, {orderId:orderId}, function(data) {
                 $("#viewOrderBody").html(data).show();
             });
         }
         
-        $(document).ready(function() {
-            
-            var a = $("#alert").val();
-            if(a=="sucess"){
-              Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'Process Started',
-            text: '',
-            showConfirmButton: false,
-            timer: 1500
-          });   
-            }
-            
-        });
-           
         </script>
         
     </body>

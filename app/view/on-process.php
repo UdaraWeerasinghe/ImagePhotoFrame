@@ -17,7 +17,11 @@
             include '../model/order-model.php';
             $orderObj=new Order();
             $allOrder=$orderObj->getAllOnProcessOrders();
-            
+            if(isset($_GET["alert"])){
+        ?>
+        <input type="hidden" id="alert" value="sucess">
+    <?php
+    }
         ?>
     </head>
     <body>
@@ -50,13 +54,7 @@
             </div>
             <div class="dashbord-body" id="dashbord-body" style="flex: 70%; height: 800px; padding: 10px;">
                 <h3 style="text-align: center; margin-top: 10px;">Order Management</h3>
-<!--                <div style="padding: 10px;">
-                    <div class="row">
-                        <div class="col-12"style="background-color: #f5f6f8;padding: 5px;">
-                            <a href="dashboard.php">Dashboard </a>/<a> Order Management</a>
-                        </div>
-                    </div>
-                </div>-->
+
                 <ul class="nav nav-tabs" style="margin-bottom: 10px;">
                   <li class="nav-item">
                       <a class="nav-link" href="order.php">New Ordes</a>
@@ -65,10 +63,10 @@
                       <a class="nav-link active" href="on-process.php">On Process</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#deactive-users">Waiting For Payment</a>
+                      <a class="nav-link" href="completed.php">Waiting For Payment</a>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link" href="#add-user">On delivery</a>
+                      <a class="nav-link" href="on-delivery.php">On delivery</a>
                   </li>
                   <li class="nav-item">
                       <a class="nav-link" href="#ad">Completed</a>
@@ -108,8 +106,8 @@
                                 ?>
                                 </td>
                                 <td>
-                                    <a href="view-order.php?oId=<?php echo $order_row["order_id"] ?>" class="btn btn-sm btn-info">View</a>
-                                    <a class="btn btn-sm btn-warning">Compleded</a>
+                                    <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#view" onclick="viewOrder('<?php echo $order_row["order_id"] ?>')">View</button>
+                                    <a type="button" class="btn btn-sm btn-warning" href="../controller/order-controller.php?status=completed&oId=<?php echo base64_encode($order_row["order_id"]); ?>">Completed</a>
                                 </td>
                             </tr>
                  <?php } ?>
@@ -122,6 +120,21 @@
          
         </div> 
         
+        <div class="modal fade" id="view">
+            <div class="modal-dialog ">
+              <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                  <h4 class="modal-title">Order Details</h4>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body" id="viewOrderBody">
+                </div>
+              </div>
+            </div>
+        </div>
         <script type="text/javascript" src="../../js/jquery-3.5.1.js"></script>
         <script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="../../DataTables-1.10.22/js/jquery.dataTables.js"></script>
@@ -139,6 +152,28 @@
              });
            });
            
+            function viewOrder(orderId){
+            var url="../controller/order-controller.php?status=viewOrderModale&onProcess&orderId="+orderId;
+            $.post(url, {orderId:orderId}, function(data) {
+                $("#viewOrderBody").html(data).show();
+            });
+        }
+        
+        $(document).ready(function() {
+            
+            var a = $("#alert").val();
+            if(a=="sucess"){
+              Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Successfull',
+            text: 'Order Successfuly Completed',
+            showConfirmButton: false,
+            timer: 1500
+          });   
+            }
+            
+        });
         </script>
         
     </body>
