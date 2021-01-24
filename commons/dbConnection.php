@@ -1,13 +1,12 @@
 <?php
 
-class dbConnection{
-    
+class dbConnection{ //class for the db
     public $conn;
-    private $hostname="localhost";
-    private $dbusename="root";
-    private $dbpassword="";
-    private $db="bit_project";
-    
+    private $hostname="localhost"; 
+    private $dbusename="root";   //user name
+    private $dbpassword="";         //password
+    private $db="ifpDb";            //db name
+        
     function __construct() {
         $this->conn= new mysqli(
         $this->hostname,
