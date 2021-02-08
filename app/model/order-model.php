@@ -80,4 +80,12 @@ class Order{
         $results = $con->query($sql) or die($con->error);
         return $results;
     }
+    ///test
+    public function  getOrders($startDate,$endDate){
+        
+        $con=$GLOBALS['con'];
+        $sql="SELECT * FROM order_detail WHERE order_timestamp BETWEEN '$endDate' AND '$startDate'";
+        $results = $con->query($sql) or die($con->error);
+        return $results;
+    }
 }

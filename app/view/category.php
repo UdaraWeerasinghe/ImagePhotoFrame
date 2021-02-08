@@ -1,4 +1,5 @@
-<?php include '../../commons/session.php'; ?>
+<?php include '../../commons/session.php';
+$userRole=$_SESSION["user"]["role_id"];?>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -14,7 +15,7 @@
         
             include '../model/module-model.php';
             $moduleObj = new Module();
-            $moduleResult=$moduleObj->getAllModules();  
+            $moduleResult=$moduleObj->getAllModules($userRole);  
             
             include '../model/product-model.php';
             $productObj=new Product();

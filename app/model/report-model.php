@@ -16,5 +16,11 @@ class Report{
         $results = $con->query($sql) or die($con->error);
         return $results;
     }
+    public function  getAllOrder(){
+        $con=$GLOBALS['con'];
+        $sql="SELECT * FROM order_detail od, customer c WHERE od.customer_id=c.customer_id";  
+        $results = $con->query($sql) or die($con->error);
+        return $results;
+    }
     
 }

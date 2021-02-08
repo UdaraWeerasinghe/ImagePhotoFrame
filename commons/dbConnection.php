@@ -1,5 +1,4 @@
 <?php
-
 class dbConnection{ //class for the db
     public $conn;
     private $hostname="localhost"; 
@@ -22,12 +21,7 @@ class dbConnection{ //class for the db
        else{
             echo "Not Success";
         $GLOBALS["con"]=$this->conn;
-       }
-        
-    }
-    
-    
-    
-    
+       } 
+    } 
 }
 

@@ -29,7 +29,6 @@ class User{
         return $results;
     }
      public function  checkEmail($email){
-        
         $con=$GLOBALS['con'];
         $sql="SELECT 1 FROM user WHERE user_email='$email'";
         $results = $con->query($sql);
@@ -43,10 +42,22 @@ class User{
           }
     }
     
-    public function  checkCno($cn){
-        
+    public function  checkCno($cn){ 
         $con=$GLOBALS['con'];
         $sql="SELECT 1 FROM user WHERE user_cno='$cn'";
+        $results = $con->query($sql);
+        if($results->num_rows>0)
+         {
+            return false;
+         }
+         else
+          {
+             return true;
+          }
+    }
+    public function  checknic($nic){
+        $con=$GLOBALS['con'];
+        $sql="SELECT 1 FROM user WHERE user_nic='$nic'";
         $results = $con->query($sql);
         if($results->num_rows>0)
          {

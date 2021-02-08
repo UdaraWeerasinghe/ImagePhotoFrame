@@ -74,31 +74,31 @@ switch ($status){
             case "startProcess":
 //                
             $order_id= base64_decode($_REQUEST["oId"]);
-//            $mId=$_POST["mId"];
-//            
-//            $x= sizeof($_POST["length"]);
-//            
-//            for($i=0; $i<$x; $i++){
-//                $length=$_POST["length"][$i]/12; //conver to feets 
-//                $squareInch=$_POST["squareInch"][$i]/12; //conver to feets 
-//                $mId=$_POST["mId"][$i];
-//                $qty=$inventoryObj->getMaterialLengthById($mId);
-//                $row=$qty->fetch_assoc();
-//                echo $nQty=$row["qty"]-$length;
-//                $inventoryObj->updateQty($mId, $nQty);
-//                
-//                $gQty=$inventoryObj->getMaterialLengthById('MAT00001');
-//                $gRow=$gQty->fetch_assoc();
-//                $gRow["qty"];
-//                $nqQty=$gRow["qty"]-$squareInch;
-//                $inventoryObj->updateQty('MAT00001', $nqQty);
-//                
-//                $bQty=$inventoryObj->getMaterialLengthById('MAT00002');
-//                $bRow=$bQty->fetch_assoc();
-//                $nbQty=$bRow["qty"]-$squareInch;
-//                $inventoryObj->updateQty('MAT00002', $nbQty);
-//            }
-//                $inventoryObj->startProcess($order_id);
+            $mId=$_POST["mId"];
+            
+            $x= sizeof($_POST["length"]);
+            
+            for($i=0; $i<$x; $i++){
+                $length=$_POST["length"][$i]/12; //conver to feets 
+                $squareInch=$_POST["squareInch"][$i]/12; //conver to feets 
+                $mId=$_POST["mId"][$i];
+                $qty=$inventoryObj->getMaterialLengthById($mId);
+                $row=$qty->fetch_assoc();
+                echo $nQty=$row["qty"]-$length;
+                $inventoryObj->updateQty($mId, $nQty);
+                
+                $gQty=$inventoryObj->getMaterialLengthById('MAT00001');
+                $gRow=$gQty->fetch_assoc();
+                $gRow["qty"];
+                $nqQty=$gRow["qty"]-$squareInch;
+                $inventoryObj->updateQty('MAT00001', $nqQty);
+                
+                $bQty=$inventoryObj->getMaterialLengthById('MAT00002');
+                $bRow=$bQty->fetch_assoc();
+                $nbQty=$bRow["qty"]-$squareInch;
+                $inventoryObj->updateQty('MAT00002', $nbQty);
+            }
+                $inventoryObj->startProcess($order_id);
                 
                 $customerResult=$inventoryObj->getCustomerByOId($order_id);
                 $cRow=$customerResult->fetch_assoc();

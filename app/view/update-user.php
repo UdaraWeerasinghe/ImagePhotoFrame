@@ -1,4 +1,5 @@
-<?php include '../../commons/session.php'; ?>
+<?php include '../../commons/session.php'; 
+$userRole=$_SESSION["user"]["role_id"];?>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -13,7 +14,7 @@
         
         include '../model/module-model.php';
             $moduleObj = new Module();
-            $moduleResult=$moduleObj->getAllModules();
+            $moduleResult=$moduleObj->getAllModules($userRole);
             
             include '../model/user-model.php';
             $userObj = new User();
@@ -52,7 +53,7 @@
 
                  <?php }?>
             </div>
-            <div class="dashbord-body" style="flex: 70%; height: 800px;">
+            <div class="dashbord-body" id="dashbord-body" style="flex: 70%; height: 800px;">
                 <h3 style="text-align: center; margin-top: 20px;">Update User</h3><hr>
            <div class="container mt-3">
                     <div id="add-user" class="container "><br>

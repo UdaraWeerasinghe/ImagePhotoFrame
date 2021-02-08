@@ -9,46 +9,88 @@ $(document).ready(function (){
         var uRole=$("#uRole").val();
         var gender=$("#gender").val();
         
+//        if(fName==""){
+//          $("#vAlert").html("First name can not be empty !");
+//          $("#vAlert").addClass("alert alert-danger");
+//          return false;
+//        }
+ 
         if(fName==""){
-          $("#vAlert").html("First name can not be empty !");
-          $("#vAlert").addClass("alert alert-danger");
+          $("#fName").addClass("is-invalid");
+          $("#fName").focus();
           return false;
+        }else{
+           $("#fName").addClass("is-valid"); 
         }
         if(lName==""){
-          $("#vAlert").html("Last name can not be empty !");
-          $("#vAlert").addClass("alert alert-danger");
+          $("#lName").addClass("is-invalid");
+          $("#lName").focus();
           return false;
+        }else{
+           $("#lName").addClass("is-valid"); 
         }
         if(email==""){
-          $("#vAlert").html("Email can not be empty !");
-          $("#vAlert").addClass("alert alert-danger");
+          $("#email").addClass("is-invalid");
+          $("#email").focus();
           return false;
+        }else{
+           $("#email").addClass("is-valid"); 
         }
         if(cn==""){
-          $("#vAlert").html("Contact number can not be empty !");
-          $("#vAlert").addClass("alert alert-danger");
+          $("#cn").addClass("is-invalid");
+          $("#cn").focus();
           return false;
+        }else{
+           $("#cn").addClass("is-valid"); 
         }
         if(dob==""){
-          $("#vAlert").html("Date of birth can not be empty !");
-          $("#vAlert").addClass("alert alert-danger");
+          $("#dob").addClass("is-invalid");
+          $("#dob").focus();
           return false;
+        }else{
+           $("#dob").addClass("is-valid"); 
         }
         if(nic==""){
-          $("#vAlert").html("NIC number can not be empty !");
-          $("#vAlert").addClass("alert alert-danger");
+          $("#nic").addClass("is-invalid");
+          $("#nic").focus();
           return false;
+        }else{
+           $("#nic").addClass("is-valid"); 
         }
         if(uRole==""){
-          $("#vAlert").html("User role can not be empty !");
-          $("#vAlert").addClass("alert alert-danger");
+          $("#uRole").addClass("is-invalid");
+          $("#uRole").focus();
           return false;
+        }else{
+           $("#uRole").addClass("is-valid"); 
         }
           if(gender==""){
-          $("#vAlert").html("User gender can not be empty !");
-          $("#vAlert").addClass("alert alert-danger");
+          $("#gender").addClass("is-invalid");
+          $("#gender").focus();
           return false;
+        }else{
+           $("#gender").addClass("is-valid"); 
         }
         
+        var email_ptn = /^([a-zA-Z0-9_\.\-])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z]{2,6})+$/;
+        var cno_ptn = /^[0]\d{9}$/;
+        var nic_ptn_new = /^[0-9]{12}$/;
+        var nic_ptn_old = /^[0-9]{9}[vVxX][1]$/;
+        
+        if (!email.match(email_ptn)){
+          $("#email").addClass("is-invalid");
+          $("#emailAlert").html("Invalid Email!");
+          $("#email").focus();
+        }
+        if (!nic.match(cno_ptn)){
+          $("#cn").addClass("is-invalid");
+          $("#cnAlert").html("Invalid phone number!");
+          $("#cn").focus();
+        }
+        if (!nic.match(nic_ptn_new) || !nic.match(nic_ptn_old)){
+          $("#nic").addClass("is-invalid");
+          $("#nicAlert").html("Invalid NIC number!");
+          $("#nic").focus();
+        }
     });
 });

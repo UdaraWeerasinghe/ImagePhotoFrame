@@ -43,12 +43,16 @@ switch ($status){
             
             $isValidEmail=$userObj->checkEmail($email);
             $isValidCno=$userObj->checkCno($cn);
+            $isValidNic=$userObj->checkNic($nic);
             
             if($isValidEmail===false){
-                throw new Exception("Email address is alredy exist!");
+                throw new Exception("Email address is alredy registered!");
             }
             if($isValidCno===false){
-                throw new Exception("Contact number is alredy exist!");
+                throw new Exception("Contact number is alredy registered!");
+            }
+            if($isValidNic===false){
+                throw new Exception("NIC number is alredy registered!");
             }
             
             if($_FILES["user_img"]["name"]!="")

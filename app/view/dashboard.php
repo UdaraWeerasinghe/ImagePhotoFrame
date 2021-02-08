@@ -1,11 +1,12 @@
-<?php include '../../commons/session.php'; ?>
+<?php include '../../commons/session.php'; 
+$userRole=$_SESSION["user"]["role_id"];
+?>
+
 <html>
     <head>
         <meta charset="UTF-8">
         <title></title>
-        <script type="text/javascript" src="../../js/jquery-3.5.1.js"></script>
         <link type="text/css" rel="stylesheet" href="../../bootstrap/css/bootstrap.css">
-        <script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="../../fontawesome-pro-5.13.0-web/css/all.css">
         <link type="text/css" rel="stylesheet" href="../../css/style.css">
 
@@ -13,7 +14,7 @@
         
         include '../model/module-model.php';
             $moduleObj = new Module();
-            $moduleResult=$moduleObj->getAllModules();
+            $moduleResult=$moduleObj->getAllModules($userRole);
         ?>
     </head>
     <body>
@@ -40,13 +41,171 @@
 
                  <?php }?>
             </div>
-            <div class="dashbord-body" style="flex: 70%; height: 800px;">
+            <div class="dashbord-body" id="dashbord-body" style="flex: 70%; height: 800px;">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div style="padding: 10px">
+                                <div class="row " style="border: #173F5F solid 2px; border-radius: 10px; padding: 20px 5px;">
+                                    <div class="col-4">
+                                        <div style="text">
+                                            <i class="fad fa-cart-arrow-down fa-4x" style="color: #173F5F"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-8" style="padding-left: 30px;">
+                                        <div>
+                                            New Orders
+                                        </div>
+                                        <div>
+                                            12
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div style="padding: 10px">
+                                <div class="row " style="border: #173F5F solid 2px; border-radius: 10px; padding: 20px 5px;">
+                                    <div class="col-4">
+                                        <div style="text">
+                                            <i class="fal fa-tools fa-4x" style="color: #173F5F"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-8" style="padding-left: 30px;">
+                                        <div>
+                                            On Process
+                                        </div>
+                                        <div>
+                                            17
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div style="padding: 10px">
+                                <div class="row " style="border: #173F5F solid 2px; border-radius: 10px; padding: 20px 5px;">
+                                    <div class="col-4">
+                                        <div style="text">
+                                            <i class="fas fa-money-check-edit-alt fa-4x" style="color: #173F5F"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-8" style="padding-left: 30px;">
+                                        <div>
+                                            Due Payment
+                                        </div>
+                                        <div>
+                                            9
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div style="padding: 10px">
+                                <div class="row " style="border: #173F5F solid 2px; border-radius: 10px; padding: 20px 5px;">
+                                    <div class="col-4">
+                                        <div style="text">
+                                            <i class="fas fa-inventory fa-4x" style="color: #173F5F"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-8" style="padding-left: 30px; color: orangered">
+                                        <div>
+                                            Out of Stock
+                                        </div>
+                                        <div>
+                                            2
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div id="columnchart_material" style="width: 100%; height: 400px;"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <div id="piechart" style="width: 100%; height: 400px;"></div>
+                        </div>
+                    </div>
+                    
+                </div>
                 
             </div>
          
-        </div>    
-        
+        </div>   
+         <script type="text/javascript" src="../../js/jquery-3.5.1.js"></script>
+        <script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script src="../../js/jsStyle.js"></script>
+        <script type="text/javascript">
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Desgin', 'Feets'],
+          ['718GUN', 100],
+          ['718BLK', 520],
+          ['720BLK', 660],
+          ['720GUN', 80],
+          ['718GFB', 400],
+          ['CFS3', 660],
+          ['CFS9', 300]
+        ]);
+        var data2 = google.visualization.arrayToDataTable([
+          ['Status', 'Precentage'],
+          ['New Orders', 100],
+          ['On Process', 520],
+          ['Due Payment', 660],
+          ['On Delivery', 80]
+        ]);
+
+        var options = {
+          chart: {
+            title: 'Company Performance',
+            subtitle: 'Orders in Last Month'
+          }
+        };
+        var options2 = {
+          title: 'Order Status of Today'
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+        
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data2, options2);
+      }
+      
+//      google.charts.load('current', {'packages':['corechart']});
+//      google.charts.setOnLoadCallback(drawChart);
+//      
+//      function drawChart() {
+//
+//        var data2 = google.visualization.arrayToDataTable([
+//          ['Status', 'Precentage'],
+//          ['New Orders', 100],
+//          ['On Process', 520],
+//          ['Due Payment', 660],
+//          ['On Delivery', 80]
+//        ]);
+//
+//        var options2 = {
+//          title: 'Order Status of Today'
+//        };
+//
+//        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+//
+//        chart.draw(data2, options2);
+//      }
+      
+      
+        </script>
         
     </body>
 </html>

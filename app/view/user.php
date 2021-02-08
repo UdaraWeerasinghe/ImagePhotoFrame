@@ -1,5 +1,6 @@
 <?php include '../../commons/session.php';
 $logUser=$_SESSION['user']['user_id'];
+$userRole=$_SESSION["user"]["role_id"];
 ?>
 <html>
     <head>
@@ -14,7 +15,7 @@ $logUser=$_SESSION['user']['user_id'];
         
         include '../model/module-model.php';
             $moduleObj = new Module();
-            $moduleResult=$moduleObj->getAllModules();
+            $moduleResult=$moduleObj->getAllModules($userRole);
             
             include '../model/user-model.php';
             $userObj = new User();

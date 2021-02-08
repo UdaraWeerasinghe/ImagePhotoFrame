@@ -1,4 +1,5 @@
-<?php include '../../commons/session.php'; ?>
+<?php include '../../commons/session.php'; 
+$userRole=$_SESSION["user"]["role_id"];?>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -11,7 +12,7 @@
         
         include '../model/module-model.php';
             $moduleObj = new Module();
-            $moduleResult=$moduleObj->getAllModules();  
+            $moduleResult=$moduleObj->getAllModules($userRole);  
             include '../model/inventory-model.php';
             $inventoryObj = new Inventory();
             $inventoryResult=$inventoryObj->getAllMaterial();
@@ -60,7 +61,8 @@
                     
                 </div>
                 <div style="padding: 15px">
-                    <div id="columnchart_material" style="width: 100%; height: 500px;"></div>
+                    <div id="piechart" style="width: 900px; height: 500px;"></div>
+                    <!--<div id="columnchart_material" style="width: 100%; height: 500px;"></div>-->
                     <div style="width: 100%; text-align: end">
                         <a class="btn btn-primary" data-toggle="modal" data-target="#addMaterial">Add New Frame Strip</a>
                     </div><br>
@@ -186,35 +188,56 @@
   
   
  
-       google.charts.load('current', {'packages':['bar']});
+//       google.charts.load('current', {'packages':['bar']});
+//      google.charts.setOnLoadCallback(drawChart);
+//
+//      function drawChart() {
+//        var data = google.visualization.arrayToDataTable([
+//          ['Year', 'Feets'],
+//          ['2014', 100],
+//          ['2015', 1170],
+//          ['2016', 660],
+//          ['2014', 1000],
+//          ['2015', 1170],
+//          ['2016', 660],
+//          ['2014', 1000],
+//          ['2015', 1170],
+//          ['2016', 660],
+//          ['2017', 1030]
+//        ]);
+//
+//        var options = {
+//          chart: {
+//            title: 'Company Performance',
+//            subtitle: 'Sales, Expenses, and Profit: 2014-2017'
+//          }
+//        };
+//
+//        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+//
+//        chart.draw(data, google.charts.Bar.convertOptions(options));
+//      }
+ google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawChart);
 
       function drawChart() {
+
         var data = google.visualization.arrayToDataTable([
-          ['Year', 'Feets'],
-          ['2014', 100],
-          ['2015', 1170],
-          ['2016', 660],
-          ['2014', 1000],
-          ['2015', 1170],
-          ['2016', 660],
-          ['2014', 1000],
-          ['2015', 1170],
-          ['2016', 660],
-          ['2017', 1030]
+          ['Task', 'Hours per Day'],
+          ['Work',     11],
+          ['Eat',      2],
+          ['Commute',  2],
+          ['Watch TV', 2],
+          ['Sleep',    7]
         ]);
 
         var options = {
-          chart: {
-            title: 'Company Performance',
-            subtitle: 'Sales, Expenses, and Profit: 2014-2017'
-          }
+          title: 'My Daily Activities'
         };
 
-        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
 
-        chart.draw(data, google.charts.Bar.convertOptions(options));
-      }
+        chart.draw(data, options);
       
       
       $( document ).ready(function() {

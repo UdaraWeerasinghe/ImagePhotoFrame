@@ -1,29 +1,28 @@
 <?php
-include '../model/login-model.php';
-$loginObj=new login();
+include '../model/login-model.php'; //include login model
+$loginObj=new login();              //create a new obj
 
 $status=$_REQUEST["status"];
 switch ($status){
     
     case "login":
-            $uname=$_POST["uName"];
-            $password=$_POST["password"];
-            $password= sha1($password);
+            $uname=$_POST["uName"];         //get the user name and pass word
+            $password=$_POST["password"]; //from the login form
+            $password= sha1($password);     //password cunvet unto sha1
             
-            $result=$loginObj->loginValidation($uname, $password);
-            
+            $result=$loginObj->loginValidation($uname, $password); //call the model in login model
+                                                                    
             $user_details=$result->fetch_assoc();
             
             session_start();
             $_SESSION['user']=$user_details;
             
-    if($result->num_rows==1){
-        header("Location:../view/dashboard.php");
+    if($result->num_rows==1){                   //check whether maching recode exist 
+        header("Location:../view/dashboard.php"); //bring to the dashboard
     }
- else {
-        ?> 
+ else {                             //when no maching record redirect to loging page
+        ?>                  
 <script>
-    
     window.location="../view/login.php?warning";
   </script>
 <?php
@@ -38,7 +37,6 @@ switch ($status){
         unset($_SESSION['user']);
         //session_destroy();
         header("Location:../view/login.php");
-
         break;
     
     case "resetPassword":
@@ -72,7 +70,7 @@ switch ($status){
                     $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
                     $mail->send();
-                    echo 'Message has been sent';
+                    header("Location:../view/landig.php");
                 }
                 else {
                     

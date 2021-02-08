@@ -1,4 +1,5 @@
-<?php include '../../commons/session.php'; ?>
+<?php include '../../commons/session.php';
+$userRole=$_SESSION["user"]["role_id"];?>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -14,7 +15,7 @@
         
             include '../model/module-model.php';
             $moduleObj = new Module();
-            $moduleResult=$moduleObj->getAllModules();  
+            $moduleResult=$moduleObj->getAllModules($userRole);  
             
             include '../model/product-model.php';
             $productObj=new Product();
@@ -199,7 +200,7 @@
                             <div class="row">
                                 <div class="col-md-12" style="text-align: right">
                                     <button type="reset" class="btn btn-danger"><i class="fad fa-sync-alt"></i>&nbsp;Reset</button>
-                                    <button type="submit" class="btn btn-success"><i class="fal fa-save"></i>&nbsp;Save</button>
+                                    <button type="submit" class="btn btn-success"><i class="fal fa-save"></i>&nbsp;Add Design</button>
                                 </div>
                             </div>
                 </form>
