@@ -125,6 +125,14 @@ switch ($status){
                                 ?>
                             <a type="button" class="btn btn-sm btn-warning" href="../controller/order-controller.php?status=startDelivery&oId=<?php echo base64_encode($orderId); ?>">Start Delivery</a>
                                 <?php
+                            }else if(isset ($_REQUEST["onDelivery"])){
+                                ?>
+                            <a type="button" class="btn btn-sm btn-warning" href="../controller/order-controller.php?status=handOver&oId=<?php echo base64_encode($order_row["order_id"]); ?>">Delivery Complete</a>
+                                <?php
+                            }else if(isset ($_REQUEST["fineshedOrder"])){
+                                ?>
+                           
+                                <?php
                             }
                             else {
                                ?>
@@ -166,5 +174,11 @@ switch ($status){
                         $order_id= base64_decode($_REQUEST["oId"]);
                         $orderObj->onDelivery($order_id);
                          header("Location:../view/completed.php?alert=startDelivery");
+                        break;
+                    
+                    case "handOver":
+                        $order_id= base64_decode($_REQUEST["oId"]);
+                        $orderObj->handOver($order_id);
+                         header("Location:../view/on-delivery.php?alert=startDelivery");
                         break;
 }

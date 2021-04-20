@@ -142,6 +142,8 @@ switch ($status){
     
     if ($mail->Send()) { 
         header("Location:../view/order.php?alert=success");           
+}else{
+    echo $mail->ErrorInfo;
 }
                 
                  

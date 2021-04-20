@@ -21,11 +21,8 @@ switch ($status){
         header("Location:../view/dashboard.php"); //bring to the dashboard
     }
  else {                             //when no maching record redirect to loging page
-        ?>                  
-<script>
-    window.location="../view/login.php?warning";
-  </script>
-<?php
+        header("Location:../view/login.php?warning");
+
         
     }
             

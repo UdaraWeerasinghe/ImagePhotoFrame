@@ -1,4 +1,5 @@
-<?php include '../../commons/session.php'; ?>
+<?php include '../../commons/session.php';
+$userRole=$_SESSION["user"]["role_id"];?>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -12,7 +13,7 @@
         
         include '../model/module-model.php';
             $moduleObj = new Module();
-            $moduleResult=$moduleObj->getAllModules();
+            $moduleResult=$moduleObj->getAllModules($userRole);
             
             include '../model/order-model.php';
             $orderObj=new Order();
@@ -69,7 +70,7 @@
                       <a class="nav-link active" href="on-delivery.php">On delivery</a>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link" href="#ad">Completed</a>
+                      <a class="nav-link" href="finished-order.php">Completed</a>
                   </li>
                 </ul>
                 
@@ -107,7 +108,7 @@
                                 </td>
                                 <td>
                                     <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#view" onclick="viewOrder('<?php echo $order_row["order_id"] ?>')">View</button>
-                                    <a type="button" class="btn btn-sm btn-warning" href="../controller/order-controller.php?status=completed&oId=<?php echo base64_encode($order_row["order_id"]); ?>">Start Delivery</a>
+                                    <a type="button" class="btn btn-sm btn-warning" href="../controller/order-controller.php?status=handOver&oId=<?php echo base64_encode($order_row["order_id"]); ?>">Delivery Completed</a>
                                 </td>
                             </tr>
                  <?php } ?>
@@ -153,7 +154,7 @@
            });
            
             function viewOrder(orderId){
-            var url="../controller/order-controller.php?status=viewOrderModale&completed&orderId="+orderId;
+            var url="../controller/order-controller.php?status=viewOrderModale&onDelivery&orderId="+orderId;
             $.post(url, {orderId:orderId}, function(data) {
                 $("#viewOrderBody").html(data).show();
             });

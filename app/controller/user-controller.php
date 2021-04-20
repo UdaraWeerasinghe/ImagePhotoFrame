@@ -28,7 +28,7 @@ switch ($status){
     case "addUser":
         $fName=$_POST["fName"];
         $lName=$_POST["lName"];
-        $email=$_POST["email"];
+        $email=strtolower($_POST["email"]);
         $cn=$_POST["cn"];
         $dob=$_POST["dob"];
         $nic=$_POST["nic"];
@@ -37,22 +37,19 @@ switch ($status){
 
         
         try{
-            if($gender==""){
-                throw new Exception("Gender can not be empty!");
-            }
             
             $isValidEmail=$userObj->checkEmail($email);
             $isValidCno=$userObj->checkCno($cn);
             $isValidNic=$userObj->checkNic($nic);
             
-            if($isValidEmail===false){
-                throw new Exception("Email address is alredy registered!");
+            if($isValidEmail==false){
+                throw new Exception("Email");
             }
-            if($isValidCno===false){
-                throw new Exception("Contact number is alredy registered!");
+            if($isValidCno==false){
+                throw new Exception("Contact");
             }
-            if($isValidNic===false){
-                throw new Exception("NIC number is alredy registered!");
+            if($isValidNic==false){
+                throw new Exception("NIC");
             }
             
             if($_FILES["user_img"]["name"]!="")
@@ -82,30 +79,39 @@ switch ($status){
                     $num++;
                     $newid = "U".str_pad($num,5,"0",STR_PAD_LEFT);
                     
-                   $isAdded=$userObj->addUser($newid,$fName, $lName, $email, $cn, $dob, $nic, $uRole, $gender, $user_img,1);
-                
-                if($isAdded=="true"){
-                    $password= sha1($nic);
-                    $userObj->addLogin($email, $password, $newid);
-                }
+//                   $isAdded=$userObj->addUser($newid,$fName, $lName, $email, $cn, $dob, $nic, $uRole, $gender, $user_img,1);
+//                
+//                if($isAdded=="true"){
+//                    $password= sha1($nic);
+////                    $userObj->addLogin($email, $password, $newid);
+//                }
                 
                 $class=" alert alert-success";
                 $class= base64_encode($class);
                 $msg="Successfully Add";
                 $msg= base64_encode($msg);
-                            ?>
-<script> window.location="../view/user.php?msg=<?php echo $msg;?> & class=<?php echo $class; ?>";</script>
-<?php
+                
+                header("Location:../view/user.php?msg=$msg&class=$class");
                 }
                
                         
-        } catch (Exception $ex) {
-            $msg=$ex->getMessage();
+        } catch (Exception $exptn) {
+            $msg=$exptn->getMessage();
             $msg= base64_encode($msg);
-            ?>
-<!--<script> window.location="../view/add-user.php?msg=<?php echo $msg; ?>";</script>-->
-
-<?php
+            
+            $fName= base64_encode($fName);
+            $lName= base64_encode($lName);
+            $email= base64_encode($email);
+            $cn= base64_encode($cn);
+            $dob= base64_encode($dob);
+            $nic= base64_encode($nic);
+            $uRole= base64_encode($uRole);
+            $gender= base64_encode($gender);
+            
+            header("Location:../view/add-user.php?msg=$msg&fName=$fName&"
+                    . "lName=$lName&email=$email&cn=$cn&dob=$dob&nic=$nic&"
+                    . "uRole=$uRole&gender=$gender");
+           
         }
         
         break;

@@ -80,14 +80,14 @@ $userRole=$_SESSION["user"]["role_id"];
                     <div class="container-fluid">
                         <div class="row" style="margin-top: 15px">
                             <div class="col-md-6" style="padding: 20px 40px 10px 20px">
-                                <a href="#" style="text-decoration: none; color: #000;">
+                                <a href="#" id="custome_repo" style="text-decoration: none; color: #000;" data-toggle="modal" data-target="#custome_repo-modal">
                                     <div class="row" style="padding: 10px 10px; border-radius: 10px; box-shadow: 1px 1px 3px #173F5F;">
                                         <div class="col-3">
                                             <i style="color: #173F5F" class="fad fa-file-medical-alt fa-5x"></i>
                                         </div>
                                         <div class="col-9" style="overflow: hidden">
                                             <h5 style="color: #029e13">Custom Report</h5>
-                                            <p>You able to generate order report by adding filters such as date wise, status wise, quantity wise, and the customer wise.</p>
+                                            <p>You are able to generate order report by adding filters such as date wise, status wise, quantity wise, and the customer wise.</p>
                                         </div>
                                     </div>
                                 </a>
@@ -163,17 +163,43 @@ $userRole=$_SESSION["user"]["role_id"];
             </div>
          
         </div> 
-        <script type="text/javascript" src="../../js/jquery-3.5.1.js"></script>
-        <script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="../../DataTables-1.10.22/js/jquery.dataTables.js"></script>
-        <script type="text/javascript" src="../../DataTables-1.10.22/js/dataTables.bootstrap4.js"></script>
-        <script type="text/javascript" src="../../js/sweetalert2.js"></script>
-        <script type="text/javascript" src="../../js/user-validation.js"></script>
-        <script src="../../js/jsStyle.js"></script>
-        <script type="text/javascript">
-     
+        
+        <!--/////////////////////////custom report user////////////-->
+<div class="modal" id="custome_repo-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
 
-        </script>
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Generate custom report </h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div id="repo_body">
+      
+
+      
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="../../js/jquery-3.5.1.js"></script>
+<script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../DataTables-1.10.22/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="../../DataTables-1.10.22/js/dataTables.bootstrap4.js"></script>
+<script type="text/javascript" src="../../js/sweetalert2.js"></script>
+<script type="text/javascript" src="../../js/user-validation.js"></script>
+<script src="../../js/jsStyle.js"></script>
+<script type="text/javascript">
+    
+$(document).ready(function (){
+     $("#custome_repo").click (function (){
+            var url="../controller/report-controller.php?status=order_custom_repo";
+            $.post(url,{}, function(data) {
+                $("#repo_body").html(data).show();
+            });
+        });
+        });
+</script>
         
     </body>
 </html>

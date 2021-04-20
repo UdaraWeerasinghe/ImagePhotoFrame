@@ -56,7 +56,7 @@ $logUser=$_SESSION['user']['user_id'];
                  <?php }?>
             </div>
             <div class="dashbord-body" style="flex: 70%; height: 800px;">
-                <h3 style="text-align: center; margin-top: 20px;">View User</h3><hr>
+                <h3 style="text-align: center; margin-top: 20px;">User Details</h3><hr>
            <div class="container mt-3">
                     <div id="add-user" class="container "><br>
                         <div class="row">
@@ -73,65 +73,65 @@ $logUser=$_SESSION['user']['user_id'];
                              ?>
                                 <div class="row" style="margin-top: 10px;">
                                     <div class="col-md-2">
-                                        <label>First Name</label>
+                                        <label style="font-weight: bold">First Name</label>
                                     </div>
                                     <div class="col-md-3">
-                                        <label style="font-weight: bold"><?php echo $uRow["user_fname"]; ?></label>
+                                        <label><?php echo $uRow["user_fname"]; ?></label>
                                     </div>
                                     <div class="col-md-2"></div>
                                     <div class="col-md-2">
-                                        <label>Last Name</label>
+                                        <label style="font-weight: bold">Last Name</label>
                                     </div>
                                     <div class="col-md-3">
-                                        <label style="font-weight: bold"><?php echo $uRow["user_lname"]; ?></label>
+                                        <label><?php echo $uRow["user_lname"]; ?></label>
                                     </div>
                                 </div>
                                 <div class="row" style="margin-top: 10px;"><div class="col-12">&nbsp;</div></div>
                                 <div class="row">
                                     <div class="col-md-2">
-                                        <label>Email</label>
+                                        <label style="font-weight: bold">Email</label>
                                     </div>
                                     <div class="col-md-3">
-                                        <label style="font-weight: bold"><?php echo $uRow["user_email"]; ?></label>
+                                        <label><?php echo $uRow["user_email"]; ?></label>
                                     </div>
                                     <div class="col-md-2"></div>
                                     <div class="col-md-2">
-                                        <label>Contact Number</label>
+                                        <label style="font-weight: bold">Contact Number</label>
                                     </div>
                                     <div class="col-md-3">
-                                        <label style="font-weight: bold"><?php echo $uRow["user_cno"]; ?></label>
+                                        <label><?php echo $uRow["user_cno"]; ?></label>
                                     </div>
                                 </div>
                                 <div class="row" style="margin-top: 10px;"><div class="col-12">&nbsp;</div></div>
                                 <div class="row">
                                     <div class="col-md-2">
-                                        <label>Date Of Birth</label>
+                                        <label style="font-weight: bold">Date Of Birth</label>
                                     </div>
                                     <div class="col-md-3">
-                                        <label style="font-weight: bold"><?php echo $uRow["user_dob"]; ?></label>
+                                        <label><?php echo $uRow["user_dob"]; ?></label>
                                     </div>
                                     <div class="col-md-2"></div>
                                     <div class="col-md-2">
-                                        <label>User NIC</label>
+                                        <label style="font-weight: bold">User NIC</label>
                                     </div>
                                     <div class="col-md-3">
-                                        <label style="font-weight: bold"><?php echo $uRow["user_nic"]; ?></label>
+                                        <label><?php echo $uRow["user_nic"]; ?></label>
                                     </div>
                                 </div>
                                 <div class="row" style="margin-top: 10px;"><div class="col-12">&nbsp;</div></div>
                                 <div class="row">
                                     <div class="col-md-2">
-                                        <label>User Role</label>
+                                        <label style="font-weight: bold">User Role</label>
                                     </div>
                                     <div class="col-md-3">
-                                        <label style="font-weight: bold"><?php echo $uRow["role_name"]; ?></label>
+                                        <label><?php echo $uRow["role_name"]; ?></label>
                                     </div>
                                     <div class="col-md-2"></div>
                                     <div class="col-md-2">
-                                           <label>gender</label>
+                                           <label style="font-weight: bold">gender</label>
                                     </div>
                                     <div class="col-md-3">
-                                        <label style="font-weight: bold">
+                                        <label>
                                             <?php 
                                         if($uRow["user_gender"]==1){
                                             echo 'Male';
@@ -153,7 +153,7 @@ $logUser=$_SESSION['user']['user_id'];
                                     </div>
                                     <div class="col-md-2"></div>
                                     <div class="col-md-2">
-                                        <label>User Image</label>
+                                        <label style="font-weight: bold">User Image</label>
                                     </div>
                                     <div class="col-md-3">
                                         <img width="100px" height="100px" src="../../images/user_image/<?php echo $uRow['user_image']; ?>">

@@ -17,7 +17,7 @@ $userRole=$_SESSION["user"]["role_id"];?>
             
             include '../model/order-model.php';
             $orderObj=new Order();
-            $allOrder=$orderObj->getAllOnProcessOrders();
+            $allOrder=$orderObj->getAllFinishedOrders();
             if(isset($_GET["alert"])){
         ?>
         <input type="hidden" id="alert" value="sucess">
@@ -61,7 +61,7 @@ $userRole=$_SESSION["user"]["role_id"];?>
                       <a class="nav-link" href="order.php">New Ordes</a>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link active" href="on-process.php">On Process</a>
+                      <a class="nav-link" href="on-process.php">On Process</a>
                   </li>
                   <li class="nav-item">
                       <a class="nav-link" href="completed.php">Waiting For Payment</a>
@@ -70,7 +70,7 @@ $userRole=$_SESSION["user"]["role_id"];?>
                       <a class="nav-link" href="on-delivery.php">On delivery</a>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link" href="finished-order.php">Completed</a>
+                      <a class="nav-link active" href="finished-order.php">Completed</a>
                   </li>
                 </ul>
                 
@@ -108,7 +108,7 @@ $userRole=$_SESSION["user"]["role_id"];?>
                                 </td>
                                 <td>
                                     <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#view" onclick="viewOrder('<?php echo $order_row["order_id"] ?>')">View</button>
-                                    <a type="button" class="btn btn-sm btn-warning" href="../controller/order-controller.php?status=completed&oId=<?php echo base64_encode($order_row["order_id"]); ?>">Completed</a>
+                                    
                                 </td>
                             </tr>
                  <?php } ?>
@@ -154,29 +154,15 @@ $userRole=$_SESSION["user"]["role_id"];?>
            });
            
             function viewOrder(orderId){
-            var url="../controller/order-controller.php?status=viewOrderModale&onProcess&orderId="+orderId;
+            var url="../controller/order-controller.php?status=viewOrderModale&fineshedOrder&orderId="+orderId;
             $.post(url, {orderId:orderId}, function(data) {
                 $("#viewOrderBody").html(data).show();
             });
         }
         
-        $(document).ready(function() {
-            
-            var a = $("#alert").val();
-            if(a=="sucess"){
-              Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'Successfull',
-            text: 'Order Successfuly Completed',
-            showConfirmButton: false,
-            timer: 1500
-          });   
-            }
-            
-        });
         </script>
         
     </body>
 </html>
 
+    

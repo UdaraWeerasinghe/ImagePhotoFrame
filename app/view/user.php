@@ -21,7 +21,7 @@ $userRole=$_SESSION["user"]["role_id"];
             $userObj = new User();
             $userResult=$userObj->getAllUserWithRole();
             $roleResult=$userObj->getAllRole();
-            
+            $allUserCount=$userResult->num_rows;
         ?>
     </head>
     <body>
@@ -56,7 +56,7 @@ $userRole=$_SESSION["user"]["role_id"];
                 <h3 style="text-align: center; margin-top: 10px;">User Management</h3>
                 <ul class="nav nav-tabs">
                   <li class="nav-item">
-                    <a class="nav-link active" href="#all-users">All Users</a>
+                    <a class="nav-link active" href="#all-users">All Users (<?php echo $allUserCount; ?>)</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="#active-users">Active Users</a>

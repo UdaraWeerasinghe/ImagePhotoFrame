@@ -97,6 +97,199 @@ $userRole=$_SESSION["user"]["role_id"];
                             <div style="text-align: center" class="col-12" id="vAlert"> 
                             </div> 
                         </div>
+                        <?php
+                        if(isset($_GET["msg"])){
+                            ?>
+                            <form id="addUser" enctype="multipart/form-data" method="post" 
+                                  action="../controller/user-controller.php?status=addUser"  
+                                  class="needs-validation" novalidate>
+
+                                <div class="row" style="margin-top: 10px;">
+                                    <div class="col-md-2">
+                                        <label>First Name</label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" id="fName" name="fName" class="form-control"
+                                               value="<?php echo base64_decode($_REQUEST["fName"]);?>">
+                                        <div class="invalid-tooltip" style="position: inherit; top:0px;">
+                                            Please enter the first name
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-2">
+                                        <label>Last Name</label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" id="lName" name="lName" class="form-control"
+                                               value="<?php echo base64_decode($_REQUEST["lName"]);?>">
+                                        <div class="invalid-tooltip" style="position: inherit; top:0px;">
+                                            Please enter the last name
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row"><div class="col-12">&nbsp;</div></div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label>Email</label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <?php
+                                        if(base64_decode($_REQUEST["msg"])=="Email"){
+                                            ?>
+                                            <input type="email" id="email" name="email" class="form-control"
+                                               value="<?php echo base64_decode($_REQUEST["email"]);?>">
+                                            <div class="form-control"
+                                                style="margin-top: 3px;height: 30px; color: white; 
+                                                background-color: #dc3545E6; font-size: 14px; 
+                                                padding: 2px 0px 2px 5px;">
+                                               Email address is already registered!
+                                           </div>
+                                        <?php
+                                        }else{
+                                            ?>
+                                            <input type="email" id="email" name="email" class="form-control"
+                                               value="<?php echo base64_decode($_REQUEST["email"]);?>">
+                                            <div class="invalid-tooltip" style="position: inherit; top:0px;">
+                                                Please enter the Email address
+                                            </div>
+                                            <?php
+                                        }
+                                        ?>
+                                        
+                                    </div>
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-2">
+                                        <label>Contact Number</label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <?php
+                                        if(base64_decode($_REQUEST["msg"])=="Contact"){
+                                            ?>
+                                        <input type="number" id="cn" name="cn" class="form-control"
+                                               value="<?php echo base64_decode($_REQUEST["cn"]);?>">
+                                        <div class="form-control"
+                                                style="margin-top: 3px;height: 30px; color: white; 
+                                                background-color: #dc3545E6; font-size: 14px; 
+                                                padding: 2px 0px 2px 5px;">
+                                               Contact number is already registered!
+                                        </div>
+                                        <?php
+                                        }else{
+                                            ?>
+                                        <input type="number" id="cn" name="cn" class="form-control"
+                                               value="<?php echo base64_decode($_REQUEST["cn"]);?>">
+                                        <div class="invalid-tooltip" style="position: inherit; top:0px;">
+                                            Please enter the contact number
+                                        </div>  
+                                        <?php
+                                        }
+                                            ?>
+                                        
+                                    </div>
+                                </div>
+                                <div class="row"><div class="col-12">&nbsp;</div></div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label>Date Of Birth</label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="date" id="dob" name="dob" class="form-control"
+                                               value="<?php echo base64_decode($_REQUEST["dob"]);?>">
+                                        <div class="invalid-tooltip" style="position: inherit; top:0px;">
+                                            Please enter the date of birth
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-2">
+                                        <label>User NIC</label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <?php
+                                        if(base64_decode($_REQUEST["msg"])=="NIC"){
+                                            ?>
+                                        <input type="text" id="nic" name="nic" class="form-control"
+                                               value="<?php echo base64_decode($_REQUEST["nic"]);?>">
+                                        <div class="form-control"
+                                                style="margin-top: 3px;height: 30px; color: white; 
+                                                background-color: #dc3545E6; font-size: 14px; 
+                                                padding: 2px 0px 2px 5px;">
+                                               NIC number is already registered!
+                                        </div>
+                                        <?php
+                                        }else{
+                                            ?>
+                                        <input type="text" id="nic" name="nic" class="form-control"
+                                               value="<?php echo base64_decode($_REQUEST["nic"]);?>">
+                                        <div class="invalid-tooltip" style="position: inherit; top:0px;">
+                                            Please enter the NIC number
+                                        </div>
+                                        <?php
+                                        }
+                                            ?>
+                                    </div>
+                                </div>
+                                <div class="row"><div class="col-12">&nbsp;</div></div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label>User Role</label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <select id="uRole" name="uRole" class="form-control">
+                                            <option value="">Select Role</option>
+                                            <?php
+                                            while ($role=$roleResult->fetch_assoc()){
+                                            ?>
+                                            <option value="<?php echo $role["role_id"]; ?>"><?php echo $role["role_name"]; ?></option>
+                                            <?php
+                                            }
+                                            ?>
+                                        </select>
+                                        <div class="invalid-tooltip" style="position: inherit; top:0px;">
+                                            Please enter select user role
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-2">
+                                           <label>gender</label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="radio" id="gender" name="gender" value="1"/>&nbsp;
+                                        <label class="control-label">Male</label>
+                                        &nbsp;
+                                        <input type="radio" id="gender" name="gender" value="0" />&nbsp;
+                                        <label class="control-label">Female</label>
+                                        <div class="invalid-tooltip" style="position: inherit; top:0px;">Please enter the a gender</div>
+                                    </div>
+                                </div>
+                                <div class="row"><div class="col-12">&nbsp;</div></div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        
+                                    </div>
+                                    <div class="col-md-3">
+                                        
+                                    </div>
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-2">
+                                        <label>User Image</label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="file" id="user_img" name="user_img" onchange="readURL(this)" class="form-control">
+                                         <img id="img_prev">
+                                         <div class="invalid-tooltip" style="position: inherit; top:0px;">Please upload a image</div>
+                                    </div>
+                                </div>
+                                 <div class="row" style="margin-top: 10px;"><div class="col-12">&nbsp;</div></div>
+                                <div class="row">
+                                    <div class="col-md-12" style="text-align: end">
+                                        <button type="reset" class="btn btn-danger">Reset</button>
+                                        <button type="submit" class="btn btn-success">Add User</button>
+                                    </div>
+                                </div>
+                            </form>
+                        <?php
+                        }else{
+                            ?>
                         <form id="addUser" enctype="multipart/form-data" method="post" action="../controller/user-controller.php?status=addUser"  class="needs-validation" novalidate>
 
                                 <div class="row" style="margin-top: 10px;">
@@ -209,6 +402,9 @@ $userRole=$_SESSION["user"]["role_id"];
                                     </div>
                                 </div>
                             </form>
+                        <?php
+                        }
+                        ?>
                 </div>
               
          

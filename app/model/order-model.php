@@ -31,6 +31,14 @@ class Order{
         $results = $con->query($sql) or die($con->error);
         return $results;
     }
+    public function  getAllFinishedOrders(){
+        
+        $con=$GLOBALS['con'];
+        $sql="SELECT * FROM order_detail o, customer c WHERE o.customer_id=c.customer_id AND order_status='5'";
+        $results = $con->query($sql) or die($con->error);
+        return $results;
+    }
+    
     public function  getOrdersById($order_id){
         
         $con=$GLOBALS['con'];
@@ -77,6 +85,13 @@ class Order{
         
         $con=$GLOBALS['con'];
         $sql="UPDATE order_detail SET order_status = '4' WHERE order_id='$order_id'";
+        $results = $con->query($sql) or die($con->error);
+        return $results;
+    }
+    public function  handOver($order_id){
+        
+        $con=$GLOBALS['con'];
+        $sql="UPDATE order_detail SET order_status = '5' WHERE order_id='$order_id'";
         $results = $con->query($sql) or die($con->error);
         return $results;
     }

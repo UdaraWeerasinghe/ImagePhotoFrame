@@ -1,4 +1,3 @@
-
 <?php
 // Include autoloader 
 require_once '../../dompdf/autoload.inc.php'; 

@@ -35,8 +35,16 @@ if(isset($_SESSION['user'])){
                             
                             <?php if(isset($_REQUEST["warning"])){
                                 ?>
-                            <input class="form-control" style="border: #dc3545E6 solid 1px;" id="email" name="email" value="<?php echo base64_decode($_REQUEST["warning"]); ?>" type="email">
-                            <div class="form-control" id="email-invalid" style="margin-top: 3px;height: 30px; color: white; background-color: #dc3545E6; font-size: 14px; padding: 2px 0px 2px 5px;">That address is not a verified email!</div>
+                            <input class="form-control" style="border: #dc3545E6 solid 1px;" 
+                                   id="email" name="email" 
+                                   value="<?php echo base64_decode($_REQUEST["warning"]); ?>" 
+                                   type="email">
+                            <div class="form-control" id="email-invalid" 
+                                 style="margin-top: 3px;height: 30px; color: white; 
+                                 background-color: #dc3545E6; font-size: 14px; 
+                                 padding: 2px 0px 2px 5px;">
+                                That address is not a verified email!
+                            </div>
                             <?php
                             }else{
                                 ?>

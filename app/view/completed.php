@@ -70,7 +70,7 @@ $userRole=$_SESSION["user"]["role_id"];?>
                       <a class="nav-link" href="on-delivery.php">On delivery</a>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link" href="#ad">Completed</a>
+                      <a class="nav-link" href="finished-order.php">Completed</a>
                   </li>
                 </ul>
                 

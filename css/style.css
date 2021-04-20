@@ -57,6 +57,9 @@
 .hide-module-name{
     display: none;
 }
+.hide-error{
+    display: none;
+}
 
 @keyframes moduleLink{
     from {background-color: #252733;}

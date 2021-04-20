@@ -4,7 +4,7 @@ class dbConnection{ //class for the db
     private $hostname="localhost"; 
     private $dbusename="root";   //user name
     private $dbpassword="";         //password
-    private $db="ifpDb";            //db name
+    private $db="ifpdb";            //db name
         
     function __construct() {
         $this->conn= new mysqli(
