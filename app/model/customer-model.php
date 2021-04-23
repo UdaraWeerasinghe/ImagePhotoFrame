@@ -33,4 +33,12 @@ class Customer{
         $results = $con->query($sql)or die($con->error);
         return $results; 
     }
+    public function  getCustomerByOrderId($oderId){
+        $con = $GLOBALS['con'];
+        $sql = "SELECT c.customer_fName, c.customer_lName From customer c, order_detail o, payment p "
+                . "WHERE p.order_id='$oderId' AND p.order_id=o.order_id "
+                . "AND o.customer_id=c.customer_id GROUP BY c.customer_id";
+        $results = $con->query($sql)or die($con->error);
+        return $results; 
+    }
 }

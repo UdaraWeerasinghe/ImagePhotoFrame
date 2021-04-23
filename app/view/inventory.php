@@ -61,7 +61,7 @@ $userRole=$_SESSION["user"]["role_id"];?>
                     
                 </div>
                 <div style="padding: 15px">
-                    <div id="piechart" style="width: 900px; height: 500px;"></div>
+                    <!--<div id="piechart" style="width: 900px; height: 500px;"></div>-->
                     <!--<div id="columnchart_material" style="width: 100%; height: 500px;"></div>-->
                     <div style="width: 100%; text-align: end">
                         <a class="btn btn-primary" data-toggle="modal" data-target="#addMaterial">Add New Frame Strip</a>
@@ -85,7 +85,7 @@ $userRole=$_SESSION["user"]["role_id"];?>
                             <td><?php echo $iRow["material_name"]; ?></td>
                             <td><?php echo number_format($iRow["qty"])." ft"; ?></td>
                             <td>
-                                <a class="btn btn-sm btn-success" data-toggle="modal" data-target="#addQty" onclick="load_data(<?php echo $iRow["material_id"]; ?>)">Add</a>
+                                <a class="btn btn-sm btn-success" data-toggle="modal" data-target="#addQty" onclick="load_data('<?php echo $iRow["material_id"]; ?>')">Add</a>
                                
                             </td>
                         </tr>
@@ -167,7 +167,6 @@ $userRole=$_SESSION["user"]["role_id"];?>
         <script type="text/javascript" src="../../bootstrap/js/bootstrap.js"></script>
         <script type="text/javascript" src="../../DataTables-1.10.22/js/jquery.dataTables.js"></script>
         <script type="text/javascript" src="../../DataTables-1.10.22/js/dataTables.bootstrap4.js"></script>
-        <script type="text/javascript" src="../../js/popper1.16.0.js"></script>
         <script type="text/javascript" src="../../js/product-validation.js"></script>
         <script type="text/javascript" src="../../js/sweetalert2.js"></script>
         <script src="../../js/jsStyle.js"></script>
@@ -217,42 +216,20 @@ $userRole=$_SESSION["user"]["role_id"];?>
 //
 //        chart.draw(data, google.charts.Bar.convertOptions(options));
 //      }
- google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
 
-      function drawChart() {
-
-        var data = google.visualization.arrayToDataTable([
-          ['Task', 'Hours per Day'],
-          ['Work',     11],
-          ['Eat',      2],
-          ['Commute',  2],
-          ['Watch TV', 2],
-          ['Sleep',    7]
-        ]);
-
-        var options = {
-          title: 'My Daily Activities'
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
-        chart.draw(data, options);
-      
-      
       $( document ).ready(function() {
-    var x = $("#alert").val();
-    
-    if (x=="materialAdded"){
-    Swal.fire({
-  position: 'top-end',
-  icon: 'success',
-  title: 'Frame Strip Successfully Added',
-  showConfirmButton: false,
-  timer: 1500
-});
-    }
-});
+        var x = $("#alert").val();
+
+        if (x=="materialAdded"){
+        Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Frame Strip Successfully Added',
+        showConfirmButton: false,
+        timer: 1500
+      });
+        }
+    });
         </script>
  
     </body>

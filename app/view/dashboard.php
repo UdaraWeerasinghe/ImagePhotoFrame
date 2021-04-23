@@ -41,7 +41,7 @@ $userRole=$_SESSION["user"]["role_id"];
 
                  <?php }?>
             </div>
-            <div class="dashbord-body" id="dashbord-body" style="flex: 70%; height: 800px;">
+            <div class="dashbord-body" id="dashbord-body" style="height: 800px;">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-3">

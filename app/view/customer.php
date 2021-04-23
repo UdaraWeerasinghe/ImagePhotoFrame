@@ -150,17 +150,18 @@ if(isset($_GET["alert"])){
         <script type="text/javascript" src="../../js/sweetalert2.js"></script>
         <script src="../../js/jsStyle.js"></script>
         <script type="text/javascript">
+//            dataTable for customer tbl
             $(function(){
             $("#customer_tbl").dataTable();
           });
-          
+          //pass email & name to custome controler and load modal body
           function sendMail(email,name){
             var url="../controller/customer-controller.php?status=CustomerMail";
             $.post(url, {email:email, name:name}, function(data) {
                 $("#customerMailBody").html(data).show();
             });
         }
-          
+          ///sweet alert for comfirm block user
             function block(customerId,name,email){
                 Swal.fire({
                   title: 'Are you sure?',
@@ -177,6 +178,7 @@ if(isset($_GET["alert"])){
                 });
             }
             
+            ///sweet alert for comfirm unblock user
             function unBlock(customerId,name,email){
                 Swal.fire({
                   title: 'Are you sure?',
@@ -193,6 +195,7 @@ if(isset($_GET["alert"])){
                 });
             }
             
+            //sweet alert for operations
             $(document).ready(function() {
                 var alert = $("#alert").val();
                 var name = $("#name").val();

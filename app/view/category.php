@@ -81,15 +81,8 @@ $userRole=$_SESSION["user"]["role_id"];?>
                         </ul>
                     </div>
                 </div>
-                <div class="container" style="padding-top: 20px;">
-                    
-                    <div class="row">
-                        <div class="col-xl-6">
-                        </div>
-                        
-                        
-                        <div class="col-xl-6">
-                            <div class="card" style="padding: 20px 20px 0px 20px;">
+                <div class="container-fluid" style="padding-top: 20px;">
+                            <div style="padding: 20px 20px 0px 20px;">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <h4>Frame Types</h4>
@@ -145,10 +138,6 @@ $userRole=$_SESSION["user"]["role_id"];?>
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
-                        
-                        
-                    </div>
                 </div>
             </div> 
             

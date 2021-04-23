@@ -10,7 +10,8 @@ $userRole=$_SESSION["user"]["role_id"];
         <link type="text/css" rel="stylesheet" href="../../bootstrap/css/bootstrap.css">
         <link rel="stylesheet" href="../../fontawesome-pro-5.13.0-web/css/all.css">
         <link type="text/css" rel="stylesheet" href="../../css/style.css">
-        <link rel="stylesheet" type="text/css" href="../../DataTables-1.10.22/css/dataTables.bootstrap4.css"/>
+        <link rel="stylesheet" type="text/css" href="../../DataTables/datatables.min.css"/>
+        <!--<link rel="stylesheet" type="text/css" href="../../DataTables-1.10.22/css/dataTables.bootstrap4.css"/>-->
         <?php include_once '../../commons/dbConnection.php'; 
         
         include '../model/module-model.php';
@@ -53,7 +54,7 @@ $userRole=$_SESSION["user"]["role_id"];
                  <?php }?>
             </div>
             <div class="dashbord-body" id="dashbord-body">
-                <h3 style="text-align: center; margin-top: 10px;">User Management</h3>
+                <h3 style="text-align: center;">User Management</h3>
                 <ul class="nav nav-tabs">
                   <li class="nav-item">
                     <a class="nav-link active" href="#all-users">All Users (<?php echo $allUserCount; ?>)</a>
@@ -68,105 +69,76 @@ $userRole=$_SESSION["user"]["role_id"];
                       <a class="nav-link" href="add-user.php">Add User</a>
                   </li>
                 </ul>
-                <div class="container-fluid">
-                    <div class="row"style="margin-top: 10px;">
-                        <div class="col-6"></div>
-                        <div class="col-6" style="text-align: right">
-                            <a href="report-all-user.php" class="btn btn-primary"><i class="far fa-download"></i>&nbsp;Export PDF</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-content"> 
-
-                    <div id="all-users" class="container-fluid"><br>
-                      <?php
-                      if(isset($_GET["msg"])){
-                          $msg=$_REQUEST["msg"];
-                          $msg= base64_decode($msg);
-                          $class=$_REQUEST["class"];
-                          $class= base64_decode($class);
-                          ?>
-                      <div class="row">
-                          <div class="col-md-12">
-                              <div style="text-align: center" class="<?php echo $class; ?>">
-                                  <?php echo $msg; ?>
-                              </div>
-                          </div>
-                      </div>
-                              <?php
-                      }
-                      ?>
-                       <div>
-                           <table class="table table-hover" id="user_tbl">
-                                        <thead>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Email</th>
-                                                <th>Role</th>
-                                                <th>Status</th>
-                                                <th>Action</th>
-                                            </tr>
-                                            </thead>
-                                            <?php
-                                         while ($row=$userResult->fetch_assoc()){
-                                             $userId=$row["user_id"];
-                                                          ?>
-                                        <tr>
-                                            <td><?php echo $row["user_fname"]." ".$row["user_lname"]; ?></td>
-                                            <td><?php echo $row["user_email"]; ?></td>
-                                            <td><?php echo $row["role_name"]; ?></td>
-                                            <td><?php
-                                                if ($row["user_status"]=="1"){
-                                                  echo 'Active';
-                                                  }
-                                                else {echo 'Deactive';}
-                                            ?>
-                                          </td>
-                                          <td>
-                                              <a href="../view/view-user.php?userId=<?php  echo base64_encode($userId);   ?>" class="btn-sm btn btn-info" >View</a>
-                                          <?php
-                                            if ($row["user_status"]=="1"){
-                                                if($logUser==$userId){
-                                                    ?>
-                                              <button class="btn btn-sm btn-danger" onclick="deactivate('<?php echo $userId;?>')" disabled>Deactivate</button>
-                                              <?php
-                                                } else {
-                                                  ?>
-                                              <button class="btn btn-sm btn-danger" onclick="deactivate('<?php echo $userId;?>')">Deactivate</button>
-                                                <?php  
-                                                }
-                                                
-                                            }
-                                             else {
-                                                 if($logUser==$userId){
-                                                    ?>
-                                              <button class="btn btn-sm btn-success" onclick="activate('<?php echo $userId;?>')" disabled>Activate</button>                                          
-                                              <?php
-                                              }else{
-                                                 ?>
-                                              <button class="btn btn-sm btn-success" onclick="activate('<?php echo $userId;?>')">Activate</button>
-                                                <?php 
-                                              }
-                                                 
-                                             }
+                <div class="tab-content" style="margin-top: -25px;"> 
+                    <table class="table table-hover" id="user_tbl">
+                        <thead>
+                            <tr style="">
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                         while ($row=$userResult->fetch_assoc()){
+                             $userId=$row["user_id"];
                                           ?>
+                        <tr>
+                            <td><?php echo $row["user_fname"]." ".$row["user_lname"]; ?></td>
+                            <td><?php echo $row["user_email"]; ?></td>
+                            <td><?php echo $row["role_name"]; ?></td>
+                            <td><?php
+                                if ($row["user_status"]=="1"){
+                                  echo 'Active';
+                                  }
+                                else {echo 'Deactive';}
+                            ?>
+                            </td>
+                            <td>
+                                <a href="../view/view-user.php?userId=<?php  echo base64_encode($userId);   ?>" class="btn-sm btn btn-info" >View</a>
+                            <?php
+                              if ($row["user_status"]=="1"){
+                                  if($logUser==$userId){
+                                      ?>
+                                <button class="btn btn-sm btn-danger" onclick="deactivate('<?php echo $userId;?>')" disabled>Deactivate</button>
+                                <?php
+                                  } else {
+                                    ?>
+                                <button class="btn btn-sm btn-danger" onclick="deactivate('<?php echo $userId;?>')">Deactivate</button>
+                                  <?php  
+                                  }
 
-                                      </td>
+                              }
+                               else {
+                                   if($logUser==$userId){
+                                      ?>
+                                <button class="btn btn-sm btn-success" onclick="activate('<?php echo $userId;?>')" disabled>Activate</button>                                          
+                                <?php
+                                }else{
+                                   ?>
+                                <button class="btn btn-sm btn-success" onclick="activate('<?php echo $userId;?>')">Activate</button>
+                                  <?php 
+                                }
 
-                                        </tr>
-                                         <?php } ?>
-                                    </table>
-                                </div>
-                  </div>
+                               }
+                            ?>
+
+                        </td>
+
+                          </tr>
+                           <?php } ?>
+                        </tbody>
+                    </table>
                 </div>
             </div>
          
         </div> 
         <script type="text/javascript" src="../../js/jquery-3.5.1.js"></script>
-        <script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="../../DataTables-1.10.22/js/jquery.dataTables.js"></script>
-        <script type="text/javascript" src="../../DataTables-1.10.22/js/dataTables.bootstrap4.js"></script>
         <script type="text/javascript" src="../../js/sweetalert2.js"></script>
+        <script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../../DataTables/datatables.min.js">
         <script type="text/javascript" src="../../js/user-validation.js"></script>
         <script src="../../js/jsStyle.js"></script>
         <script type="text/javascript">
@@ -185,8 +157,15 @@ $userRole=$_SESSION["user"]["role_id"];
     }
 }   
 
-$(function(){
-    $("#user_tbl").dataTable();
+
+    $("#user_tbl").dataTable({
+        dom: 'Bfrtip',
+         buttons: [
+            { extend: 'copy', className: 'cusbtn'},
+            { extend: 'excel', className: 'cusbtn'},
+            { extend: 'pdf', className: 'cusbtn' },
+            { extend: 'print', className: 'cusbtn'}
+        ]
   });
  
 function deactivate(userId){

@@ -31,6 +31,9 @@
     right: 0;
     padding: 10px 10px 10px 10px;
 }
+/*.margine{
+    
+}*/
 .toggle-bar{
     width: 50px;
     background-color: #173F5F;
@@ -71,3 +74,20 @@
     display: none;
 }
 /*product management end*/
+
+/*//data table button*/
+button.cusbtn{ 
+    position: absolute;
+    top: 40px;
+    border: none;
+    /*border-radius: 10px;*/
+    background-color: #007bff;
+    color: white; 
+    width: 70px;
+    margin: 5px;
+}
+button.cusbtn:hover{
+    background-color: #17a2b8;
+    color: white;
+}
+/*//data table button*/
