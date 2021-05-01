@@ -1,11 +1,13 @@
 <?php
-include '../model/order-model.php';
+include '../model/order-model.php'; ////include orderb model
 $orderObj=new Order();
+include '../model/log-model.php'; ////include log model
+$logObj= new Log();
 
 $status=$_REQUEST["status"];
 switch ($status){
     
-    case "viewOrderModale":
+    case "viewOrderModale":  //lod body of the modal
                     $orderId=$_POST["orderId"];
                     $oResult=$orderObj->getOrdersById($orderId);
                     $tRow=$oResult->fetch_assoc();
@@ -123,11 +125,12 @@ switch ($status){
                                 <?php
                             }else if(isset($_REQUEST["completed"])){
                                 ?>
-                            <a type="button" class="btn btn-sm btn-warning" href="../controller/order-controller.php?status=startDelivery&oId=<?php echo base64_encode($orderId); ?>">Start Delivery</a>
+                            <a type="button" class="btn btn-sm btn-warning" href="../controller/order-controller.php?status=startDeliveryProcess&oId=<?php echo base64_encode($orderId); ?>">Start Delivery</a>
                                 <?php
                             }else if(isset ($_REQUEST["onDelivery"])){
-                                ?>
-                            <a type="button" class="btn btn-sm btn-warning" href="../controller/order-controller.php?status=handOver&oId=<?php echo base64_encode($order_row["order_id"]); ?>">Delivery Complete</a>
+                                ?> 
+                            <!--/on delivery move to the delivery  anage menagemnt/-->
+                            <!--<a type="button" class="btn btn-sm btn-warning" href="../controller/order-controller.php?status=handOver&oId=<?php echo base64_encode($order_row["order_id"]); ?>">Delivery Complete</a>-->
                                 <?php
                             }else if(isset ($_REQUEST["fineshedOrder"])){
                                 ?>
@@ -138,19 +141,13 @@ switch ($status){
                                ?>
                             <form method="post" action="../controller/inventory-controller.php?status=startProcess&oId=<?php echo base64_encode($orderId); ?>">
                                 <?php
-                            $orderProduct=$orderObj->getOrdersProductById($orderId);
+                            $orderProduct=$orderObj->getOrdersProductDetailsById($orderId);
                             while($opRow=$orderProduct->fetch_assoc()){
-                                $pId=$opRow["product_id"];
-                                $mResult=$orderObj->getMaterialById($pId);
-                                $mRow=$mResult->fetch_assoc();
                                 ?>
-                                    <input type="hidden" name="mId[]" value="<?php echo $mRow["material_id"]; ?>">
+                                    <input type="hidden" name="mId[]" value="<?php echo $opRow["material_id"]; ?>">
                                         <?php 
-                                        $sizeId=$opRow["size_id"]; 
-                                        $sizeResult=$orderObj->getSizeByPId($sizeId);
-                                        $sRow=$sizeResult->fetch_assoc();
-                                        $length=$sRow['width']+$sRow['height']+1;
-                                        $squareInch=$sRow['width']*$sRow['height']+1;
+                                        $length=($opRow['width']+$opRow['height']+1)*$opRow['quantity'];    ///calculate lenth of frame
+                                        $squareInch=($opRow['width']*$opRow['height']+1)*$opRow['quantity']  //calculate squreinchers
                                         ?>
                                     <input type="hidden" name="length[]" value="<?php echo $length; ?>">
                                     <input type="hidden" name="squareInch[]" value="<?php echo $squareInch; ?>">
@@ -168,17 +165,24 @@ switch ($status){
                     case "completed":
                         $order_id= base64_decode($_REQUEST["oId"]);
                         $orderObj->completeProcess($order_id);
+                        
+                        session_start();
+                        $userId=$_SESSION["user"]["user_id"];
+                        $activity="Set order completed"." ".base64_decode($_REQUEST["oId"]);
+                        $logObj->addLog($userId, $activity); //add log
+                        
                          header("Location:../view/on-process.php?alert=completed");
                         break;
-                    case "startDelivery":
+                    case "startDeliveryProcess":
                         $order_id= base64_decode($_REQUEST["oId"]);
-                        $orderObj->onDelivery($order_id);
-                         header("Location:../view/completed.php?alert=startDelivery");
+                        $orderObj->onDeliveryProcess($order_id);
+                        
+                        session_start();
+                        $userId=$_SESSION["user"]["user_id"];
+                        $activity="Start order delivery"." ".base64_decode($_REQUEST["oId"]);
+                        $logObj->addLog($userId, $activity); //add log
+                        
+                         header("Location:../view/completed.php?alert=startDeliveryProcess");
                         break;
-                    
-                    case "handOver":
-                        $order_id= base64_decode($_REQUEST["oId"]);
-                        $orderObj->handOver($order_id);
-                         header("Location:../view/on-delivery.php?alert=startDelivery");
-                        break;
+
 }

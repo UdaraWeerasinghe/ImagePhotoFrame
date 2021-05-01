@@ -8,7 +8,7 @@ $userRole=$_SESSION["user"]["role_id"];?>
         <link type="text/css" rel="stylesheet" href="../../bootstrap/css/bootstrap.css">
         <link rel="stylesheet" href="../../fontawesome-pro-5.13.0-web/css/all.css">
         <link type="text/css" rel="stylesheet" href="../../css/style.css">
-        <link rel="stylesheet" type="text/css" href="../../DataTables-1.10.22/css/dataTables.bootstrap4.css"/>
+        <link rel="stylesheet" type="text/css" href="../../DataTables/datatables.min.css"/>
         <?php include_once '../../commons/dbConnection.php'; 
         
         include '../model/module-model.php';
@@ -67,7 +67,7 @@ $userRole=$_SESSION["user"]["role_id"];?>
                       <a class="nav-link" href="completed.php">Waiting For Payment</a>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link" href="on-delivery.php">On delivery</a>
+                      <a class="nav-link" href="delivery-process.php">On delivery</a>
                   </li>
                   <li class="nav-item">
                       <a class="nav-link" href="finished-order.php">Completed</a>
@@ -137,11 +137,11 @@ $userRole=$_SESSION["user"]["role_id"];?>
             </div>
         </div>
         <script type="text/javascript" src="../../js/jquery-3.5.1.js"></script>
-        <script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="../../DataTables-1.10.22/js/jquery.dataTables.js"></script>
-        <script type="text/javascript" src="../../DataTables-1.10.22/js/dataTables.bootstrap4.js"></script>
         <script type="text/javascript" src="../../js/sweetalert2.js"></script>
+        <script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../../DataTables/datatables.min.js"></script>
         <script type="text/javascript" src="../../js/user-validation.js"></script>
+        <script type="text/javascript" src="../../js/change-password-validation.js"></script>
         <script src="../../js/jsStyle.js"></script>
         <script type="text/javascript">
         
@@ -149,7 +149,14 @@ $userRole=$_SESSION["user"]["role_id"];?>
         <script type="text/javascript">
             $(function(){
              $("#order_tbl").dataTable({
-                 "order": [[ 2, "desc" ]]
+                 "order": [[ 2, "desc" ]],
+                 dom: 'Bfrtip',
+         buttons: [
+            { extend: 'copy', className: 'cusbtn'},
+            { extend: 'excel', className: 'cusbtn'},
+            { extend: 'pdf', className: 'cusbtn' },
+            { extend: 'print', className: 'cusbtn'}
+        ]
              });
            });
            

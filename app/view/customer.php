@@ -18,7 +18,7 @@ if(isset($_GET["alert"])){
         <link type="text/css" rel="stylesheet" href="../../bootstrap/css/bootstrap.css">
         <link rel="stylesheet" href="../../fontawesome-pro-5.13.0-web/css/all.css">
         <link type="text/css" rel="stylesheet" href="../../css/style.css">
-        <link rel="stylesheet" type="text/css" href="../../DataTables-1.10.22/css/dataTables.bootstrap4.css"/>
+        <link rel="stylesheet" type="text/css" href="../../DataTables/datatables.min.css"/>
         <?php include_once '../../commons/dbConnection.php'; 
         
         include '../model/module-model.php';
@@ -145,15 +145,23 @@ if(isset($_GET["alert"])){
 </div>
         <script type="text/javascript" src="../../js/jquery-3.5.1.js"></script>
         <script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="../../DataTables-1.10.22/js/jquery.dataTables.js"></script>
-        <script type="text/javascript" src="../../DataTables-1.10.22/js/dataTables.bootstrap4.js"></script>
+        <script type="text/javascript" src="../../DataTables/datatables.min.js"></script>
         <script type="text/javascript" src="../../js/sweetalert2.js"></script>
         <script src="../../js/jsStyle.js"></script>
+        <script type="text/javascript" src="../../js/change-password-validation.js"></script>
         <script type="text/javascript">
 //            dataTable for customer tbl
-            $(function(){
-            $("#customer_tbl").dataTable();
-          });
+            
+            $("#customer_tbl").dataTable({
+                dom: 'Bfrtip',
+         buttons: [
+            { extend: 'copy', className: 'cusbtn'},
+            { extend: 'excel', className: 'cusbtn'},
+            { extend: 'pdf', className: 'cusbtn' },
+            { extend: 'print', className: 'cusbtn'}
+        ]
+            });
+         
           //pass email & name to custome controler and load modal body
           function sendMail(email,name){
             var url="../controller/customer-controller.php?status=CustomerMail";
@@ -209,8 +217,7 @@ if(isset($_GET["alert"])){
                 showConfirmButton: false,
                 timer: 2000
               });   
-            }
-            
+            } 
         });
         //sweetAlert trime
         var url = window.location.href;

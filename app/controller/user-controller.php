@@ -1,6 +1,9 @@
 <?php
-include '../model/user-model.php';
+include '../model/user-model.php';  //include user model
 $userObj=new User();
+
+include '../model/log-model.php';   ///include log model
+$logObj= new Log();
 
 $status=$_REQUEST["status"];
 switch ($status){
@@ -8,8 +11,12 @@ switch ($status){
     case "activateUser":
         $user_id=$_REQUEST["userId"];
         $userObj->activateUser($user_id);
-     
-  
+        
+        session_start();
+        $userId=$_SESSION["user"]["user_id"];
+        $activity="Deactivate user"." ".$user_id;
+        $logObj->addLog($userId, $activity); //add log
+                
         ?>
 <script> window.location="../view/user.php";</script>
 <?php
@@ -19,6 +26,10 @@ switch ($status){
         $user_id=$_REQUEST["userId"];
         $userObj->deactivateUser($user_id);
         
+        session_start();
+        $userId=$_SESSION["user"]["user_id"];
+        $activity="Activate user"." ".$user_id;
+        $logObj->addLog($userId, $activity); //add log
       
         ?>
 <script> window.location="../view/user.php";</script>
@@ -26,15 +37,17 @@ switch ($status){
         break;
   
     case "addUser":
-        $fName=$_POST["fName"];
-        $lName=$_POST["lName"];
+//        print_r($_POST);
+        $fName=$_POST["fname"];
+        $lName=$_POST["lname"];
         $email=strtolower($_POST["email"]);
-        $cn=$_POST["cn"];
+        $cn=$_POST["cno"];
         $dob=$_POST["dob"];
         $nic=$_POST["nic"];
         $uRole=$_POST["uRole"];
         $gender=$_POST["gender"];
-
+        $address=$_POST["address"];
+      
         
         try{
             
@@ -43,15 +56,15 @@ switch ($status){
             $isValidNic=$userObj->checkNic($nic);
             
             if($isValidEmail==false){
-                throw new Exception("Email");
+                throw new Exception("email");
             }
             if($isValidCno==false){
-                throw new Exception("Contact");
+                throw new Exception("tel");
             }
             if($isValidNic==false){
-                throw new Exception("NIC");
+                throw new Exception("nic");
             }
-            
+            print_r($_FILES["user_img"]["name"]);
             if($_FILES["user_img"]["name"]!="")
                 {
                     $user_img=$_FILES["user_img"]["name"];
@@ -79,39 +92,32 @@ switch ($status){
                     $num++;
                     $newid = "U".str_pad($num,5,"0",STR_PAD_LEFT);
                     
-//                   $isAdded=$userObj->addUser($newid,$fName, $lName, $email, $cn, $dob, $nic, $uRole, $gender, $user_img,1);
-//                
-//                if($isAdded=="true"){
-//                    $password= sha1($nic);
-////                    $userObj->addLogin($email, $password, $newid);
-//                }
+                   $isAdded=$userObj->addUser($newid,$fName, $lName, $email, $cn, $dob, $nic, $uRole, $gender, $user_img,1);
+                
+                if($isAdded=="true"){
+                    $password= sha1($nic);
+                    $userObj->addLogin($email, $password, $newid);
+                }
                 
                 $class=" alert alert-success";
                 $class= base64_encode($class);
                 $msg="Successfully Add";
                 $msg= base64_encode($msg);
                 
-                header("Location:../view/user.php?msg=$msg&class=$class");
+//                header("Location:../view/user.php?msg=$msg&class=$class");
                 }
+                
+                print 'sub';
+                session_start();
+                $userId=$_SESSION["user"]["user_id"];
+                $activity="Add user"." ".$newid;
+                $logObj->addLog($userId, $activity); //add log
                
                         
         } catch (Exception $exptn) {
             $msg=$exptn->getMessage();
-            $msg= base64_encode($msg);
+            print $msg;
             
-            $fName= base64_encode($fName);
-            $lName= base64_encode($lName);
-            $email= base64_encode($email);
-            $cn= base64_encode($cn);
-            $dob= base64_encode($dob);
-            $nic= base64_encode($nic);
-            $uRole= base64_encode($uRole);
-            $gender= base64_encode($gender);
-            
-            header("Location:../view/add-user.php?msg=$msg&fName=$fName&"
-                    . "lName=$lName&email=$email&cn=$cn&dob=$dob&nic=$nic&"
-                    . "uRole=$uRole&gender=$gender");
-           
         }
         
         break;
@@ -140,8 +146,104 @@ switch ($status){
                     $user_img="defaultImage.jpg";
                 }
                 $userObj->updateUser($user_id, $fName, $lName, $email, $cn, $dob, $nic, $uRole, $gender, $user_img);
+        session_start();
+        $userId=$_SESSION["user"]["user_id"];
+        $activity="Udate user"." ".$user_id;
+        $logObj->addLog($userId, $activity); //add log
                 ?>
 <script> window.location="../view/view-user.php?userId=<?php echo $user_id; ?>";</script>
 <?php
     break;
+    
+    case "validateUserProfileEmail": //update user profile  email validate
+        $userId=$_POST["userId"];
+        $email=$_POST["email"];
+        $isValidEmail=$userObj->validateEmail($userId, $email);
+        if($isValidEmail){
+            echo 'notExist';
+        }else{
+            echo 'exist';
+        }
+        break;
+        
+        case "validateUserProfileCno": //update user profile  cnovalidate
+        $userId=$_POST["userId"];
+        $cno=$_POST["cno"];
+        $isValidCno=$userObj->validateCno($userId, $cno);
+        if($isValidCno){
+            echo 'notExist';
+        }else{
+            echo 'exist';
+        }
+        break;
+        
+        case "validateUserProfileNic": //update user profile  nic validate
+        $userId=$_POST["userId"];
+        $nic=$_POST["nic"];
+        $isValidNic=$userObj->validateNic($userId, $nic);
+        if($isValidNic){
+            echo 'notExist';
+        }else{
+            echo 'exist';
+        }
+        break;
+        
+        case "validatePassword": //change password password match
+        $userId=$_POST["userId"];
+        $oldPass= sha1($_POST["oldPass"]);
+        $isValidpass=$userObj->validatePass($userId, $oldPass);
+        if(!$isValidpass){
+            echo 'notExist';
+        }else{
+            echo 'exist';
+        }
+        break;
+    
+    case "changePassword":
+        $userId=$_POST["userId"];
+        $newPass=sha1($_POST["newPass"]);
+        $userObj->changePass($userId, $newPass);
+        session_start();
+        $uId=$_SESSION["user"]["user_id"];
+        unset($_SESSION['user']);
+        
+        $activity="Change password"." ".$userId;
+        $logObj->addLog($uId, $activity); //add log
+        $msg= base64_encode("Your password has been successfully Updated");
+        header("Location:../view/login.php?alert&type=success&msg=$msg");
+        break;
+    
+    case "updateProfile": //update user profile
+        $userid = $_POST["userId"];
+        $fName = $_POST["fname"];
+        $lName = $_POST["lname"];
+        $email = $_POST["email"];
+        $gender = $_POST["gender"];
+        $dob = $_POST["dob"];
+        $nic = $_POST["nic"];
+        $cno = $_POST["cno"];
+        $address = $_POST["address"];
+        
+        if($_FILES["img"]["name"]!="")
+                {
+                    $user_img=$_FILES["img"]["name"];
+                    $user_img="".time()."_".$user_img;
+                    /// obtain temporary location
+                   $tmp= $_FILES["img"]["tmp_name"];
+                   $destination="../../images/user_image/$user_img";
+                   move_uploaded_file($tmp, $destination);  //move image
+                }else{
+                    $user_img="";
+                }   
+        $userObj->updateUserProfile($userid, $fName, $lName, $email, $cno, $dob, $nic, $gender, $address, $user_img);
+        
+        session_start();
+        $userId=$_SESSION["user"]["user_id"];
+        $activity="Update profile"." ".$userid;
+        $logObj->addLog($userId, $activity); //add log
+        $msg= base64_encode("Your account has been successfuly updated");
+        header("Location:../view/profile.php?alert&type=success&msg=$msg");
+  
+        break;
+    
 }

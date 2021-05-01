@@ -161,6 +161,7 @@ if(isset($_REQUEST["oId"])){
         <script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="../../js/sweetalert2.js"></script>
         <script type="text/javascript" src="../../js/user-validation.js"></script>
+        <script type="text/javascript" src="../../js/change-password-validation.js"></script>
         <script src="../../js/jsStyle.js"></script>
         <script>
         

@@ -4,8 +4,9 @@
 1=New Order
 2=On process
 3=Waiting for payment
-4=on Delivery
-5=Completed
+4=ready for delivery
+5=on delivery
+6=Completed
 
 ----------------order payment Status---------
 1=full

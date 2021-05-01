@@ -191,6 +191,7 @@
         <script type="text/javascript" src="../../DataTables-1.10.22/js/dataTables.bootstrap4.js"></script>
         <script type="text/javascript" src="../../js/popper1.16.0.js"></script>
         <script type="text/javascript" src="../../js/product-validation.js"></script>
+        <script type="text/javascript" src="../../js/change-password-validation.js"></script>
         <script src="../../js/jsStyle.js"></script>
  
     </body>

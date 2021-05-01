@@ -2,11 +2,20 @@
 include '../model/customer-model.php';  //iclude customer model
 $customerObj=new Customer();                  //create custemr object
 
+include '../model/log-model.php';
+$logObj= new Log();
+
 $status=$_REQUEST["status"];
 switch ($status){
     
     case "blockCustomer":
         $customerObj->blockCustomer($_REQUEST["customerId"]);
+        
+        session_start();
+        $userId=$_SESSION["user"]["user_id"];
+        $activity="Block customer"." ".$_REQUEST["customerId"];
+        $logObj->addLog($userId, $activity); //add log
+        
         $email= $_REQUEST["email"];
         $name= base64_encode($_REQUEST["name"]);
         $msg= base64_encode("Successfully Blocked");
@@ -36,10 +45,15 @@ switch ($status){
     
     case "unBlockCustomer":
         $customerObj->unBlockCustomer($_REQUEST["customerId"]);
+        session_start();
+        $userId=$_SESSION["user"]["user_id"];
+        $activity="Unblack customer"." ".$_REQUEST["customerId"];
+        $logObj->addLog($userId, $activity); //add log
+        
         $email= $_REQUEST["email"];
         $name= base64_encode($_REQUEST["name"]);
         $msg= base64_encode("Successfully unblocked");
-                $customerObj->unBlockCustomer($_REQUEST["customerId"]);
+        $customerObj->unBlockCustomer($_REQUEST["customerId"]);
         $name= base64_encode($_REQUEST["name"]);
         $msg= base64_encode("Successfully Blocked");
         
@@ -68,14 +82,18 @@ switch ($status){
     case "CustomerMail":
         $email=$_POST["email"];
         $name=$_POST["name"];
-        ?>
+       ?>
+        <input type="hidden" name="name" value="<?php echo $name; ?>">
         <label>Email Address</label>
         <input class="form-control mb-4" type="text" name="email" value="<?php echo $email ?>" readonly="readonly">
-        <label>Subject</label>
-        <input class="form-control mb-4" type="text" name="subject" placeholder="Enter the subject of Email...">
+        <div>
+            <label>Subject</label>
+            <input class="form-control mb-4" type="text" id="subject" name="subject" placeholder="Enter the subject of Email...">
+            <div class="invalid-tooltip" id="subjectTooltip" style="position: relative; top: -10px"></div>
+        </div>
         <label>Body</label>
-        <textarea class="form-control" name="body" style="height: 150px;">Dear <?php echo $name; ?>,</textarea>
-          
+        <textarea class="form-control" name="body" id="body" style="height: 150px;">Dear <?php echo $name; ?>,</textarea>
+          <div class="invalid-tooltip" id="bodyTooltip" style="position: relative;"></div>
           <?php
         break;
     
@@ -83,6 +101,11 @@ switch ($status){
         $email=$_POST["email"];
         $subject=$_POST["subject"];
         $body=$_POST["body"];
+        
+        session_start();
+        $userId=$_SESSION["user"]["user_id"];
+        $activity="Sent email to customer";
+        $logObj->addLog($userId, $activity); //add log
         
         require '../../includes/phpMailer-header.php';
 

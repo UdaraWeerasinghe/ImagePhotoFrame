@@ -1,6 +1,8 @@
 <?php
 include '../model/login-model.php'; //include login model
 $loginObj=new login();              //create a new obj
+include '../model/log-model.php';
+$logObj= new Log();
 
 $status=$_REQUEST["status"];
 switch ($status){
@@ -16,6 +18,9 @@ switch ($status){
             
             session_start();
             $_SESSION['user']=$user_details;
+            $userId=$_SESSION["user"]["user_id"];
+            $activity="Login";
+            $logObj->addLog($userId, $activity); //add log
             
     if($result->num_rows==1){                   //check whether maching recode exist 
         header("Location:../view/dashboard.php"); //bring to the dashboard
@@ -31,21 +36,33 @@ switch ($status){
         
     case "logout":
         session_start();
+        $userId=$_SESSION["user"]["user_id"];
         unset($_SESSION['user']);
-        //session_destroy();
+
+        $activity="Logout";
+        $logObj->addLog($userId, $activity); //add log
         header("Location:../view/login.php");
         break;
     
     case "resetPassword":
         $password= sha1($_POST["password1"]);
         $login_id=$_POST["login_id"];
-        $loginObj->resetPassword($login_id, $password);
+        $loginObj->resetPassword($login_id, $password); 
+        
+        session_start();
+        $userId=$_SESSION["user"]["user_id"];
+        $activity="Reset password";
+        $logObj->addLog($userId, $activity); //add log
         header("Location:../view/login.php");
         break;
         
     case "checkEmail":
         $email=$_POST["email"];
         $emailResult=$loginObj->ValidateEmail($email);
+        session_start();
+        $userId=$_SESSION["user"]["user_id"];
+        $activity="Try to reset password";
+        $logObj->addLog($userId, $activity); //add log
         
                 if($emailResult->num_rows==1){ 
                     $eRow=$emailResult->fetch_assoc();

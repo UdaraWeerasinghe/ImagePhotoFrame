@@ -6,7 +6,34 @@ class Order{
     public function  getAllOrders(){
         
         $con=$GLOBALS['con'];
-        $sql="SELECT * FROM order_detail o, customer c WHERE o.customer_id=c.customer_id AND o.order_status='1' AND o.order_payment_status!='0'" ;
+        $sql="SELECT * FROM order_detail o, customer c WHERE o.customer_id=c.customer_id "
+                . "AND o.order_status='1' AND o.order_payment_status!='0'" ;
+        $results = $con->query($sql) or die($con->error);
+        return $results;
+    }
+    public function  getOrderCountByStatus(){ ///display count in dashbord
+        
+        $con=$GLOBALS['con'];
+        $sql="SELECT (SELECT COUNT(order_id) FROM order_detail WHERE order_status='1' ) AS newOrder, "
+                . "(SELECT COUNT(order_id) FROM order_detail WHERE order_status='2' ) AS onProcess, "
+                . "(SELECT COUNT(order_id) FROM order_detail WHERE order_status='3' ) AS duePayment, "
+                . "(SELECT COUNT(order_id) FROM order_detail WHERE order_notification='1' )AS notiCount "
+                . "FROM order_detail o GROUP BY 1";
+        $results = $con->query($sql) or die($con->error);
+        return $results;
+    }
+     public function  ReadNotification(){ ///hide notification after view
+        
+        $con=$GLOBALS['con'];
+        $sql="UPDATE order_detail SET order_notification='0'";
+        $results = $con->query($sql) or die($con->error);
+        return $results;
+    }
+    public function  getMaxAndMinPayment(){
+        
+        $con=$GLOBALS['con'];
+        $sql="SELECT (SELECT MAX(payment_amount) FROM payment)AS max,(SELECT MIN(payment_amount) "
+                . "FROM payment)AS min FROM payment GROUP BY max";
         $results = $con->query($sql) or die($con->error);
         return $results;
     }
@@ -24,17 +51,17 @@ class Order{
         $results = $con->query($sql) or die($con->error);
         return $results;
     }
-    public function  getAllOnDeliveryOrders(){
+    public function  getAllOnDeliveryProcessOrders(){
         
         $con=$GLOBALS['con'];
-        $sql="SELECT * FROM order_detail o, customer c WHERE o.customer_id=c.customer_id AND order_status='4'";
+        $sql="SELECT * FROM order_detail o, customer c WHERE o.customer_id=c.customer_id AND (order_status='4' OR order_status='5')";
         $results = $con->query($sql) or die($con->error);
         return $results;
     }
     public function  getAllFinishedOrders(){
         
         $con=$GLOBALS['con'];
-        $sql="SELECT * FROM order_detail o, customer c WHERE o.customer_id=c.customer_id AND order_status='5'";
+        $sql="SELECT * FROM order_detail o, customer c WHERE o.customer_id=c.customer_id AND order_status='6'";
         $results = $con->query($sql) or die($con->error);
         return $results;
     }
@@ -49,14 +76,17 @@ class Order{
     public function  getOrderByOrderId($orderId){
         
         $con=$GLOBALS['con'];
-        $sql="SELECT * FROM order_detail o, order_product op, product p WHERE o.order_id = op.order_id AND op.product_id=p.product_id AND o.order_id='$orderId'";
+        $sql="SELECT * FROM order_detail o, order_product op, product p "
+                . "WHERE o.order_id = op.order_id AND op.product_id=p.product_id AND o.order_id='$orderId'";
         $results = $con->query($sql) or die($con->error);
         return $results;
     }
-        public function  getOrdersProductById($order_id){
+        public function  getOrdersProductDetailsById($order_id){
         
         $con=$GLOBALS['con'];
-        $sql="SELECT * FROM order_product o, product p WHERE o.product_id=p.product_id AND order_id='$order_id'";
+        $sql="SELECT o.product_id, o.size_id, o.quantity, s.width, s.height, mp.material_id "
+                . "FROM order_product o, product p, size s, product_material mp "
+                . "WHERE o.product_id=p.product_id AND o.size_id=s.size_id AND o.product_id=mp.product_id AND order_id='$order_id'";
         $results = $con->query($sql) or die($con->error);
         return $results;
     }
@@ -81,21 +111,15 @@ class Order{
         $results = $con->query($sql) or die($con->error);
         return $results;
     }
-    public function  onDelivery($order_id){
+    public function  onDeliveryProcess($order_id){
         
         $con=$GLOBALS['con'];
         $sql="UPDATE order_detail SET order_status = '4' WHERE order_id='$order_id'";
         $results = $con->query($sql) or die($con->error);
         return $results;
     }
-    public function  handOver($order_id){
-        
-        $con=$GLOBALS['con'];
-        $sql="UPDATE order_detail SET order_status = '5' WHERE order_id='$order_id'";
-        $results = $con->query($sql) or die($con->error);
-        return $results;
-    }
-    ///test
+
+    
     public function  getOrders($startDate,$endDate){
         
         $con=$GLOBALS['con'];

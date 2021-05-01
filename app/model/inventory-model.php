@@ -45,12 +45,7 @@ class Inventory{
         $results = $con->query($sql) or die($con->error);
         return $results;
     }
-    public function  rejectOrderStatus($order_id,$reason){
-        $con=$GLOBALS['con'];
-        $sql="UPDATE order_detail SET order_status = '0', reject_reason='$reason' WHERE order_id='$order_id'";
-        $results = $con->query($sql) or die($con->error);
-        return $results;
-    }
+  
     public function  startProcess($order_id){
         
         $con=$GLOBALS['con'];
@@ -76,6 +71,13 @@ class Inventory{
         
         $con=$GLOBALS['con'];
         $sql="SELECT * FROM  order_detail o, customer c WHERE o.customer_id=c.customer_id AND o.order_id='$order_id'";
+        $results = $con->query($sql) or die($con->error);
+        return $results;
+    }
+    public function  getLowOfStock(){
+        
+        $con=$GLOBALS['con'];
+        $sql="SELECT COUNT(material_id)AS lowStock FROM material WHERE qty<100";
         $results = $con->query($sql) or die($con->error);
         return $results;
     }

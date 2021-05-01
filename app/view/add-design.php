@@ -55,7 +55,7 @@ $userRole=$_SESSION["user"]["role_id"];?>
             <div class="dashbord-body" id="dashbord-body" style="flex: 70%; height: 800px; padding: 10px;">
                 <div class="row container-fluid">
                     <div class="col-sm-2">
-                        <button class="btn" onclick="history.go(-1);"><i style="color: #173F5F;" class="fad fa-arrow-alt-circle-left fa-2x"></i></button>
+                        <!--<button class="btn" onclick="history.go(-1);"><i style="color: #173F5F;" class="fad fa-arrow-alt-circle-left fa-2x"></i></button>-->
                     </div>
                     <div class="col-sm-8">
                          <h3 style="text-align: center; margin-bottom: 20px;">Product Management</h3>
@@ -214,6 +214,7 @@ $userRole=$_SESSION["user"]["role_id"];?>
 
         <script src="../../js/jsStyle.js"></script>
         <script src="../../js/product-validation.js"></script>
+        <script type="text/javascript" src="../../js/change-password-validation.js"></script>
         <script type="text/javascript">
       
       function isNumberKey(event){

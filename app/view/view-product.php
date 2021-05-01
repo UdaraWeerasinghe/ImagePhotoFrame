@@ -57,7 +57,7 @@ $userRole=$_SESSION["user"]["role_id"];?>
                 
                 <div class="row">
                     <div class="col-sm-2">
-                        <button class="btn" onclick="history.go(-1);"><i style="color: #173F5F;" class="fad fa-arrow-alt-circle-left fa-2x"></i></button>
+                        <!--<button class="btn" onclick="history.go(-1);"><i style="color: #173F5F;" class="fad fa-arrow-alt-circle-left fa-2x"></i></button>-->
                     </div>
                     <div class="col-sm-8">
                         <h3 style="text-align: center; margin-bottom: 20px;">View Product</h3>
@@ -177,6 +177,7 @@ $userRole=$_SESSION["user"]["role_id"];?>
         <script type="text/javascript" src="../../DataTables-1.10.22/js/dataTables.bootstrap4.js"></script>
         <script type="text/javascript" src="../../js/popper1.16.0.js"></script>
         <script type="text/javascript" src="../../js/product-validation.js"></script>
+        <script type="text/javascript" src="../../js/change-password-validation.js"></script>
         <script src="../../js/jsStyle.js"></script>
  
     </body>

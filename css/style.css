@@ -2,7 +2,7 @@
     width: 250px;
     background-color: #173F5F;
     padding-bottom: 20px;
-    height: 600px;;
+    height: 600px;
     position: fixed;
     top: 59px;
     z-index: 1;
@@ -63,10 +63,27 @@
 .hide-error{
     display: none;
 }
-
+.customInValidToltip{
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 5;
+  max-width: 100%;
+  padding: 0.25rem 0.5rem;
+  margin-top: .1rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #fff;
+  background-color: rgba(220, 53, 69, 0.9);
+  border-radius: 0.25rem;
+}
 @keyframes moduleLink{
     from {background-color: #252733;}
     to {background-color: white; color: black;}
+}
+/*////buttun in reports*/
+.reportBtn:hover{
+    background-color: #a3d2ca;
 }
 
 /*product management start*/
@@ -76,9 +93,11 @@
 /*product management end*/
 
 /*//data table button*/
-button.cusbtn{ 
-    position: absolute;
+.dt-buttons{
+    position: relative;
     top: 40px;
+}
+button.cusbtn{ 
     border: none;
     /*border-radius: 10px;*/
     background-color: #007bff;

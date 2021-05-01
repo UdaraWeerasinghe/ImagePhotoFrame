@@ -1,6 +1,8 @@
 <?php
 include '../model/inventory-model.php';
 $inventoryObj=new Inventory();
+include '../model/log-model.php';
+$logObj= new Log();
 
 $status=$_REQUEST["status"];
 switch ($status){
@@ -22,7 +24,11 @@ switch ($status){
                     
                     $inventoryObj->addMaterial($newid,$mName, $mType);
                 }
-            
+        session_start();
+        $userId=$_SESSION["user"]["user_id"];
+        $activity="Add new material type"." ".$newid;
+        $logObj->addLog($userId, $activity); //add log 
+        
         header("Location:../view/inventory.php?alert=materialAdded");
             break;
         
@@ -48,6 +54,11 @@ switch ($status){
             $mRow=$mResult->fetch_assoc();
             $qty=$mRow["qty"]+$qty;
             $inventoryObj->addMaterialQty($mId,$qty);
+            
+            session_start();
+            $userId=$_SESSION["user"]["user_id"];
+            $activity="Add material"." ".$newid;
+            $logObj->addLog($userId, $activity); //add log 
             break;
         
         case "getStrip":
@@ -61,22 +72,24 @@ switch ($status){
                 <?php
                  } 
             break;
-            
-            case "addReason":
-                $reason=$_POST["reason"];
-                $order_id=$_POST["orderId"];
-                
-                $inventoryObj->rejectOrderStatus($order_id,$reason);
-               
-                header("Location:../view/order.php");
-                break;
+          
             
             case "startProcess":
 //                
             $order_id= base64_decode($_REQUEST["oId"]);
             $mId=$_POST["mId"];
-            
             $x= sizeof($_POST["length"]);
+            print_r($mId);
+//            print_r($_POST["length"]);
+//            print_r($_POST["squareInch"]);echo '<br>';
+            $count=0;
+            
+            $allMarResult=$inventoryObj->getAllMaterial();
+            
+//            while ($matRow=$allMarResult->fetch_assoc()){
+            
+//            echo array_search("MAT00009",$matRow);
+//            echo '<br>';} 
             
             for($i=0; $i<$x; $i++){
                 $length=$_POST["length"][$i]/12; //conver to feets 
@@ -84,25 +97,42 @@ switch ($status){
                 $mId=$_POST["mId"][$i];
                 $qty=$inventoryObj->getMaterialLengthById($mId);
                 $row=$qty->fetch_assoc();
-                echo $nQty=$row["qty"]-$length;
-                $inventoryObj->updateQty($mId, $nQty);
+                $nQty=$row["qty"]-$length;               
+//                $inventoryObj->updateQty($mId, $nQty);
+                
+                while ($matRow=$allMarResult->fetch_assoc()){
+            
+            if(in_array($_POST["mId"][$i],$matRow)){
+                echo $matRow["material_id"];
+            } else {
+                echo "no match";
+            }
+            
+            echo '<br>';}
                 
                 $gQty=$inventoryObj->getMaterialLengthById('MAT00001');
                 $gRow=$gQty->fetch_assoc();
                 $gRow["qty"];
                 $nqQty=$gRow["qty"]-$squareInch;
-                $inventoryObj->updateQty('MAT00001', $nqQty);
+               // $inventoryObj->updateQty('MAT00001', $nqQty);
                 
                 $bQty=$inventoryObj->getMaterialLengthById('MAT00002');
                 $bRow=$bQty->fetch_assoc();
                 $nbQty=$bRow["qty"]-$squareInch;
-                $inventoryObj->updateQty('MAT00002', $nbQty);
+               // $inventoryObj->updateQty('MAT00002', $nbQty);
             }
-                $inventoryObj->startProcess($order_id);
+                $inventoryObj->startProcess($order_id);   ///change order status
                 
-                $customerResult=$inventoryObj->getCustomerByOId($order_id);
+                $customerResult=$inventoryObj->getCustomerByOId($order_id);///get customer to send mail
                 $cRow=$customerResult->fetch_assoc();
                 $customerName=$cRow["customer_fName"]." ".$cRow["customer_lName"];
+                header("Location:../view/order.php?alert=success");  
+                
+                session_start();
+                $userId=$_SESSION["user"]["user_id"];
+                $activity="Start order process"." ".base64_decode($_REQUEST["oId"]);
+                $logObj->addLog($userId, $activity); //add log 
+                break;
                 
     require '../../includes/phpMailer-header.php';
 

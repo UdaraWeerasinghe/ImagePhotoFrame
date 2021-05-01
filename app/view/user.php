@@ -6,7 +6,6 @@ $userRole=$_SESSION["user"]["role_id"];
     <head>
         <meta charset="UTF-8">
         <title></title>
-        
         <link type="text/css" rel="stylesheet" href="../../bootstrap/css/bootstrap.css">
         <link rel="stylesheet" href="../../fontawesome-pro-5.13.0-web/css/all.css">
         <link type="text/css" rel="stylesheet" href="../../css/style.css">
@@ -54,23 +53,17 @@ $userRole=$_SESSION["user"]["role_id"];
                  <?php }?>
             </div>
             <div class="dashbord-body" id="dashbord-body">
-                <h3 style="text-align: center;">User Management</h3>
+                <h3 style="text-align: center; margin-top: 10px;">User Management</h3>
                 <ul class="nav nav-tabs">
                   <li class="nav-item">
                     <a class="nav-link active" href="#all-users">All Users (<?php echo $allUserCount; ?>)</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#active-users">Active Users</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#deactive-users">Deactive Users</a>
-                  </li>
-                  <li class="nav-item">
                       <a class="nav-link" href="add-user.php">Add User</a>
                   </li>
                 </ul>
-                <div class="tab-content" style="margin-top: -25px;"> 
-                    <table class="table table-hover" id="user_tbl">
+                <div class="container" style="margin-top: 0px;"> 
+                    <table class="table table-hover" id="user_tbl" style="margin-top: 0px;">
                         <thead>
                             <tr style="">
                                 <th>Name</th>
@@ -140,6 +133,7 @@ $userRole=$_SESSION["user"]["role_id"];
         <script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="../../DataTables/datatables.min.js">
         <script type="text/javascript" src="../../js/user-validation.js"></script>
+        <script type="text/javascript" src="../../js/change-password-validation.js"></script>
         <script src="../../js/jsStyle.js"></script>
         <script type="text/javascript">
         function readURL(input) {

@@ -5,15 +5,14 @@ $userRole=$_SESSION["user"]["role_id"];?>
         <meta charset="UTF-8">
         <title></title>
         <link type="text/css" rel="stylesheet" href="../../bootstrap/css/bootstrap.css">
-        <link rel="stylesheet" type="text/css" href="../../DataTables-1.10.22/css/dataTables.bootstrap4.css"/>
+        <link rel="stylesheet" type="text/css" href="../../DataTables/datatables.min.css">
         <link rel="stylesheet" href="../../fontawesome-pro-5.13.0-web/css/all.css">
         <link type="text/css" rel="stylesheet" href="../../css/style.css">
 
-        <?php include_once '../../commons/dbConnection.php'; 
-        
+        <?php 
         include '../model/module-model.php';
             $moduleObj = new Module();
-            $moduleResult=$moduleObj->getAllModules($userRole);  
+            $moduleResult=$moduleObj->getAllModules($userRole);  //load module
             
         include '../model/product-model.php'; 
             $productObj=new Product();
@@ -21,7 +20,7 @@ $userRole=$_SESSION["user"]["role_id"];?>
         
         if(isset($_GET["alert"])){
                 ?>
-    <input type="hidden" id="alert" value="<?php echo $_REQUEST["alert"]; ?>">
+    <input type="hidden" id="alert" value="<?php echo $_REQUEST["alert"]; ?>">  //check for sweat alert
         <?php
             }
         ?>
@@ -54,10 +53,10 @@ $userRole=$_SESSION["user"]["role_id"];?>
 
                  <?php }?>
             </div>
-            <div class="dashbord-body" id="dashbord-body" style="padding: 10px;">
+            <div class="dashbord-body" id="dashbord-body">
                 <div class="row container-fluid">
                     <div class="col-sm-2">
-                        <button class="btn" onclick="history.go(-1);"><i style="color: #173F5F;" class="fad fa-arrow-alt-circle-left fa-2x"></i></button>
+                        <!--<button class="btn" onclick="history.go(-1);"><i style="color: #173F5F;" class="fad fa-arrow-alt-circle-left fa-2x"></i></button>-->
                     </div>
                     <div class="col-sm-8">
                         <h3 style="text-align: center; margin-bottom: 20px;">Product Management</h3>
@@ -66,16 +65,8 @@ $userRole=$_SESSION["user"]["role_id"];?>
                         
                     </div>
                 </div>
-                
-                
-<!--                <div style="padding: 10px;">
-                    <div class="row">
-                        <div class="col-12"style="background-color: #f5f6f8;padding: 5px;">
-                            <a href="dashboard.php">Dashboard</a> / <a>Product Management</a>
-                        </div>
-                    </div>
-                </div>-->
-                <div class="row" style="margin: 0px;">
+
+                <div class="row" style="margin-bottom: -20px;">
                     <div class="col-md-12">
                         <ul class="nav nav-tabs">
                             <li class="nav-item">
@@ -90,17 +81,10 @@ $userRole=$_SESSION["user"]["role_id"];?>
                         </ul>
                     </div>
                 </div>
-                <div  style="padding: 20px;">
-                    <div class="row">
-                        <div class="col-6"></div>
-                        <div class="col-6 mb-2" style="text-align: right">
-                            <a href="report-all-product.php" class="btn btn-primary"><i class="far fa-download"></i>&nbsp;Export PDF</a>
-                        </div>
-                    </div>
+                <div  style="padding: 0px 20px;">
                     <table id="product_tbl" class="table table-hover">
                         <thead>
                             <tr>
-
                                 <th>Product Name</th>
                                 <th>Color</th>
                                 <th>Availability</th>
@@ -155,16 +139,24 @@ $userRole=$_SESSION["user"]["role_id"];?>
         
         <script type="text/javascript" src="../../js/jquery-3.5.1.js"></script>
         <script type="text/javascript" src="../../bootstrap/js/bootstrap.js"></script>
-        <script type="text/javascript" src="../../DataTables-1.10.22/js/jquery.dataTables.js"></script>
-        <script type="text/javascript" src="../../DataTables-1.10.22/js/dataTables.bootstrap4.js"></script>
+        <script type="text/javascript" src="../../DataTables/datatables.min.js"></script>
         <script type="text/javascript" src="../../js/popper1.16.0.js"></script>
         <script type="text/javascript" src="../../js/product-validation.js"></script>
         <script type="text/javascript" src="../../js/sweetalert2.js"></script>
+        <script type="text/javascript" src="../../js/change-password-validation.js"></script>
         <script src="../../js/jsStyle.js"></script>
         <script>
-         $(function(){
-    $("#product_tbl").dataTable();
-  });
+        
+    $("#product_tbl").dataTable({
+        dom: 'Bfrtip',
+         buttons: [
+            { extend: 'copy', className: 'cusbtn'},
+            { extend: 'excel', className: 'cusbtn'},
+            { extend: 'pdf', className: 'cusbtn' },
+            { extend: 'print', className: 'cusbtn'}
+        ]
+    });
+
   
   $( document ).ready(function() {
     var x = $("#alert").val();

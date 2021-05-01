@@ -2,7 +2,14 @@
 session_start();
 if(isset($_SESSION['user'])){
     header("Location: ../view/dashboard.php");
-}?>
+}
+if(isset($_GET["alert"])){
+        ?>
+        <input type="hidden" id="alert" value="<?php echo $_REQUEST["type"]?>">
+        <input type="hidden" id="msg" value="<?php echo base64_decode($_REQUEST["msg"])?>">
+    <?php
+    }
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -77,5 +84,29 @@ if(isset($_SESSION['user'])){
      <script type="text/javascript" src="../../js/jquery-3.5.1.js"></script>
     <script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../js/login-validation.js"></script>
+    <script type="text/javascript" src="../../js/sweetalert2.js"></script>
+    <script>
+        //sweet alert for operations
+            $(document).ready(function() {
+                var alert = $("#alert").val();
+                var msg = $("#msg").val();
+                if(alert=="success"){
+                  Swal.fire({
+                position: 'center',
+                icon: alert,
+                title: 'Successfull!',
+                text: msg,
+                showConfirmButton: false,
+                timer: 2000
+              });   
+            } 
+        });
+        //sweetAlert trime
+        var url = window.location.href;
+        var splitUrl = url.split('?')[0];
+        var newSplitUrl = splitUrl.split('localhost')[1];
+        window.history.pushState({}, document.title, "" + newSplitUrl);
+        //sweetAlert trime
+    </script>
     </body>
 </html>

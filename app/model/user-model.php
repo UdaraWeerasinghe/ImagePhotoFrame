@@ -103,6 +103,77 @@ class User{
         $sql="UPDATE user SET user_fname='$fName', user_lname='$lName', user_email='$email', user_cno='$cn', user_gender='$gender', user_dob='$dob', user_nic='$nic', role_id='$uRole', user_image='$user_img' WHERE user_id='$user_id'";
         $con->query($sql)or die($con->error); 
     }
+    public function updateUserProfile($user_id,$fName,$lName,$email,$cn,$dob,$nic,$gender,$address,$user_img){
+        $con=$GLOBALS["con"];
+        if($user_img==""){
+        $sql="UPDATE user SET user_fname='$fName', user_lname='$lName', user_email='$email', user_cno='$cn', user_gender='$gender', user_dob='$dob', user_nic='$nic', user_address='$address' WHERE user_id='$user_id'";
+        }else{
+        $sql="UPDATE user SET user_fname='$fName', user_lname='$lName', user_email='$email', user_cno='$cn', user_gender='$gender', user_dob='$dob', user_nic='$nic', user_image='$user_img',user_address='$address' WHERE user_id='$user_id'";
+        }
+        $con->query($sql)or die($con->error); 
+    }
+    
+    public function  validateEmail($userId,$email){ //validate email to udate user
+        $con=$GLOBALS['con'];
+        $sql="SELECT 1 FROM user WHERE user_email='$email' AND user_id!='$userId'";
+        $results = $con->query($sql);
+        if($results->num_rows>0)
+         {
+            return false;
+         }
+         else
+          {
+             return true;
+          }
+    }
+    
+     public function  validateCno($userId,$cno){ //validate contact to udate user
+        $con=$GLOBALS['con'];
+        $sql="SELECT 1 FROM user WHERE user_cno='$cno' AND user_id!='$userId'";
+        $results = $con->query($sql);
+        if($results->num_rows>0)
+         {
+            return false;
+         }
+         else
+          {
+             return true;
+          }
+    }
+    
+     public function  validateNic($userId,$nic){ //validate contact to udate user
+        $con=$GLOBALS['con'];
+        $sql="SELECT 1 FROM user WHERE user_nic='$nic' AND user_id!='$userId'";
+        $results = $con->query($sql);
+        if($results->num_rows>0)
+         {
+            return true;
+         }
+         else
+          {
+             return false;
+          }
+    }
+    
+     public function  validatePass($userId,$oldPass){ //check password to chamge
+        $con=$GLOBALS['con'];
+        $sql="SELECT 1 FROM login WHERE user_id='$userId' AND login_password='$oldPass'";
+        $results = $con->query($sql);
+        if($results->num_rows>0)
+         {
+            return true;
+         }
+         else
+          {
+             return false;
+          }
+    }
+    
+    public function changePass($userId,$password){
+        $con=$GLOBALS["con"];
+        $sql="UPDATE login SET login_password='$password' WHERE user_id='$userId'";
+        $con->query($sql); 
+    }
     
     
     

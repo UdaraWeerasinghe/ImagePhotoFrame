@@ -2,6 +2,10 @@
 include '../model/product-model.php';
 $productObj=new Product();
 
+$orderObj=new Order();
+include '../model/log-model.php';   ///include log model
+$logObj= new Log();
+
 $status=$_REQUEST["status"];
 switch ($status){
     
@@ -27,6 +31,11 @@ switch ($status){
                     foreach ($size as $s) {
                  $productObj->addSubCategorySize($newid,$s);
                 }
+                session_start();
+                $userId=$_SESSION["user"]["user_id"];
+                $activity="Add sub category"." ".$newid;
+                $logObj->addLog($userId, $activity); //add log
+                
                 header("Location:../view/category.php?alert=subCatAdded");
                 }
                     
@@ -38,12 +47,24 @@ switch ($status){
     case "deactivateSubCategory":
         $sub_cat_id=$_REQUEST["sub_cat_id"];
         $productObj->deactivateSubCategory($sub_cat_id);
+        
+        session_start();
+        $userId=$_SESSION["user"]["user_id"];
+        $activity="Deactivate sub category"." ".$sub_cat_id;
+        $logObj->addLog($userId, $activity); //add log
+        
         header("Location:../view/category.php?alert=deactivated");
         break;
     
     case "activateSubCategory":
         $sub_cat_id=$_REQUEST["sub_cat_id"];
         $productObj->activateSubCategory($sub_cat_id);
+        
+        session_start();
+        $userId=$_SESSION["user"]["user_id"];
+        $activity="Activate sub category"." ".$sub_cat_id;
+        $logObj->addLog($userId, $activity); //add log
+        
         header("Location:../view/category.php?alert=activated");
          
         break;
@@ -105,7 +126,10 @@ switch ($status){
                 }
                     }
                 }
-
+        session_start();
+        $userId=$_SESSION["user"]["user_id"];
+        $activity="Add new design"." ".$newid;
+        $logObj->addLog($userId, $activity); //add log
                 header("Location:../view/product.php?alert=designAdded");
         break;
         

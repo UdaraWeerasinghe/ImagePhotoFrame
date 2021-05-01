@@ -53,367 +53,156 @@ $userRole=$_SESSION["user"]["role_id"];
 
                  <?php }?>
             </div>
-            <div class="dashbord-body" id="dashbord-body" style="flex: 70%; height: 800px;">
+            <div class="dashbord-body" id="dashbord-body">
                 <h3 style="text-align: center; margin-top: 10px;">User Management</h3>
                 <ul class="nav nav-tabs">
                   <li class="nav-item">
                       <a class="nav-link" href="user.php">All Users</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link"  href="#active-users">Active Users</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#deactive-users">Deactive Users</a>
-                  </li>
-                  <li class="nav-item">
                     <a class="nav-link active" href="#add-user">Add User</a>
                   </li>
                 </ul>
-
-                    <div id="add-user" class="container "><br>
-                       <?php
-                        if(isset($_GET["msg"])){
-                            ?>
-                        <div class="row">
-                            <div style="text-align: center" class="col-12">
-                                <div class="alert alert-danger">
-                                    <?php
-                        
-                                        $msg=$_REQUEST["msg"];
-                                        $msg=  base64_decode($msg);
-                                        echo $msg;
-                                        ?>
-                                </div>
-                            </div> 
-                        </div>
-                        <?php
-                        }
-                        ?>
-                        <div class="row">
-                            <div style="text-align: center" class="col-12"> 
-                            </div> 
-                        </div>
-                      <div class="row">
-                            <div style="text-align: center" class="col-12" id="vAlert"> 
-                            </div> 
-                        </div>
-                        <?php
-                        if(isset($_GET["msg"])){
-                            ?>
-                            <form id="addUser" enctype="multipart/form-data" method="post" 
-                                  action="../controller/user-controller.php?status=addUser"  
-                                  class="needs-validation" novalidate>
-
-                                <div class="row" style="margin-top: 10px;">
-                                    <div class="col-md-2">
-                                        <label>First Name</label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" id="fName" name="fName" class="form-control"
-                                               value="<?php echo base64_decode($_REQUEST["fName"]);?>">
-                                        <div class="invalid-tooltip" style="position: inherit; top:0px;">
-                                            Please enter the first name
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2"></div>
-                                    <div class="col-md-2">
-                                        <label>Last Name</label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" id="lName" name="lName" class="form-control"
-                                               value="<?php echo base64_decode($_REQUEST["lName"]);?>">
-                                        <div class="invalid-tooltip" style="position: inherit; top:0px;">
-                                            Please enter the last name
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row"><div class="col-12">&nbsp;</div></div>
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <label>Email</label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <?php
-                                        if(base64_decode($_REQUEST["msg"])=="Email"){
-                                            ?>
-                                            <input type="email" id="email" name="email" class="form-control"
-                                               value="<?php echo base64_decode($_REQUEST["email"]);?>">
-                                            <div class="form-control"
-                                                style="margin-top: 3px;height: 30px; color: white; 
-                                                background-color: #dc3545E6; font-size: 14px; 
-                                                padding: 2px 0px 2px 5px;">
-                                               Email address is already registered!
-                                           </div>
-                                        <?php
-                                        }else{
-                                            ?>
-                                            <input type="email" id="email" name="email" class="form-control"
-                                               value="<?php echo base64_decode($_REQUEST["email"]);?>">
-                                            <div class="invalid-tooltip" style="position: inherit; top:0px;">
-                                                Please enter the Email address
-                                            </div>
-                                            <?php
-                                        }
-                                        ?>
-                                        
-                                    </div>
-                                    <div class="col-md-2"></div>
-                                    <div class="col-md-2">
-                                        <label>Contact Number</label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <?php
-                                        if(base64_decode($_REQUEST["msg"])=="Contact"){
-                                            ?>
-                                        <input type="number" id="cn" name="cn" class="form-control"
-                                               value="<?php echo base64_decode($_REQUEST["cn"]);?>">
-                                        <div class="form-control"
-                                                style="margin-top: 3px;height: 30px; color: white; 
-                                                background-color: #dc3545E6; font-size: 14px; 
-                                                padding: 2px 0px 2px 5px;">
-                                               Contact number is already registered!
-                                        </div>
-                                        <?php
-                                        }else{
-                                            ?>
-                                        <input type="number" id="cn" name="cn" class="form-control"
-                                               value="<?php echo base64_decode($_REQUEST["cn"]);?>">
-                                        <div class="invalid-tooltip" style="position: inherit; top:0px;">
-                                            Please enter the contact number
-                                        </div>  
-                                        <?php
-                                        }
-                                            ?>
-                                        
-                                    </div>
-                                </div>
-                                <div class="row"><div class="col-12">&nbsp;</div></div>
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <label>Date Of Birth</label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="date" id="dob" name="dob" class="form-control"
-                                               value="<?php echo base64_decode($_REQUEST["dob"]);?>">
-                                        <div class="invalid-tooltip" style="position: inherit; top:0px;">
-                                            Please enter the date of birth
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2"></div>
-                                    <div class="col-md-2">
-                                        <label>User NIC</label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <?php
-                                        if(base64_decode($_REQUEST["msg"])=="NIC"){
-                                            ?>
-                                        <input type="text" id="nic" name="nic" class="form-control"
-                                               value="<?php echo base64_decode($_REQUEST["nic"]);?>">
-                                        <div class="form-control"
-                                                style="margin-top: 3px;height: 30px; color: white; 
-                                                background-color: #dc3545E6; font-size: 14px; 
-                                                padding: 2px 0px 2px 5px;">
-                                               NIC number is already registered!
-                                        </div>
-                                        <?php
-                                        }else{
-                                            ?>
-                                        <input type="text" id="nic" name="nic" class="form-control"
-                                               value="<?php echo base64_decode($_REQUEST["nic"]);?>">
-                                        <div class="invalid-tooltip" style="position: inherit; top:0px;">
-                                            Please enter the NIC number
-                                        </div>
-                                        <?php
-                                        }
-                                            ?>
-                                    </div>
-                                </div>
-                                <div class="row"><div class="col-12">&nbsp;</div></div>
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <label>User Role</label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <select id="uRole" name="uRole" class="form-control">
-                                            <option value="">Select Role</option>
-                                            <?php
-                                            while ($role=$roleResult->fetch_assoc()){
-                                            ?>
-                                            <option value="<?php echo $role["role_id"]; ?>"><?php echo $role["role_name"]; ?></option>
-                                            <?php
-                                            }
-                                            ?>
-                                        </select>
-                                        <div class="invalid-tooltip" style="position: inherit; top:0px;">
-                                            Please enter select user role
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2"></div>
-                                    <div class="col-md-2">
-                                           <label>gender</label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="radio" id="gender" name="gender" value="1"/>&nbsp;
-                                        <label class="control-label">Male</label>
-                                        &nbsp;
-                                        <input type="radio" id="gender" name="gender" value="0" />&nbsp;
-                                        <label class="control-label">Female</label>
-                                        <div class="invalid-tooltip" style="position: inherit; top:0px;">Please enter the a gender</div>
-                                    </div>
-                                </div>
-                                <div class="row"><div class="col-12">&nbsp;</div></div>
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        
-                                    </div>
-                                    <div class="col-md-3">
-                                        
-                                    </div>
-                                    <div class="col-md-2"></div>
-                                    <div class="col-md-2">
-                                        <label>User Image</label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="file" id="user_img" name="user_img" onchange="readURL(this)" class="form-control">
-                                         <img id="img_prev">
-                                         <div class="invalid-tooltip" style="position: inherit; top:0px;">Please upload a image</div>
-                                    </div>
-                                </div>
-                                 <div class="row" style="margin-top: 10px;"><div class="col-12">&nbsp;</div></div>
-                                <div class="row">
-                                    <div class="col-md-12" style="text-align: end">
-                                        <button type="reset" class="btn btn-danger">Reset</button>
-                                        <button type="submit" class="btn btn-success">Add User</button>
-                                    </div>
-                                </div>
-                            </form>
-                        <?php
-                        }else{
-                            ?>
-                        <form id="addUser" enctype="multipart/form-data" method="post" action="../controller/user-controller.php?status=addUser"  class="needs-validation" novalidate>
-
-                                <div class="row" style="margin-top: 10px;">
-                                    <div class="col-md-2">
-                                        <label>First Name</label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" id="fName" name="fName" class="form-control">
-                                        <div class="invalid-tooltip" style="position: inherit; top:0px;">Please enter the first name</div>
-                                    </div>
-                                    <div class="col-md-2"></div>
-                                    <div class="col-md-2">
-                                        <label>Last Name</label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" id="lName" name="lName" class="form-control">
-                                        <div class="invalid-tooltip" style="position: inherit; top:0px;">Please enter the last name</div>
-                                    </div>
-                                </div>
-                                <div class="row"><div class="col-12">&nbsp;</div></div>
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <label>Email</label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="email" id="email" name="email" class="form-control">
-                                        <div class="invalid-tooltip" style="position: inherit; top:0px;">Please enter the Email address</div>
-                                    </div>
-                                    <div class="col-md-2"></div>
-                                    <div class="col-md-2">
-                                        <label>Contact Number</label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="number" id="cn" name="cn" class="form-control">
-                                        <div class="invalid-tooltip" style="position: inherit; top:0px;">Please enter the contact number</div>
-                                    </div>
-                                </div>
-                                <div class="row"><div class="col-12">&nbsp;</div></div>
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <label>Date Of Birth</label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="date" id="dob" name="dob" class="form-control">
-                                        <div class="invalid-tooltip" style="position: inherit; top:0px;">Please enter the date of birth</div>
-                                    </div>
-                                    <div class="col-md-2"></div>
-                                    <div class="col-md-2">
-                                        <label>User NIC</label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" id="nic" name="nic" class="form-control">
-                                        <div class="invalid-tooltip" style="position: inherit; top:0px;">Please enter the NIC number</div>
-                                    </div>
-                                </div>
-                                <div class="row"><div class="col-12">&nbsp;</div></div>
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <label>User Role</label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <select id="uRole" name="uRole" class="form-control">
-                                            <option value="">Select Role</option>
-                                            <?php
-                                            while ($role=$roleResult->fetch_assoc()){
-                                            ?>
-                                            <option value="<?php echo $role["role_id"]; ?>"><?php echo $role["role_name"]; ?></option>
-                                            <?php
-                                            }
-                                            ?>
-                                        </select>
-                                        <div class="invalid-tooltip" style="position: inherit; top:0px;">Please enter select user role</div>
-                                    </div>
-                                    <div class="col-md-2"></div>
-                                    <div class="col-md-2">
-                                           <label>gender</label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="radio" id="gender" name="gender" value="1"/>&nbsp;
-                                        <label class="control-label">Male</label>
-                                        &nbsp;
-                                        <input type="radio" id="gender" name="gender" value="0" />&nbsp;
-                                        <label class="control-label">Female</label>
-                                        <div class="invalid-tooltip" style="position: inherit; top:0px;">Please enter the a gender</div>
-                                    </div>
-                                </div>
-                                <div class="row"><div class="col-12">&nbsp;</div></div>
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        
-                                    </div>
-                                    <div class="col-md-3">
-                                        
-                                    </div>
-                                    <div class="col-md-2"></div>
-                                    <div class="col-md-2">
-                                        <label>User Image</label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="file" id="user_img" name="user_img" onchange="readURL(this)" class="form-control">
-                                         <img id="img_prev">
-                                         <div class="invalid-tooltip" style="position: inherit; top:0px;">Please upload a image</div>
-                                    </div>
-                                </div>
-                                 <div class="row" style="margin-top: 10px;"><div class="col-12">&nbsp;</div></div>
-                                <div class="row">
-                                    <div class="col-md-12" style="text-align: end">
-                                        <button type="reset" class="btn btn-danger">Reset</button>
-                                        <button type="submit" class="btn btn-success">Add User</button>
-                                    </div>
-                                </div>
-                            </form>
-                        <?php
-                        }
-                        ?>
-                </div>
-              
-         
                 
+                <div class="container">
+                    <div style="background-color: #4b778d; padding: 30px;
+                             border-radius: 20px; margin: 20px 0px 0px 0px;">
+                        <form id="addUser" enctype="multipart/form-data" method="post">
+                        <div class="row ">
+                            <div class="col-md-3">
+                                <span class="btn" style="position: relative;overflow: hidden; height:200px; 
+                                      width:200px; border-radius: 50%;">
+                                    <img id="img_prev" height="200px" width="200px" style="border-radius: 50%;
+                                         position: absolute; right: 0px; "
+                                         src="../../images/user_image/1601310242_defaultImage.jpg">
+                                    <span style="width: 184px; height: 50px; background-color: #4b778d; opacity: 75%;
+                                          position: absolute; bottom: 0px; right:10px;">
+                                        <i class="fas fa-camera-retro fa-2x" style="color: white; margin-top: 8px;"></i>
+                                    </span>
+                                    <input type="file" id="user_img" name="user_img" onchange="readURL(this)"
+                                           style="position: absolute;top: 6px;
+                                           right: 0px;
+                                           width: 200px; height: 200px;
+                                           border-radius: 50%;cursor: inherit;opacity: 0;">
+                                </span>
+                                
+                            </div>
+                            <div class="col-md-9" style="padding: 50px 0px 0px 0px;">
+                                <div class="row mb-4" style="padding: 0px 15px 0px 0px">
+                                    <div class="col-sm-6">
+                                        <label style="color: white; font-size: 18px">
+                                            <b>First Name : </b>
+                                        </label>
+                                        <input type="text" name="fname" id="fname" 
+                                                class="form-control">
+                                        <div id="fnameTooltip" style="position: absolute;width: 92%; left: 16px" class="invalid-tooltip"></div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label style="color: white; font-size: 18px">
+                                            <b>Last Name : </b>
+                                        </label>
+                                        <input type="text" name="lname" id="lname" class="form-control">
+                                        <div id="lnameTooltip" style="position: absolute;width: 92%; left: 16px" class="invalid-tooltip"></div>
+                                    </div>
+                                </div>
+                                <div class="row mb-4">
+                                  
+                                    <div class="col-sm-6">
+                                        <label style="color: white; font-size: 18px">
+                                            <b>Email : </b>
+                                        </label>
+                                        <input class="form-control" id="email" name="email" id="email">
+                                        <div id="emailTooltip" style="position: absolute;width: 92%; left: 16px" class="invalid-tooltip"></div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <label style="color: white; font-size: 18px">
+                                            <b>Contact No : </b>
+                                        </label>
+                                        <input class="form-control" name="cno" id="cno">
+                                        <div id="cnoTooltip" style="position: absolute;width: 92%; left: 16px" class="invalid-tooltip"></div>
+                                    </div>
+                                </div>
+                                <div class="row mb-4">
+                                    <div class="col-sm-6">
+                                        <label style="color: white; font-size: 18px">
+                                            <b>User Role : </b>
+                                        </label>
+                                        <select id="uRole" name="uRole" class="form-control">
+                                                    <option value="">Select Role</option>
+                                                    <?php
+                                                    while ($role=$roleResult->fetch_assoc()){
+                                                    ?>
+                                                    <option value="<?php echo $role["role_id"]; ?>"><?php echo $role["role_name"]; ?></option>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                        </select>
+                                        <div id="uRoleTooltip" style="position: absolute;width: 92%; left: 16px" class="invalid-tooltip"></div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label style="color: white; font-size: 18px">
+                                            <b>NIC : </b>
+                                        </label>
+                                        <input class="form-control" name="nic" id="nic" >
+                                        <div id="nicTooltip" style="position: absolute;width: 92%; left: 16px" class="invalid-tooltip"></div>
+                                    </div>
+                                </div>
+                                <div class="row mb-4">
+                                    <div class="col-sm-6">
+                                        <label style="color: white; font-size: 18px">
+                                            <b>Date of birth : </b>
+                                        </label>
+                                        <input class="form-control" name="dob" id="dob" type="date">
+                                        <div id="dobTooltip" style="position: absolute;width: 92%; left: 16px" class="invalid-tooltip"></div>
+                                    </div>
+                                    <div class="col-sm-6"> 
+                                         <label style="color: white; font-size: 18px">
+                                            <b>Gender : </b>
+                                         </label><br>
+                                         <div style="padding-left: 90px;">
+                                            <lable style="color: white; font-size: 18px">
+                                                <input type="radio" value="1" name="gender" checked>&nbsp;Male
+                                            </lable><br>
+                                            <lable style="color: white; font-size: 18px">
+                                                <input type="radio" value="0" name="gender">&nbsp;Female
+                                            </lable>
+                                         </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label style="color: white; font-size: 18px">
+                                            <b>Address : </b>
+                                        </label>
+                                        <textarea class="form-control" name="address" id="address"></textarea>
+                                        <div id="addressTooltip" style="position: absolute;width: 92%; left: 16px" class="invalid-tooltip"></div>
+                                    </div>
+                                    <div class="col-sm-5"> 
+
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-12" style="text-align: end; padding: 15px 15px 0px 0px;">
+                                <button type="submit" class="btn btn-warning"><i class="far fa-pencil-alt"></i>&nbsp;Add User</button>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+
             </div>
          
-        </div>   
-        <script type="text/javascript" src="../../js/user-validation.js"></script>
+        </div>  
+        <script type="text/javascript" src="../../js/jquery-3.5.1.js"></script>
+        <script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../../js/addUser-validation.js"></script>
         <script src="../../js/jsStyle.js"></script>
+        <script type="text/javascript" src="../../js/change-password-validation.js"></script>
         <script type="text/javascript">
       
         function readURL(input) {
@@ -423,8 +212,8 @@ $userRole=$_SESSION["user"]["role_id"];
         reader.onload = function (e) {
             $('#img_prev')
             .attr('src', e.target.result)
-            .height(70)
-            .width(80);
+            .height(200)
+            .width(200);
         };
 
         reader.readAsDataURL(input.files[0]);
