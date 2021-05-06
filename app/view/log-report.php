@@ -10,7 +10,7 @@ $userRole=$_SESSION["user"]["role_id"];
         <link type="text/css" rel="stylesheet" href="../../bootstrap/css/bootstrap.css">
         <link rel="stylesheet" href="../../fontawesome-pro-5.13.0-web/css/all.css">
         <link type="text/css" rel="stylesheet" href="../../css/style.css">
-        <link rel="stylesheet" type="text/css" href="../../DataTables-1.10.22/css/dataTables.bootstrap4.css"/>
+        <link rel="stylesheet" type="text/css" href="../../DataTables/datatables.min.css"/>
         <?php include_once '../../commons/dbConnection.php'; 
         
         include '../model/module-model.php';
@@ -24,9 +24,7 @@ $userRole=$_SESSION["user"]["role_id"];
             
             include '../model/report-model.php';
             $reportObj=new Report();
-            $maxMinResult=$reportObj->getMaxAndMinPayment();
-            $mnRow=$maxMinResult->fetch_assoc();
-            
+            $logResult=$reportObj->getLogDetails();
         ?>
     </head>
     <body>
@@ -70,13 +68,13 @@ $userRole=$_SESSION["user"]["role_id"];
                       <a class="nav-link" href="supplier-report.php">Supplier Reports</a>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link active" href="payment-report.php">Payment Reports</a>
+                      <a class="nav-link" href="payment-report.php">Payment Reports</a>
                   </li>
                   <?php
                   if($userRole=="1"){
                       ?>
                   <li class="nav-item">
-                      <a class="nav-link" href="log-report.php">User Log Reports</a>
+                      <a class="nav-link active" href="log-report.php">User Log Reports</a>
                   </li>
                   <?php
                   }
@@ -95,22 +93,49 @@ $userRole=$_SESSION["user"]["role_id"];
                                         </div>
                                         <div class="col-9" style="overflow: hidden">
                                             <h5 style="color: #029e13">Custom Report</h5>
-                                            <p>You are able to generate payment Report by date, amount and type wises.</p>
+                                            <p>You are able to generate supplier supply material wise.</p>
                                         </div>
                                     </div>
                                 </a>
                             </div>
-                        
+                            <div class="col-md-6" style="padding: 20px 20px 10px 10px">
+                            </div>
                         </div>
-                        
-                        
-                        
-                   
-                    
                        <div>
                            
                        </div>
                     </div>
+                </div>
+                
+                <div class="container">
+                    <table id="log_table" class="table table-responsive table-hover">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>User Id</th>
+                                <th>User name</th>
+                                <th>User role</th>
+                                <th>Operation</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            while($lRow=$logResult->fetch_assoc()){
+                                ?>
+                            <tr>
+                                <td><?php echo $lRow["log_id"] ?></td>
+                                <td><?php echo $lRow["user_id"] ?></td>
+                                <td><?php echo $lRow["user_fname"]." ".$lRow["user_lname"] ?></td>
+                                <td><?php echo $lRow["role_name"] ?></td>
+                                <td><?php echo $lRow["log_activity"] ?></td>
+                                <td><?php echo $lRow["timestamp"] ?></td>
+                            </tr>
+                            <?php
+                            }
+                            ?>
+                        </tbody>
+                    </table>
                 </div>
             </div>
          
@@ -127,7 +152,7 @@ $userRole=$_SESSION["user"]["role_id"];
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div>
-          <form id="customReport" method="post" action="../view/reports-custom-payment.php">
+          <form id="customReport" method="post" action="../view/reports-custom-supplier.">
       <!-- Modal body -->
             <div class="modal-body">
                 <div class="row">
@@ -160,7 +185,6 @@ $userRole=$_SESSION["user"]["role_id"];
                         <lable><input type="radio" name="paymentType" value="1">&nbsp;Full</lable>
                         <lable><input type="radio" name="paymentType" value="2">&nbsp;Half</lable>
                     </div>
-                </div>
             </div>
                <!-- Modal footer -->
                <div class="row">
@@ -175,17 +199,24 @@ $userRole=$_SESSION["user"]["role_id"];
   </div>
 </div>
 <script type="text/javascript" src="../../js/jquery-3.5.1.js"></script>
-<script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="../../DataTables-1.10.22/js/jquery.dataTables.js"></script>
-<script type="text/javascript" src="../../DataTables-1.10.22/js/dataTables.bootstrap4.js"></script>
- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript" src="../../js/sweetalert2.js"></script>
+<script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../DataTables/datatables.min.js"></script>
 <script type="text/javascript" src="../../js/user-validation.js"></script>
 <script type="text/javascript" src="../../js/change-password-validation.js"></script>
 <script type="text/javascript" src="../../js/report-validation.js"></script>
 <script src="../../js/jsStyle.js"></script>
 <script type="text/javascript">
-
+$("#log_table").dataTable({
+                 "order": [[ 5, "desc" ]],
+                 dom: 'Bfrtip',
+         buttons: [
+            { extend: 'copy', className: 'cusbtn'},
+            { extend: 'excel', className: 'cusbtn'},
+            { extend: 'pdf', className: 'cusbtn' },
+            { extend: 'print', className: 'cusbtn'}
+        ]
+             });
 </script>
         
     </body>

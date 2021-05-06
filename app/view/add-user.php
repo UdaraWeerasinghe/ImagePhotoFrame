@@ -199,6 +199,7 @@ $userRole=$_SESSION["user"]["role_id"];
          
         </div>  
         <script type="text/javascript" src="../../js/jquery-3.5.1.js"></script>
+        <script type="text/javascript" src="../../js/sweetalert2.js"></script>
         <script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="../../js/addUser-validation.js"></script>
         <script src="../../js/jsStyle.js"></script>

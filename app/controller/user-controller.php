@@ -64,7 +64,7 @@ switch ($status){
             if($isValidNic==false){
                 throw new Exception("nic");
             }
-            print_r($_FILES["user_img"]["name"]);
+           
             if($_FILES["user_img"]["name"]!="")
                 {
                     $user_img=$_FILES["user_img"]["name"];
@@ -92,26 +92,20 @@ switch ($status){
                     $num++;
                     $newid = "U".str_pad($num,5,"0",STR_PAD_LEFT);
                     
-                   $isAdded=$userObj->addUser($newid,$fName, $lName, $email, $cn, $dob, $nic, $uRole, $gender, $user_img,1);
+                   $isAdded=$userObj->addUser($newid,$fName, $lName, $email, $cn, $dob, $nic, $uRole, $gender, $user_img,1,$address);
                 
                 if($isAdded=="true"){
                     $password= sha1($nic);
                     $userObj->addLogin($email, $password, $newid);
                 }
-                
-                $class=" alert alert-success";
-                $class= base64_encode($class);
-                $msg="Successfully Add";
-                $msg= base64_encode($msg);
-                
-//                header("Location:../view/user.php?msg=$msg&class=$class");
+               
                 }
                 
-                print 'sub';
                 session_start();
                 $userId=$_SESSION["user"]["user_id"];
                 $activity="Add user"." ".$newid;
                 $logObj->addLog($userId, $activity); //add log
+                print 'success';
                
                         
         } catch (Exception $exptn) {
@@ -121,17 +115,35 @@ switch ($status){
         }
         
         break;
+        case "updateUser":
+            
+            
+          try{
+            $user_id=$_POST["userId"];
+            $fName=$_POST["fName"];
+            $lName=$_POST["lName"];
+            $email=$_POST["email"];
+            $cn=$_POST["cn"];
+            $dob=$_POST["dob"];
+            $nic=$_POST["nic"];
+            $uRole=$_POST["uRole"];
+            $gender=$_POST["gender"];
+            $address=$_POST["address"];
+            
+            $isValidEmail=$userObj->checkEmailUpdate($email,$user_id);
+            $isValidCno=$userObj->checkCnoUpdate($cn,$user_id);
+            $isValidNic=$userObj->checknicUpdate($nic,$user_id);
+            
+            if($isValidEmail==false){
+                throw new Exception("email");
+            }
+            if($isValidCno==false){
+                throw new Exception("tel");
+            }
+            if($isValidNic==false){
+                throw new Exception("nic");
+            }
   
-    case "updateUser":
-        $user_id=$_POST["userId"];
-        $fName=$_POST["fName"];
-        $lName=$_POST["lName"];
-        $email=$_POST["email"];
-        $cn=$_POST["cn"];
-        $dob=$_POST["dob"];
-        $nic=$_POST["nic"];
-        $uRole=$_POST["uRole"];
-        $gender=$_POST["gender"];
         
         if($_FILES["user_img"]["name"]!="")
                 {
@@ -143,16 +155,21 @@ switch ($status){
                    move_uploaded_file($tmp, $destination); 
                 }
                 else{
-                    $user_img="defaultImage.jpg";
+                    $user_img="";
                 }
-                $userObj->updateUser($user_id, $fName, $lName, $email, $cn, $dob, $nic, $uRole, $gender, $user_img);
+                $result=$userObj->updateUser($user_id, $fName, $lName, $email, $cn, $dob, $nic, $uRole, $gender, $user_img,$address);
+                echo "success";
+          } 
+          catch (Exception $exptn) {
+            $msg=$exptn->getMessage();
+            print $msg;
+            
+        }
         session_start();
         $userId=$_SESSION["user"]["user_id"];
         $activity="Udate user"." ".$user_id;
         $logObj->addLog($userId, $activity); //add log
-                ?>
-<script> window.location="../view/view-user.php?userId=<?php echo $user_id; ?>";</script>
-<?php
+        
     break;
     
     case "validateUserProfileEmail": //update user profile  email validate

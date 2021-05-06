@@ -31,7 +31,27 @@ switch ($status){
         $activity="Handover order"." ".base64_decode($_REQUEST["orderId"]);
         $logObj->addLog($userId, $activity); //add log
         
-        header("Location:../view/on-delivery.php?alert&type=success&name=&msg=$msg");
+        require '../../includes/phpMailer-header.php';
+
+                        $mail->setFrom('imagephotoframs@gmail.com');
+                        $mail->addAddress('imagephotoframs@gmail.com');    
+                        $mail->addReplyTo('imagephotoframs@gmail.com', 'Information');
+
+
+                        $mail->isHTML(FALSE);                                  
+                        $mail->Subject = "Order Status";
+                        $mail->Body    = "<p>Your order has been Deliverd</p>"
+                                . "<a href='http://localhost/imagePhotoFrameWeb/app/view/givefeedback.php?orderId=".$_REQUEST['orderId']."'>Give Feedback</a>";
+                        $mail->AltBody = "Your order has been completed you will be reviev soon";
+
+
+                        if ($mail->Send()) { 
+                           header("Location:../view/on-delivery.php?alert&type=success&name=&msg=$msg");
+                            }
+                            else{
+                                echo $mail->ErrorInfo;
+                            }
+        
         break;
     case "CustomerMail":
         $email=$_POST["email"];

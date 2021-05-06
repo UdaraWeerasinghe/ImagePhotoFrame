@@ -88,7 +88,7 @@ $userRole=$_SESSION["user"]["role_id"];?>
                                 </div>
                                 <div class="col-md-4">
                                     <input type="text" id="dNanme" name="dNanme" class="form-control">
-                                    <div class="invalid-tooltip">
+                                    <div class="invalid-tooltip" style="position: initial">
                                         Design name need to be enter
                                     </div>
                                 </div>
@@ -98,7 +98,7 @@ $userRole=$_SESSION["user"]["role_id"];?>
                                 </div>
                                 <div class="col-md-4 mb-4">
                                     <input type="text" id="dCode" name="dCode" class="form-control">
-                                    <div class="invalid-tooltip">
+                                    <div class="invalid-tooltip" style="position: initial">
                                         Design code need to be enter
                                     </div>
                                 </div>
@@ -118,7 +118,7 @@ $userRole=$_SESSION["user"]["role_id"];?>
                                         Design name need to be enter
                                     </div>
                                     </select>
-                                    <div class="invalid-tooltip">
+                                    <div class="invalid-tooltip" style="position: initial">
                                         Design Material need to be select
                                     </div>
                                 </div>
@@ -127,7 +127,7 @@ $userRole=$_SESSION["user"]["role_id"];?>
                                     <label>Frame Strip</label>
                                 </div>
                                 <div class="col-md-4 mb-4">
-                                    <select name="fStrip" id="fStrip" class="form-control">
+                                    <select name="fStrip" id="fStrip" class="form-control" style="position: initial">
                                        
                                     </select>
                                     <div class="invalid-tooltip">
@@ -149,7 +149,7 @@ $userRole=$_SESSION["user"]["role_id"];?>
                                         <option value="<?php echo $prow['sub_cat_id'] ?>"><?php echo $prow['sub_cat_name'] ?></option>
                                         <?php } ?>
                                     </select>
-                                    <div class="invalid-tooltip">
+                                    <div class="invalid-tooltip" style="position: initial">
                                         Design type need to be select
                                     </div>
                                 </div>
@@ -160,7 +160,7 @@ $userRole=$_SESSION["user"]["role_id"];?>
                                     <div class="row">
                                         <div class="col-md-12">
                                             <input type="text" name="color" id="color" class="form-control">
-                                            <div class="invalid-tooltip">
+                                            <div class="invalid-tooltip" style="position: initial">
                                                 Design color need to be enter
                                             </div>
                                         </div>
@@ -174,7 +174,7 @@ $userRole=$_SESSION["user"]["role_id"];?>
                                 </div>
                                 <div class="col-md-4">
                                     <input type="file" id="img1" name="img1" onchange="readURL1(this)" class="form-control">
-                                    <div class="invalid-tooltip">
+                                    <div class="invalid-tooltip" style="position: initial">
                                         Design image need to be upload
                                     </div>
                                     <img id="img_prev1" style="margin-top: 10px">
@@ -185,7 +185,7 @@ $userRole=$_SESSION["user"]["role_id"];?>
                                     </div>
                                     <div class="col-md-4">                                
                                         <input type="file" id="img2" name="img2" onchange="readURL2(this)" class="form-control">
-                                        <div class="invalid-tooltip">
+                                        <div class="invalid-tooltip" style="position: initial">
                                             Design image need to be upload
                                         </div>
                                         <img id="img_prev2" style="margin-top: 10px;">                                       

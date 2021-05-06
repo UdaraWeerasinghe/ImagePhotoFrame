@@ -93,28 +93,14 @@ $userRole=$_SESSION["user"]["role_id"];
                                 <a href="../view/view-user.php?userId=<?php  echo base64_encode($userId);   ?>" class="btn-sm btn btn-info" >View</a>
                             <?php
                               if ($row["user_status"]=="1"){
-                                  if($logUser==$userId){
-                                      ?>
-                                <button class="btn btn-sm btn-danger" onclick="deactivate('<?php echo $userId;?>')" disabled>Deactivate</button>
-                                <?php
-                                  } else {
                                     ?>
                                 <button class="btn btn-sm btn-danger" onclick="deactivate('<?php echo $userId;?>')">Deactivate</button>
                                   <?php  
                                   }
-
-                              }
                                else {
-                                   if($logUser==$userId){
-                                      ?>
-                                <button class="btn btn-sm btn-success" onclick="activate('<?php echo $userId;?>')" disabled>Activate</button>                                          
-                                <?php
-                                }else{
                                    ?>
                                 <button class="btn btn-sm btn-success" onclick="activate('<?php echo $userId;?>')">Activate</button>
                                   <?php 
-                                }
-
                                }
                             ?>
 

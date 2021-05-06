@@ -38,6 +38,18 @@ class Inventory{
         $results = $con->query($sql) or die($con->error);
         return $results;
     }
+    public function  materialRequestHide($mId){
+        $con=$GLOBALS['con'];
+        $sql="UPDATE material SET order_request = '0' WHERE material_id='$mId'";
+        $results = $con->query($sql) or die($con->error);
+        return $results;
+    }
+     public function  materialRequestShow($mId){
+        $con=$GLOBALS['con'];
+        $sql="UPDATE material SET order_request = '1' WHERE material_id='$mId'";
+        $results = $con->query($sql) or die($con->error);
+        return $results;
+    }
      public function  getMaterialBytype($mType){
         
         $con=$GLOBALS['con'];
@@ -77,7 +89,31 @@ class Inventory{
     public function  getLowOfStock(){
         
         $con=$GLOBALS['con'];
-        $sql="SELECT COUNT(material_id)AS lowStock FROM material WHERE qty<100";
+        $sql="SELECT COUNT(material_id)AS OutStock, (SELECT COUNT(material_id) "
+                . "FROM material WHERE qty<150) AS lowStock FROM material WHERE qty<50";
+        $results = $con->query($sql) or die($con->error);
+        return $results;
+    }
+     public function  getOutofmaterial(){
+        
+        $con=$GLOBALS['con'];
+        $sql="SELECT material_id, material_name FROM material WHERE qty<50";
+        $results = $con->query($sql) or die($con->error);
+        return $results;
+    }
+    public function  getSuppliersBymat($matId){ ///get suppliers for sellect
+        
+        $con=$GLOBALS['con'];
+        $sql="SELECT m.supplier_id,s.supplier_email, s.supplier_name "
+                . "FROM supplier_material m, supplier s "
+                . "WHERE m.material_id='$matId' AND m.supplier_id=s.supplier_id";
+        $results = $con->query($sql) or die($con->error);
+        return $results;
+    }
+    public function  getSupplier($supId){ ///get suppliers email
+        
+        $con=$GLOBALS['con'];
+        $sql="SELECT supplier_email FROM supplier  WHERE supplier_id='$supId'";
         $results = $con->query($sql) or die($con->error);
         return $results;
     }

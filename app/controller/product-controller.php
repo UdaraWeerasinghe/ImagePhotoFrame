@@ -1,7 +1,7 @@
 <?php
 include '../model/product-model.php';
 $productObj=new Product();
-
+include '../model/order-model.php';
 $orderObj=new Order();
 include '../model/log-model.php';   ///include log model
 $logObj= new Log();
@@ -40,7 +40,6 @@ switch ($status){
                 }
                     
                 }
- 
 
     break;
     

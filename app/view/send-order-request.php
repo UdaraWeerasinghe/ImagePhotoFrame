@@ -67,7 +67,7 @@ $userRole=$_SESSION["user"]["role_id"];?>
                     <div class="row">
                         <div class="col-md-3">
                             <div style="padding: 10px">
-                                <a href="" style="text-decoration: none" data-toggle="modal" data-target="#orderRqst">
+                                <a href="" style="text-decoration: none">
                                 <div class="row " style="border: #173F5F solid 2px; border-radius: 10px; padding: 20px 5px;">
                                     <div class="col-4">
                                         <div style="text">
@@ -106,7 +106,8 @@ $userRole=$_SESSION["user"]["role_id"];?>
                         <div class="col-md-3">
                             <div style="padding: 10px">
                                 <a href="send-order-request.php" style="text-decoration: none;">
-                                    <div class="row " style="border: #173F5F solid 2px; border-radius: 10px; padding: 20px 5px;">
+                                    <div class="row " style="border: #173F5F solid 2px; border-radius: 10px; 
+                                         padding: 20px 5px; background-color: #eeeeee">
                                         <div class="col-4">
                                             <div style="text">
                                                 <i class="fal fa-clipboard-list-check fa-4x" style="color: #173F5F"></i>
@@ -142,7 +143,7 @@ $userRole=$_SESSION["user"]["role_id"];?>
                     </div>
                 </div>
                 <div class="container">
-                    <table id="inventory_tbl" class="table table-hover">
+                     <table id="inventory_tbl" class="table table-hover">
                     <thead>
                         <tr>
                             <th>Id</th>
@@ -161,7 +162,23 @@ $userRole=$_SESSION["user"]["role_id"];?>
                             <td><?php echo number_format($iRow["qty"])." ft"; ?></td>
                             <td>
                                 <a class="btn btn-sm btn-success" data-toggle="modal" data-target="#addQty" onclick="load_data('<?php echo $iRow["material_id"]; ?>')">Add</a>
-                               
+                                <?php 
+                                if($iRow["order_request"]=="0"){
+                                    ?>
+                                <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#requestOrder" onclick="orderRqst('<?php echo $iRow["material_id"]; ?>')">Send Order Request</a>
+                                <?php
+                                }else{
+                                    if($iRow["qty"]<150){
+                                    ?>
+                                <button class="btn btn-primary btn-sm"  disabled>Already Requested</button>
+                                <?php
+                                    }else{
+                                    ?>
+<!--                                <button class="btn btn-primary btn-sm"  disabled></button>-->
+                                <?php
+                                    }
+                                }
+                                ?>
                             </td>
                         </tr>
                         <?php
@@ -178,7 +195,7 @@ $userRole=$_SESSION["user"]["role_id"];?>
             <div class="modal fade" id="addMaterial">
                 <div class="modal-dialog modal-lg">
                   <div class="modal-content">
-                      <form id="addMaterial" enctype="multipart/form-data" method="post" style="padding-top: 10px;" action="../controller/inventory-controller.php?status=addMaterial">
+                      <form enctype="multipart/form-data" method="post" style="padding-top: 10px;" action="../controller/inventory-controller.php?status=addMaterial">
                         <!-- Modal Header -->
                         <div class="modal-header">
                           <h4 class="modal-title">Add Strip</h4>
@@ -191,8 +208,7 @@ $userRole=$_SESSION["user"]["role_id"];?>
                                     Name
                                 </div>
                                 <div class="col-sm-9">
-                                    <input name="mName" id="mName"class="form-control" type="text">
-                                    <div class="invalid-tooltip" style="position: inherit">Please enter material name</div>
+                                    <input name="mName" class="form-control" type="text">
                                 </div>
                             </div>
                             <div class="row">
@@ -207,7 +223,7 @@ $userRole=$_SESSION["user"]["role_id"];?>
                         </div>
                         <!-- Modal footer -->
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary"><i class="fas fa-plus" style="margin: 4px"></i>&nbsp;Add</button>
+                            <button type="submit" class="btn btn-primary"></i>&nbsp;Add</button>
                         </div>
                     </form> 
                   </div>
@@ -230,41 +246,13 @@ $userRole=$_SESSION["user"]["role_id"];?>
                         </div>
                         <!-- Modal footer -->
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary"></i>Add</button>
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-plus" style="margin: 4px"></i>&nbsp;Add</button>
                         </div>
                     </form> 
                   </div>
                 </div>
             </div>
             <!--///////////////add material qty modal end/////////////////-->
-              <!--///////////////order Request strat/////////////////--> 
-            <div class="modal fade" id="orderRqst">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                       <!-- Modal Header -->
-                        <div class="modal-header">
-                          <h4 class="modal-title">Request Materials</h4>
-                          <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        </div>
-                        <!-- Modal body -->
-                      <table class="table table-hover">
-                          <tr>
-                              <th></th>
-                              <th></th>
-                          </tr>
-                          <?php
-                          while($omRow=$outOfstockMatResult->fetch_assoc()){
-                          ?>
-                          <tr>
-                              <td><?php echo $omRow["material_name"] ?></td>
-                              <td><button class="btn btn-sm btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#requestOrder" onclick="orderRqst('<?php echo $omRow["material_id"]; ?>')">Send Order Request</button></td>
-                          </tr>
-                          <?php }?>
-                      </table>
-                  </div>
-                </div>
-            </div>
-            <!--///////////////aorder request end/////////////////-->
             <!--///////////////Order Request start/////////////////--> 
             <div class="modal fade" id="requestOrder">
                 <div class="modal-dialog">
@@ -289,7 +277,6 @@ $userRole=$_SESSION["user"]["role_id"];?>
                 </div>
             </div>
             <!--///////////////order Request end/////////////////-->
-         
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript" src="../../js/jquery-3.5.1.js"></script>
          <script type="text/javascript" src="../../js/sweetalert2.js"></script>
@@ -299,7 +286,7 @@ $userRole=$_SESSION["user"]["role_id"];?>
         <script type="text/javascript" src="../../js/change-password-validation.js"></script>
         <script src="../../js/jsStyle.js"></script>
         <script>
-            //     load  add feet
+                        //     load  add feet
     function load_data(mId) {
         var url="../controller/inventory-controller.php?status=loadQty";
         $.post(url, {material_id:mId}, function(data){
@@ -307,7 +294,14 @@ $userRole=$_SESSION["user"]["role_id"];?>
         });
     }
     // load add feet  end
-            
+                   
+    function orderRqst(mId) { //     load send Order
+        var url="../controller/inventory-controller.php?status=loadModalBody";
+        $.post(url, {material_id:mId}, function(data){
+            $("#sendRequestBody").html(data).show();
+        });
+    }
+    
      
     $("#inventory_tbl").dataTable({
          dom: 'Bfrtip',
@@ -318,42 +312,13 @@ $userRole=$_SESSION["user"]["role_id"];?>
             { extend: 'print', className: 'cusbtn'}
         ]
     });
-
-      function orderRqst(mId) { //     load send Order
-        var url="../controller/inventory-controller.php?status=loadModalBody";
-        $.post(url, {material_id:mId}, function(data){
-            $("#sendRequestBody").html(data).show();
-        });
-    }
-
-      $( document ).ready(function() {
-        var x = $("#alert").val();
-
-        if (x=="materialAdded"){
-        Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: 'Frame Strip Successfully Added',
-        showConfirmButton: false,
-        timer: 1500
-      });
-        }
-    });
-    
-    $("#addMaterial").submit(function (){
-        var mName=$("#mName").val();
-        if(mName==""){
-            $("#mName").addClass("is-invalid");
-            return  false;
-        }
-    });
-    
-       //sweetAlert trime
+   //sweetAlert trime
         var url = window.location.href;
         var splitUrl = url.split('?')[0];
         var newSplitUrl = splitUrl.split('localhost')[1];
         window.history.pushState({}, document.title, "" + newSplitUrl);
         //sweetAlert trime
+ 
         </script>
  
     </body>

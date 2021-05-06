@@ -54,13 +54,16 @@ switch ($status){
             $mRow=$mResult->fetch_assoc();
             $qty=$mRow["qty"]+$qty;
             $inventoryObj->addMaterialQty($mId,$qty);
+            $inventoryObj->materialRequestHide($mId);
+            
             
             session_start();
             $userId=$_SESSION["user"]["user_id"];
-            $activity="Add material"." ".$newid;
+            $activity="Add material"." ".$mId;
             $logObj->addLog($userId, $activity); //add log 
+            header("Location:../view/inventory.php"); 
             break;
-        
+            
         case "getStrip":
             $mType=$_POST["sType"];
             $stripResult=$inventoryObj->getMaterialBytype($mType);
@@ -132,7 +135,7 @@ switch ($status){
                 $userId=$_SESSION["user"]["user_id"];
                 $activity="Start order process"." ".base64_decode($_REQUEST["oId"]);
                 $logObj->addLog($userId, $activity); //add log 
-                break;
+               
                 
     require '../../includes/phpMailer-header.php';
 
@@ -177,6 +180,60 @@ switch ($status){
 }
                 
                  
+                break;
+                
+            case "loadModalBody":
+                
+                ?>
+                <label>Select Supplier</label>
+                <?php
+                $mNameResult=$inventoryObj->getMaterialById($_POST["material_id"]);
+                $mnRow=$mNameResult->fetch_assoc();
+                ?>
+                <input type="hidden" name="matId" value="<?php echo $mnRow["material_id"] ?>">
+                <input type="hidden" name="matName" value="<?php echo $mnRow["material_name"] ?>">
+                <select name="supId" class="form-control">
+                           <?php
+                            $supResult=$inventoryObj->getSuppliersBymat($_POST["material_id"]);
+                            while ($sRow=$supResult->fetch_assoc()){
+                                ?>
+                            <option value="<?php echo $sRow["supplier_id"]?>"><?php echo $sRow["supplier_name"]; ?></option>
+                            <?php
+                           }
+                           ?>
+                </select>
+                <?php
+                break;
+                
+                
+            case "sendRequest":
+                $mId=$_POST["matId"];
+                $matName=$_POST["matName"];
+                $supId=$_POST["supId"];
+                $inventoryObj->materialRequestShow($mId);
+                $supResult=$inventoryObj->getSupplier($supId);
+                $supEmail=$supResult->fetch_assoc();
+                $email=$supEmail["supplier_email"];
+                
+                require '../../includes/phpMailer-header.php';
+
+                $mail->setFrom('imagephotoframs@gmail.com');
+                $mail->addAddress($email);     
+                $mail->addReplyTo('imagephotoframs@gmail.com', 'Information');
+
+
+                $mail->isHTML(true);                                  
+                $mail->Subject = 'Order Request';
+                $mail->Body    ='We dont have enugh '.$matName.' materials';
+                $mail->AltBody = 'We dont have enugh '.$matName.' materials';
+
+//                $mail->AddEmbeddedImage('../../images/system/icon.jpg', 'icon');
+
+                if ($mail->Send()) { 
+                    header("Location:../view/send-order-request.php");           
+            }else{
+                echo $mail->ErrorInfo;
+            }
                 break;
                 
 }

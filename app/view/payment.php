@@ -66,6 +66,7 @@ if(isset($_GET["alert"])){   ////checking for the sweet alert
                 <h3 style="text-align: center; margin-top: 10px;">Payment Management</h3>
                 
                 <div class="container-fluid" style="margin-top: -20px;"> 
+                    <a href="" data-toggle="modal" data-target="#addtax" class="btn btn-primary">Add Tax</a>
                     <table id="payment_tbl" class="table table-hover">
                         <thead>
                             <tr>
@@ -140,6 +141,34 @@ if(isset($_GET["alert"])){   ////checking for the sweet alert
   </div>
 </div>
   <!--///////////////view payment modal end///////-->
+  
+  <div class="modal" id="addtax">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Add tax</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+          <div class="modal-body" ></div>
+          <form action="../controller/payment-controller.php?status=addTax" method="post">
+              <label>Name</label><br>
+              <input type="text" name="texName" class="form-control">
+              <label>precentage</label><br>
+              <input type="text" name="texpres" class="form-control">
+              <input class="btn btn-primary" type="submit" value="Add">
+          </form>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
         
         <script type="text/javascript" src="../../js/jquery-3.5.1.js"></script>
         <script type="text/javascript" src="../../js/sweetalert2.js"></script>

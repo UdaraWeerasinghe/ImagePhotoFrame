@@ -11,6 +11,20 @@ class Order{
         $results = $con->query($sql) or die($con->error);
         return $results;
     }
+     public function  getAllOrdersCount($start_date,$end_date){
+        
+        $con=$GLOBALS['con'];
+        $sql="SELECT (SELECT COUNT(order_id) FROM order_detail "
+                . "WHERE order_status='1') AS new,(SELECT COUNT(order_id) "
+                . "FROM order_detail WHERE order_status='2') AS pendding,"
+                . "(SELECT COUNT(order_id) FROM order_detail WHERE order_status='3') "
+                . "AS waiting,(SELECT COUNT(order_id) FROM order_detail "
+                . "WHERE order_status='4') AS onDelivery,(SELECT COUNT(order_id) "
+                . "FROM order_detail WHERE order_status='6') AS complite "
+                . "FROM order_detail WHERE order_timestamp BETWEEN '$start_date' AND '$end_date' GROUP BY new" ;
+        $results = $con->query($sql) or die($con->error);
+        return $results;
+    }
     public function  getOrderCountByStatus(){ ///display count in dashbord
         
         $con=$GLOBALS['con'];

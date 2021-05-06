@@ -152,6 +152,14 @@ class Report{
         $results = $con->query($sql)or die($con->error);
         return $results;
     }
+    public function  getLogDetails(){   ////////////get log
+        $con = $GLOBALS['con'];
+        $sql = "SELECT a.* , u.user_fname,u.user_lname ,r.role_name "
+                . "FROM activity_log a, user u, role r "
+                . "WHERE a.user_id=u.user_id AND u.role_id=r.role_id";
+        $results = $con->query($sql)or die($con->error);
+        return $results;
+    }
     public function  getPaymentByOrderId($orderId){       ////////
         $con = $GLOBALS['con'];
         $sql = "SELECT payment_amount, payment_id, payment_timestamp "

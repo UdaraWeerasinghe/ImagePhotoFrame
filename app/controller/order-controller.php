@@ -171,7 +171,25 @@ switch ($status){
                         $activity="Set order completed"." ".base64_decode($_REQUEST["oId"]);
                         $logObj->addLog($userId, $activity); //add log
                         
-                         header("Location:../view/on-process.php?alert=completed");
+                        require '../../includes/phpMailer-header.php';
+
+                        $mail->setFrom('imagephotoframs@gmail.com');
+                        $mail->addAddress('imagephotoframs@gmail.com');    
+                        $mail->addReplyTo('imagephotoframs@gmail.com', 'Information');
+
+
+                        $mail->isHTML(FALSE);                                  
+                        $mail->Subject = "Order Status";
+                        $mail->Body    = "Your order has been completed you will be reviev soon";
+                        $mail->AltBody = "Your order has been completed you will be reviev soon";
+
+
+                        if ($mail->Send()) { 
+                            header("Location:../view/on-process.php?alert=completed"); 
+                            }
+                            else{
+                                echo $mail->ErrorInfo;
+                            }
                         break;
                     case "startDeliveryProcess":
                         $order_id= base64_decode($_REQUEST["oId"]);
@@ -182,7 +200,27 @@ switch ($status){
                         $activity="Start order delivery"." ".base64_decode($_REQUEST["oId"]);
                         $logObj->addLog($userId, $activity); //add log
                         
-                         header("Location:../view/completed.php?alert=startDeliveryProcess");
+                        require '../../includes/phpMailer-header.php';
+
+                        $mail->setFrom('imagephotoframs@gmail.com');
+                        $mail->addAddress('imagephotoframs@gmail.com');    
+                        $mail->addReplyTo('imagephotoframs@gmail.com', 'Information');
+
+
+                        $mail->isHTML(FALSE);                                  
+                        $mail->Subject = "Order Status";
+                        $mail->Body    = "Your order has been start to deliver";
+                        $mail->AltBody = "Your order has been start to deliver";
+
+                     
+
+                        if ($mail->Send()) { 
+                           header("Location:../view/completed.php?alert=startDeliveryProcess");
+                            }
+                            else{
+                                echo $mail->ErrorInfo;
+                            }
+                         
                         break;
 
 }

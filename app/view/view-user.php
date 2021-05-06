@@ -1,14 +1,13 @@
-<?php include '../../commons/session.php';
+<?php include '../../commons/session.php'; //incude session
 $userRole=$_SESSION["user"]["role_id"];
-$logUser=$_SESSION['user']['user_id'];
+$userId= base64_decode($_REQUEST["userId"]);
+
 ?>
 <html>
     <head>
         <meta charset="UTF-8">
         <title></title>
-        <script type="text/javascript" src="../../js/jquery-3.5.1.js"></script>
         <link type="text/css" rel="stylesheet" href="../../bootstrap/css/bootstrap.css">
-        <script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="../../fontawesome-pro-5.13.0-web/css/all.css">
         <link type="text/css" rel="stylesheet" href="../../css/style.css">
 
@@ -16,16 +15,13 @@ $logUser=$_SESSION['user']['user_id'];
         
         include '../model/module-model.php';
             $moduleObj = new Module();
-            $moduleResult=$moduleObj->getAllModules($userRole);
-            
+            $moduleResult=$moduleObj->getAllModules($userRole); //load module releted to the user role
+           
             include '../model/user-model.php';
-            $userObj = new User();
-            $userResult=$userObj->getAllUserWithRole();
-            $roleResult=$userObj->getAllRole();
-            $userId= base64_decode($_REQUEST["userId"]);
-            $viewUser=$userObj->viewUser($userId);
- 
-        ?>
+            $userObj= new User();
+            $userResult=$userObj->viewUser($userId);
+            $uRow=$userResult->fetch_assoc();
+            ?>
     </head>
     <body>
         
@@ -40,14 +36,10 @@ $logUser=$_SESSION['user']['user_id'];
                     </div>
                 </a>
                 <?php
-                 while ($row=$moduleResult->fetch_assoc()){
+                 while ($row=$moduleResult->fetch_assoc()){    ///display user module
                                   ?>
                 <a href="<?php echo $row["module_url"]; ?>" style="text-decoration: none;">
-                    <div class="module <?php
-                            if($row["module_id"]=='1'){
-                                echo 'module-active';
-                            }
-                            ?>">
+                    <div class="module">
                         <i class="<?php echo $row["module_class"]; ?> ">&nbsp;&nbsp;</i>
                          <span class="module-name"> <?php echo $row["module_name"];?> </span>
                     </div>
@@ -55,140 +47,103 @@ $logUser=$_SESSION['user']['user_id'];
 
                  <?php }?>
             </div>
-            <div class="dashbord-body" style="flex: 70%; height: 800px;">
-                <h3 style="text-align: center; margin-top: 20px;">User Details</h3><hr>
-           <div class="container mt-3">
-                    <div id="add-user" class="container "><br>
-                        <div class="row">
-                            <div style="text-align: center" class="col-12"> 
-                            </div> 
+            <div class="dashbord-body" id="dashbord-body" style="height: 800px;">
+                <div class="container">
+                    <div style="background-color: #4b778d; padding: 30px;
+                             border-radius: 20px; margin: 20px 0px 0px 0px;">
+                        <div class="row ">
+                            <div class="col-md-3" style="padding-right: 20px;">
+                                <img height="200px" width="200px" style="border-radius: 50%"
+                                     src="../../images/user_image/<?php echo $uRow["user_image"] ?>">
+                            </div>
+                            <div class="col-md-9" style="padding: 50px 0px 0px 0px;">
+                                <h3 style="color: white">
+                                    <?php echo $uRow["user_fname"]." ".$uRow["user_lname"]; 
+                                    echo '<br>'; echo "(".$uRow["role_name"].")"?>
+                                </h3>
+                            </div>
                         </div>
-                      <div class="row">
-                            <div style="text-align: center" class="col-12" id="vAlert"> 
-                            </div> 
+                        <div class="row mb-4" style="padding: 0px 0px 0px 80px;">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-5">
+                                <label style="color: white; font-size: 18px">
+                                    <b>Email : </b><?php echo $uRow["user_email"]?>
+                                </label>
+                            </div>
+                            
+                            <div class="col-sm-5">
+                                <label style="color: white; font-size: 18px">
+                                    <b>Contact No : </b><?php echo $uRow["user_cno"]?>
+                                </label>
+                            </div>
                         </div>
-                        
-                            <?php
-                         while ($uRow=$viewUser->fetch_assoc()){
-                             ?>
-                                <div class="row" style="margin-top: 10px;">
-                                    <div class="col-md-2">
-                                        <label style="font-weight: bold">First Name</label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label><?php echo $uRow["user_fname"]; ?></label>
-                                    </div>
-                                    <div class="col-md-2"></div>
-                                    <div class="col-md-2">
-                                        <label style="font-weight: bold">Last Name</label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label><?php echo $uRow["user_lname"]; ?></label>
-                                    </div>
-                                </div>
-                                <div class="row" style="margin-top: 10px;"><div class="col-12">&nbsp;</div></div>
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <label style="font-weight: bold">Email</label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label><?php echo $uRow["user_email"]; ?></label>
-                                    </div>
-                                    <div class="col-md-2"></div>
-                                    <div class="col-md-2">
-                                        <label style="font-weight: bold">Contact Number</label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label><?php echo $uRow["user_cno"]; ?></label>
-                                    </div>
-                                </div>
-                                <div class="row" style="margin-top: 10px;"><div class="col-12">&nbsp;</div></div>
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <label style="font-weight: bold">Date Of Birth</label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label><?php echo $uRow["user_dob"]; ?></label>
-                                    </div>
-                                    <div class="col-md-2"></div>
-                                    <div class="col-md-2">
-                                        <label style="font-weight: bold">User NIC</label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label><?php echo $uRow["user_nic"]; ?></label>
-                                    </div>
-                                </div>
-                                <div class="row" style="margin-top: 10px;"><div class="col-12">&nbsp;</div></div>
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <label style="font-weight: bold">User Role</label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label><?php echo $uRow["role_name"]; ?></label>
-                                    </div>
-                                    <div class="col-md-2"></div>
-                                    <div class="col-md-2">
-                                           <label style="font-weight: bold">gender</label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label>
-                                            <?php 
-                                        if($uRow["user_gender"]==1){
-                                            echo 'Male';
-                                        }
-                                        else{
-                                            echo 'Female';
-                                        }
-                                        ?>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="row" style="margin-top: 10px;"><div class="col-12">&nbsp;</div></div>
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        
-                                    </div>
-                                    <div class="col-md-3">
-                                        
-                                    </div>
-                                    <div class="col-md-2"></div>
-                                    <div class="col-md-2">
-                                        <label style="font-weight: bold">User Image</label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <img width="100px" height="100px" src="../../images/user_image/<?php echo $uRow['user_image']; ?>">
-                                    </div>
-                                </div>
-                                 <div class="row" style="margin-top: 10px;"><div class="col-12">&nbsp;</div></div>
-                                <div class="row">
-                                    <div class="col-md-12" style="text-align: end">
-                                        <?php
-                                        if($logUser==$userId){
-                                            ?>
-                                        <button class="btn btn-warning" disabled>Update</button>
-                                            
-                                            <?php
+                        <div class="row mb-4" style="padding: 0px 0px 0px 80px;">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-5">
+                                <label style="color: white; font-size: 18px">
+                                    <b>Date of birth : </b><?php echo $uRow["user_dob"]?>
+                                </label>
+                            </div>
+                            <div class="col-sm-5">
+                                <label style="color: white; font-size: 18px">
+                                    <b>NIC : </b><?php echo $uRow["user_nic"]?>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row" style="padding: 0px 0px 0px 80px;">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-5">
+                                <label style="color: white; font-size: 18px">
+                                    <b>Gender : </b>
+                                        <?php 
+                                        if($uRow["user_gender"]=="1"){
+                                        echo "Male";
                                         }else{
-                                            ?>
-                                            <a href="update-user.php?userId=<?php  echo $userId;?>" class="btn btn-warning">Update</a>
-                                            <?php
+                                            echo "Female";
                                         }
                                         ?>
-                                        
-                                    </div>
-                                </div>
-                         <?php } ?>
-                          
+                                </label>
+                            </div>
+                            <div class="col-sm-5"> 
+                                 <label style="color: white; font-size: 18px">
+                                    <b>Address : </b><?php echo $uRow["user_address"]?>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12" style="text-align: end; padding-right: 50px;">
+                                <a href="update-user.php?userId=<?php echo $userId; ?>" class="btn btn-warning">Update</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-         
-                
             </div>
          
         </div>   
-        <script type="text/javascript" src="../../js/user-validation.js"></script>
-        <script type="text/javascript" src="../../js/change-password-validation.js"></script>
+         <script type="text/javascript" src="../../js/jquery-3.5.1.js"></script>
+         <script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js"></script>
+         <script type="text/javascript" src="../../js/sweetalert2.js"></script>
+         <script type="text/javascript" src="../../js/change-password-validation.js"></script>
         <script src="../../js/jsStyle.js"></script>
         
+        <script>
+           //sweet alert for operations
+            $(document).ready(function() {
+                var alert = $("#alert").val();
+                var msg = $("#msg").val();
+                if(alert=="success"){
+                  Swal.fire({
+                position: 'center',
+                icon: alert,
+                title: 'Successfull!',
+                text: msg,
+                showConfirmButton: false,
+                timer: 2000
+              });   
+            } 
+        });
+ 
+        </script>
     </body>
 </html>
+

@@ -104,7 +104,7 @@ switch ($status){
                                             Out of Stock
                                         </div>
                                         <div>
-                                            <?php echo $low["lowStock"]; ?>
+                                            <?php echo $low["OutStock"]; ?>
                                         </div>
                                     </div>
                                 </div>

@@ -33,4 +33,17 @@ class Payment{
         $results = $con->query($sql)or die($con->error);
         return $results;
     }
+    
+     public function  addTax($name,$precentage){       ////////
+        $con = $GLOBALS['con'];
+        $sql = "INSERT INTO tax(name,precentage) VALUES('$name','$precentage')";
+        $results = $con->query($sql)or die($con->error);
+        return $results;
+    }
+    public function  getTax(){       ////////
+        $con = $GLOBALS['con'];
+        $sql = "SELECT precentage FROM tax ORDER BY id DESC LIMIT 1";
+        $results = $con->query($sql)or die($con->error);
+        return $results;
+    }
 }

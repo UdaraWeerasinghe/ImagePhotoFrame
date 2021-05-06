@@ -25,6 +25,11 @@ $userRole=$_SESSION["user"]["role_id"];
             $inventoryObj=new Inventory();
             $lowStock=$inventoryObj->getLowOfStock(); ///get low sock
             $low=$lowStock->fetch_assoc();
+            $lastMonthStart=date("Y-n-j", strtotime("first day of previous month"))." 00:00:00";
+            $lastMonthEnd=date("Y-n-j", strtotime("last day of previous month"))." 23:59:59";
+            $stateCountResult=$orderObj->getAllOrdersCount($lastMonthStart, $lastMonthEnd);
+            $cpRow=$stateCountResult->fetch_assoc();
+         
         ?>
     </head>
     <body>
@@ -142,7 +147,7 @@ $userRole=$_SESSION["user"]["role_id"];
                                             Out of Stock
                                         </div>
                                         <div>
-                                            <?php echo $low["lowStock"]; ?>
+                                            <?php echo $low["OutStock"]; ?>
                                         </div>
                                     </div>
                                 </div>
@@ -161,8 +166,7 @@ $userRole=$_SESSION["user"]["role_id"];
                     </div>
                 
             </div>
-                
-         
+          
         </div>   
          <script type="text/javascript" src="../../js/jquery-3.5.1.js"></script>
         <script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js"></script>
@@ -187,10 +191,10 @@ $userRole=$_SESSION["user"]["role_id"];
         ]);
         var data2 = google.visualization.arrayToDataTable([
           ['Status', 'Precentage'],
-          ['New Orders', 100],
-          ['On Process', 520],
-          ['Due Payment', 660],
-          ['On Delivery', 80]
+          ['New Orders', <?php echo $cpRow["new"] ?>],
+          ['On Process', <?php echo $cpRow["pendding"] ?>],
+          ['Due Payment', <?php echo $cpRow["waiting"] ?>],
+          ['On Delivery', <?php echo $cpRow["complite"] ?>]
         ]);
 
         var options = {
@@ -212,27 +216,6 @@ $userRole=$_SESSION["user"]["role_id"];
         chart.draw(data2, options2);
       }
       
-//      google.charts.load('current', {'packages':['corechart']});
-//      google.charts.setOnLoadCallback(drawChart);
-//      
-//      function drawChart() {
-//
-//        var data2 = google.visualization.arrayToDataTable([
-//          ['Status', 'Precentage'],
-//          ['New Orders', 100],
-//          ['On Process', 520],
-//          ['Due Payment', 660],
-//          ['On Delivery', 80]
-//        ]);
-//
-//        var options2 = {
-//          title: 'Order Status of Today'
-//        };
-//
-//        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-//
-//        chart.draw(data2, options2);
-//      }
 $(document).ready(function(){
     var url="../controller/dashbordCount-refresh.php?status=refreshOrder";
     setInterval(function (){

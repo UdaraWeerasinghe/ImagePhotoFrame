@@ -59,11 +59,6 @@ switch ($status){
     case "checkEmail":
         $email=$_POST["email"];
         $emailResult=$loginObj->ValidateEmail($email);
-        session_start();
-        $userId=$_SESSION["user"]["user_id"];
-        $activity="Try to reset password";
-        $logObj->addLog($userId, $activity); //add log
-        
                 if($emailResult->num_rows==1){ 
                     $eRow=$emailResult->fetch_assoc();
                     $login_id= base64_encode($eRow["login_id"]);
@@ -84,7 +79,7 @@ switch ($status){
                     $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
                     $mail->send();
-                    header("Location:../view/landig.php");
+                     header("Location:../view/landing.php");
                 }
                 else {
                     

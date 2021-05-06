@@ -41,6 +41,20 @@ class User{
              return true;
           }
     }
+     public function  checkEmailUpdate($email,$userId){
+        $con=$GLOBALS['con'];
+        $sql="SELECT 1 FROM user WHERE user_email='$email' AND 	user_id!='$userId'";
+        $results = $con->query($sql);
+        if($results->num_rows>0)
+         {
+            return false;
+         }
+         else
+          {
+             return true;
+          }
+    }
+    
     
     public function  checkCno($cn){ 
         $con=$GLOBALS['con'];
@@ -55,9 +69,36 @@ class User{
              return true;
           }
     }
+      public function  checkCnoUpdate($cn,$userId){ 
+        $con=$GLOBALS['con'];
+        $sql="SELECT 1 FROM user WHERE user_cno='$cn' AND user_id!='$userId'";
+        $results = $con->query($sql);
+        if($results->num_rows>0)
+        {
+            return false;
+         }
+         else
+          {
+             return true;
+          }
+    }
+    
     public function  checknic($nic){
         $con=$GLOBALS['con'];
         $sql="SELECT 1 FROM user WHERE user_nic='$nic'";
+        $results = $con->query($sql);
+        if($results->num_rows>0)
+         {
+            return false;
+         }
+         else
+          {
+             return true;
+          }
+    }
+    public function  checknicUpdate($nic,$userId){
+        $con=$GLOBALS['con'];
+        $sql="SELECT 1 FROM user WHERE user_nic='$nic'  AND user_id!='$userId'";
         $results = $con->query($sql);
         if($results->num_rows>0)
          {
@@ -75,11 +116,11 @@ class User{
         $results = $con->query($sql);
         return $results;
     }
-    public function  addUser($newid,$fName,$lName,$email,$cn,$dob,$nic,$uRole,$gender,$user_img,$status){
+    public function  addUser($newid,$fName,$lName,$email,$cn,$dob,$nic,$uRole,$gender,$user_img,$status,$address){
         $con=$GLOBALS['con'];
         $sql="INSERT INTO user(user_id,user_fname,user_lname,user_email,user_cno,user_gender,
-            user_dob,user_nic,role_id,user_image,user_status)
-            VALUES('$newid','$fName','$lName','$email','$cn','$gender','$dob','$nic','$uRole','$user_img','$status')";
+            user_dob,user_nic,role_id,user_image,user_status,user_address)
+            VALUES('$newid','$fName','$lName','$email','$cn','$gender','$dob','$nic','$uRole','$user_img','$status','$address')";
         $con->query($sql) or die($con->error);
         $isAdded="true";
         return $isAdded;
@@ -98,10 +139,15 @@ class User{
         $results = $con->query($sql);
         return $results;
     }
-    public function updateUser($user_id,$fName,$lName,$email,$cn,$dob,$nic,$uRole,$gender,$user_img){
+    public function updateUser($user_id,$fName,$lName,$email,$cn,$dob,$nic,$uRole,$gender,$user_img,$address){
         $con=$GLOBALS["con"];
-        $sql="UPDATE user SET user_fname='$fName', user_lname='$lName', user_email='$email', user_cno='$cn', user_gender='$gender', user_dob='$dob', user_nic='$nic', role_id='$uRole', user_image='$user_img' WHERE user_id='$user_id'";
-        $con->query($sql)or die($con->error); 
+        if($user_img==""){
+          $sql="UPDATE user SET user_fname='$fName', user_lname='$lName', user_email='$email', user_cno='$cn', user_gender='$gender', user_dob='$dob', user_nic='$nic', role_id='$uRole', user_address='$address' WHERE user_id='$user_id'";
+        }else{
+          $sql="UPDATE user SET user_fname='$fName', user_lname='$lName', user_email='$email', user_cno='$cn', user_gender='$gender', user_dob='$dob', user_nic='$nic', role_id='$uRole', user_image='$user_img', user_address='$address' WHERE user_id='$user_id'";
+        }
+        $result=$con->query($sql)or die($con->error); 
+        return $result;
     }
     public function updateUserProfile($user_id,$fName,$lName,$email,$cn,$dob,$nic,$gender,$address,$user_img){
         $con=$GLOBALS["con"];

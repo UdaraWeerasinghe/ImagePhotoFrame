@@ -5,7 +5,13 @@ $paymentrObj=new Payment();      //create payment objret
 $status=$_REQUEST["status"];
 switch ($status){
     
+    case "addTax":
+       $paymentrObj->addTax($_POST["texName"],$_POST["texpres"]);
+        break;
     case "viewPayment":  ///body of the view payment in payment.php
+        $taxResult=$paymentrObj->getTax();
+        $tRow=$taxResult->fetch_assoc();
+        $taxAmount=$tRow["precentage"];
         $pId=$_POST["pId"];//getayment id from post
         $paymentResult=$paymentrObj->getPaymentByPId($pId);
         $pRow=$paymentResult->fetch_assoc();
@@ -54,6 +60,12 @@ switch ($status){
                         <td></td>
                         <td>Rs.<?php echo number_format($total,2); ?></td>
                     </tr>
+                 <tr>
+                  
+                    <td>tax</td>
+                    <td></td>
+                    <td style="text-align: right"><?php echo $taxAmount."%"; ?></td>
+                </tr>
             </tbody>
         </table>
         <table style="width: 100%">
@@ -73,11 +85,29 @@ switch ($status){
                     $totalPaid=$totalPaid+$phRow["payment_amount"];
                 ?>
                 <tr>
+                    <td></td>
+                    <td>total amount</td>
+                    <td></td>
+                    <td style="text-align: right">Rs.<?php echo number_format($phRow["payment_amount"],2) ?></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>tax amount</td>
+                    <td></td>
+                    <td style="text-align: right">Rs.<?php echo number_format(($phRow["payment_amount"]*$taxAmount/100),2) ?></td>
+                </tr>
+                <tr>
                     <td><?php echo $phRow["payment_id"] ?></td>
                     <td><?php echo date("Y-m-d",strtotime($phRow["payment_timestamp"])) ?></td>
                     <td><?php echo date("h:m:s a",strtotime($phRow["payment_timestamp"])) ?></td>
-                    <td style="text-align: right">Rs.<?php echo number_format($phRow["payment_amount"],2) ?></td>
+                    <td style="text-align: right">Rs.<?php echo number_format($phRow["payment_amount"]*($taxAmount+100)/100,2) ?></td>
                 </tr>
+<!--                <tr>
+                    <td></td>
+                    <td>tax</td>
+                    <td></td>
+                    <td style="text-align: right"><?php // echo $taxAmount."%"; ?></td>
+                </tr>-->
                 <?php
                 }?>
                 <tr>
@@ -89,7 +119,7 @@ switch ($status){
                 <tr>
                     <td></td>
                     <td colspan="2"><b>Total paid amount</b></td>
-                    <td style="text-align: right">Rs.<?php echo number_format($totalPaid,2); ?></td>
+                    <td style="text-align: right">Rs.<?php echo number_format(($totalPaid*($taxAmount+100)/100),2); ?></td>
                 </tr>
                 <?php
                 if($total>$totalPaid){
