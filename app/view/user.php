@@ -25,7 +25,6 @@ $userRole=$_SESSION["user"]["role_id"];
         ?>
     </head>
     <body>
-        
         <?php include 'dashboard-header.php'; ?>
         
         <div class="container-fluid m-0 p-0" style="width: 100%;">
